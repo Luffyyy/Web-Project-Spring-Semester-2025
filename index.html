@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>My First Web application</title>
+    <link href="/style.css" rel="stylesheet">
+  </head>
+  <body class="bg-white dark:bg-black">
+    <div class ="max-w-[1000px] mx-auto h-[100vh] bg-slate-200 flex flex-col gap-2 p-2">
+      <div class="p-4 bg-slate-300 flex justify-between">
+        <div>
+          <button class="border border-slate-700 rounded py-1 px-3 block lg:hidden" id=btnMenu >Menu</button>
+          <div class=" justify-start hidden lg:block  bg-slate-300 p-4" id="popUpMenu">
+            <a href="#" class="font-bold hover:underline text-2xl">Home</a>
+            <a href="#" class="font-bold hover:underline text-2xl">Projects</a>
+            <a href="#" class="font-bold hover:underline text-2xl">About</a>
+            <a href="src/login.html" class="font-bold hover:underline text-2xl">Login</a>
+          </div>
+        </div>
+        <div>
+          <button id="btnTheme" class="border border-slate-700 rounded py-1 px-3">Dark</button>
+        </div>
+      </div>
+      <div class="p-4 grow bg-slate-300">body</div>
+      <div class="p-4 text-center bg-slate-300">footer</div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

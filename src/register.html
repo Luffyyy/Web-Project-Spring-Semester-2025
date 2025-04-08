@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+    <link href= "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" >
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded shadow-md w-96">
+        <h1 class="text-2xl font-semibold mb-6 text-center">Register</h1>
+        <form id="registerForm">
+            <label for="userInput">Username</label>
+            <input type="text" id="userInput" class="w-full p-3 mb-4 border rounded" required />
+            <label for="mailInput">Email</label>
+            <input type="email" id="mailInput" class="w-full p-3 mb-4 border rounded" required />
+            <label for="passInput">Password</label>
+            <input type="password" id="passInput" class="w-full p-3 mb-4 border rounded" required />
+            <label for="confirmInput">Confirm Password</label>
+            <input type="password" id="confirmInput" class="w-full p-3 mb-4 border rounded" required />
+            <label for="dateInput">Birth Date</label>
+            <input type="date" id="dateInput" class="w-full p-3 mb-4 border rounded" required />
+            <button type="submit" class="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-600">Register</button>
+            <a href="login.html" class="block text-right mt-4 text-blue-500 hover:underline">already have an account? login</a>
+        </form>
+        <div id="registerMessage" class="mt-2 text-red-500 text-center text-sm"></div>
+    </div>
+    <script src="register.js"></script>
+</body>
+
+</html>
