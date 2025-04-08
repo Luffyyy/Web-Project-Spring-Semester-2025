@@ -1,2 +1,44 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+body {
+	font-family: Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+:root {
+    --text-color: #000;
+    --bg-color: #fff;
+    --content-bg-color: #e6e6e6;
+    --btn-bg-color: #d44343;
+    --input-bg-color: rgb(206, 206, 206);
+}
+
+html.dark {
+    --text-color: #fff;
+    --bg-color: hsl(0, 0%, 5%);
+    --content-bg-color: hsl(0, 0%,7%);
+    --input-bg-color: #303030;
+}
+
+.content {    
+    background-color: var(--content-bg-color);
+}
+
+.btn {
+    background-color: var(--btn-bg-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.nav-link {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.input {
+    background-color: var(--input-bg-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
