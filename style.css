@@ -24,6 +24,7 @@ html.dark {
 
 .content {    
     background-color: var(--content-bg-color);
+    border-radius: 8px;
 }
 
 .btn {

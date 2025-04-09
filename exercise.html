@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/x-icon" href="/src/favicon.ico">
+        <title>NextFit</title>
+        <link href="/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class ="flex flex-col gap-2 layout">
+            <header class="navbar p-4">
+                <div class="flex flex-wrap gap-4 items-center justify-between">
+                    <a href="/">
+                        <img src="/src/Logo.png" width="128">
+                    </a>
+                    <div>
+                        <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
+                            <a href="./browse.html" class="nav-link">Browse Exercises</a>
+                        </div>
+                    </div>
+                    <div class="ml-auto flex gap-1">
+                        <input type="search" class="input max-lg:hidden" placeholder="Search">
+                        <button class="btn-small"><img src="src/MdiMagnify.svg" width="24"></button>    
+                    </div>
+                    <div class="gap-3 flex max-lg:hidden">
+                        <a href="src/login.html" class="nav-link">Login</a>
+                        <a href="src/register.html" class="nav-link">Register</a>
+                        <a id="btnTheme" href="#" class="nav-link">🌙</a>
+                    </div>
+                    <button class="lg:hidden" id=btnMenu >
+                        <img src="src/MdiMenu.svg">
+                    </button>
+                </div>
+            </header>
+            <main class="px-4 my-4 grow flex gap-4 rounded">
+                <iframe 
+                    style="width: 75%; aspect-ratio: 16 / 9;"
+                    src="https://www.youtube.com/embed/eFEVKmp3M4g"
+                    title="How to squat ✅"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                </iframe>
+                <div class="content grow p-4">
+                    <strong class="text-2xl">Squat</strong>
+                </div>
+            </main>
+            <footer class="p-4 content rounded">Made By Group 2 - Braude College</footer>
+        </div>
+        <script type="module" src="/main.js"></script>
+    </body>
+</html>
