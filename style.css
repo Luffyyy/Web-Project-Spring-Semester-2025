@@ -11,14 +11,14 @@ body {
     --text-color: #000;
     --bg-color: #fff;
     --content-bg-color: #e6e6e6;
-    --btn-bg-color: #d44343;
+    --btn-bg-color: hsl(0, 0%, 30%);
     --input-bg-color: rgb(206, 206, 206);
 }
 
 html.dark {
     --text-color: #fff;
     --bg-color: hsl(0, 0%, 5%);
-    --content-bg-color: hsl(0, 0%,7%);
+    --content-bg-color: hsl(0, 0%, 10%);
     --input-bg-color: #303030;
 }
 
@@ -32,13 +32,44 @@ html.dark {
     border-radius: 0.5rem;
 }
 
+.btn-small {
+    background-color: var(--btn-bg-color);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
 .nav-link {
     font-weight: bold;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
 }
 
 .input {
     background-color: var(--input-bg-color);
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+}
+
+.navbar {
+    background-color: var(--content-bg-color);
+    position: sticky;
+    line-height: 1;
+    top: 0;
+    left: 0;
+}
+
+.layout {
+    min-height: 100vh;
+}
+
+.body {
+    position: relative;
+    width: 250px;
+}
+
+.body img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    transition: opacity 0.25s;
 }
