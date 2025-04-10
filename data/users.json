@@ -1,0 +1,14 @@
+[
+    {
+        "username":"Moran",
+        "email":"morkupfer@braude.ac.il",
+        "password":"lala1234",
+        "dob": "10/01/2000"
+    },
+    {
+        "username":"Ilya",
+        "email":"IlyaZ@braude.ac.il",
+        "password":"bubu1234",
+        "dob": "20/05/2000"
+    }
+]

@@ -2,16 +2,17 @@
 <html lang="en" class="dark">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/x-icon" href="/src/favicon.ico">
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
         <title>NextFit</title>
         <link href="/style.css" rel="stylesheet">
+        <script type="module" src="/main.js"></script>
     </head>
     <body>
         <div class ="flex flex-col gap-2 layout">
             <header class="navbar p-4">
                 <div class="flex flex-wrap gap-4 items-center justify-between">
                     <a href="/">
-                        <img src="/src/Logo.png" width="128">
+                        <img src="assets/Logo.png" width="128">
                     </a>
                     <div>
                         <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
@@ -28,7 +29,7 @@
                         <a id="btnTheme" href="#" class="nav-link">🌙</a>
                     </div>
                     <button class="lg:hidden" id=btnMenu >
-                        <img src="src/MdiMenu.svg">
+                        <img src="assets/MdiMenu.svg">
                     </button>
                 </div>
             </header>
@@ -39,6 +40,5 @@
             </main>
             <footer class="p-4 content rounded">Made By Group 2 - Braude College</footer>
         </div>
-        <script type="module" src="/main.js"></script>
     </body>
 </html>
