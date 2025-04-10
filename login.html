@@ -19,10 +19,12 @@
                             <a href="./browse.html" class="nav-link">Browse Exercises</a>
                         </div>
                     </div>
-                    <div class="ml-auto flex gap-1">
-                        <input type="search" class="input max-lg:hidden" placeholder="Search">
-                        <button class="btn-small"><img src="src/MdiMagnify.svg" width="24"></button>    
-                    </div>
+                    <form action="browse.html" class="ml-auto max-lg:hidden flex gap-1" id="searchForm">
+                        <input type="search" class="input" placeholder="Search" name="query">
+                        <button class="btn-small hover:cursor-pointer" onclick="document.querySelector('searchForm').submit()">
+                            <img src="assets/MdiMagnify.svg" width="24">
+                        </button>
+                    </form>
                     <div class="gap-3 flex max-lg:hidden">
                         <a href="login.html" class="nav-link">Login</a>
                         <a href="register.html" class="nav-link">Register</a>
