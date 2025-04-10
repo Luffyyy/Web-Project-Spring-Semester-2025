@@ -1,3 +1,5 @@
+import { loadExercises } from "./db";
+
 document.addEventListener("DOMContentLoaded", async function() {
     // Load exercises from JSON
     const exercises = await loadExercises();
@@ -12,6 +14,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         
         if (exercise) {
             document.querySelector('#exercise-title').innerHTML = exercise.title;
+            document.querySelector('#exercise-video').src = exercise.video;
         }
     }
 });
