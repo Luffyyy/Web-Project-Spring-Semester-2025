@@ -1,27 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link href= "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" >
-    <link rel="stylesheet" href="login.css">
-</head>
-
-<body>
-    <div class="container">
-        <h1>Login</h1>
-        <form id="loginForm" action="/login" method="post">
-            <label for="userInput">Username or Email</label>
-            <input type="text" id="userInput" required />
-            <label for="passInput">Password</label>
-            <input type="password" id="passInput" required />
-            <button type="submit" class="w-full p-3 bg-blue-500 text-white rounded hover:bg-blue-600">Login</button>
-            <a href="register.html" class="block text-center w-full p-3 mt-4 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Register</a>
-            <a href="#" class="block text-right mt-4 text-blue-500 hover:underline" onclick="alert('Forgot password functionality to be implemented.');">Forgot Password?</a>
-        </form>
-        <div id="loginMessage" class="mt-2 text-red-500 text-center text-sm"></div>
-    </div>
-    <script src="login.js"></script>
-</body>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/x-icon" href="/src/favicon.ico">
+        <title>NextFit</title>
+        <link href="/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div class ="flex flex-col gap-2 layout">
+            <header class="navbar p-4">
+                <div class="flex flex-wrap gap-4 items-center justify-between">
+                    <a href="/">
+                        <img src="/src/Logo.png" width="128">
+                    </a>
+                    <div>
+                        <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
+                            <a href="./browse.html" class="nav-link">Browse Exercises</a>
+                        </div>
+                    </div>
+                    <div class="ml-auto flex gap-1">
+                        <input type="search" class="input max-lg:hidden" placeholder="Search">
+                        <button class="btn-small"><img src="src/MdiMagnify.svg" width="24"></button>    
+                    </div>
+                    <div class="gap-3 flex max-lg:hidden">
+                        <a href="login.html" class="nav-link">Login</a>
+                        <a href="register.html" class="nav-link">Register</a>
+                        <a id="btnTheme" href="#" class="nav-link">🌙</a>
+                    </div>
+                    <button class="lg:hidden" id=btnMenu >
+                        <img src="src/MdiMenu.svg">
+                    </button>
+                </div>
+            </header>
+            <main>
+                <!--Edit here mostly, the rest should remain the same-->
+                <div class="lg:w-1/4 md:w-1/2 w-full mx-auto">
+                    <form id="loginForm" action="/login" method="post" class="flex flex-col gap-3">
+                        <strong class="text-2xl">Login</strong>
+                        <label for="userInput" >Username or Email</label>
+                        <input type="text" id="userInput" required class="input"/>
+                        <label for="passInput">Password</label>
+                        <input type="password" id="passInput" required class="input"/>
+                        <a href="#" class="block text-right" onclick="alert('Forgot password functionality to be implemented.');">Forgot Password?</a>
+                        <button type="submit" class="btn">Login</button>
+                        <a href="register.html" class="btn">Register</a>
+                    </form>
+                    <div id="loginMessage" class="mt-2 text-red-500 text-center text-sm"></div>
+                </div>
+            </main>
+            <footer class="content">Made By Group 2 - Braude College</footer>
+        </div>
+        <script src="login.js"></script>
+    </body>
 </html>

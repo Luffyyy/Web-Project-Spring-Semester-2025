@@ -7,12 +7,21 @@ body {
     background-color: var(--bg-color);
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2rem;
+    gap: 2rem;
+}
+
 :root {
     --text-color: #000;
     --bg-color: #fff;
     --content-bg-color: #e6e6e6;
     --btn-bg-color: hsl(0, 0%, 30%);
     --input-bg-color: rgb(206, 206, 206);
+    color-scheme: light;
 }
 
 html.dark {
@@ -20,17 +29,24 @@ html.dark {
     --bg-color: hsl(0, 0%, 5%);
     --content-bg-color: hsl(0, 0%, 10%);
     --input-bg-color: #303030;
+    color-scheme: dark;
 }
 
 .content {    
     background-color: var(--content-bg-color);
     border-radius: 8px;
+    padding: 1rem;
 }
 
 .btn {
     background-color: var(--btn-bg-color);
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
+    text-align: center;
+}
+
+a:link {
+    text-decoration: underline;
 }
 
 .btn-small {
@@ -42,6 +58,10 @@ html.dark {
 .nav-link {
     font-weight: bold;
     font-size: 1.15rem;
+}
+
+a.btn, a.nav-link {
+    text-decoration: none;
 }
 
 .input {

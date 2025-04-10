@@ -23,8 +23,8 @@
                         <button class="btn-small"><img src="src/MdiMagnify.svg" width="24"></button>    
                     </div>
                     <div class="gap-3 flex max-lg:hidden">
-                        <a href="src/login.html" class="nav-link">Login</a>
-                        <a href="src/register.html" class="nav-link">Register</a>
+                        <a href="login.html" class="nav-link">Login</a>
+                        <a href="register.html" class="nav-link">Register</a>
                         <a id="btnTheme" href="#" class="nav-link">🌙</a>
                     </div>
                     <button class="lg:hidden" id=btnMenu >
@@ -32,15 +32,30 @@
                     </button>
                 </div>
             </header>
-            <main class="px-4 my-4 grow flex flex-col rounded items-center">
+            <main>
+                <!--Edit here mostly, the rest should remain the same-->
                 <strong class="text-3xl">Browse Exercises</strong>
-                <div class="body">
-                    <img src="/src/body.png">
-                    <img src="/src/Biceps.png" class="opacity-0 hover:opacity-100" style="width: 25px; top: 105px; left: 174px;">
-                    <img src="/src/Biceps.png" class="opacity-0 hover:opacity-100" style="width: 25px; top: 105px; left: 174px;">
+                <div class="flex grow gap-4">
+                    <div class="content grow" style="flex: 1;">
+                        <strong class="text-3xl mx-auto">Filters</strong>
+                        <div class="body">
+                            <img src="/src/body.png">
+                            <img src="/src/Biceps.png" class="opacity-0 hover:opacity-100" style="width: 25px; top: 105px; left: 174px;">
+                            <img src="/src/Biceps.png" class="opacity-0 hover:opacity-100" style="width: 25px; top: 105px; left: 174px;">
+                        </div>
+                    </div>
+                    <div class="flex flex-col grow gap-4" style="flex: 2;">
+                        <a href="exercise.html?name=squat" class="content flex gap-3">
+                            <img 
+                                src="https://hips.hearstapps.com/hmg-prod/images/man-training-with-weights-royalty-free-image-1718637105.jpg?crop=0.670xw:1.00xh;0.138xw,0&resize=1200:*"
+                                width="150"
+                            >
+                            <strong class="text-2xl">Squat</strong>
+                        </a>
+                    </div>
                 </div>
             </main>
-            <footer class="p-4 content rounded">Made By Group 2 - Braude College</footer>
+            <footer class="content">Made By Group 2 - Braude College</footer>
         </div>
         <script type="module" src="/main.js"></script>
     </body>
