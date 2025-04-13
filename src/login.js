@@ -1,8 +1,9 @@
+import { loadUsers } from './db.js';
 const html = document.documentElement;
 const loginForm = document.getElementById('loginForm');
 const loginMessage = document.getElementById('loginMessage');
 
-loginForm.addEventListener('submit', function(event) {
+ loginForm.addEventListener('submit', async function(event) {
     event.preventDefault(); //if event not from submit value is false
 
     const usernameOrEmail = document.getElementById('userInput').value;
@@ -10,8 +11,7 @@ loginForm.addEventListener('submit', function(event) {
 
     let nameOrEmail = 'test';
     let pass = 'password';
-
-    let users = JSON.parse(localStorage.getItem('users')) || [];
+    const users = await loadUsers(); // Load users from the JSON file
     let user =  users.find(u=>u.username === usernameOrEmail || u.email === usernameOrEmail);
 
     if(user != undefined){
@@ -19,8 +19,8 @@ loginForm.addEventListener('submit', function(event) {
         pass = user.password;
     }
 
-    // Replace with your actual login logic (e.g., fetch request to a backend API)
     if (usernameOrEmail === nameOrEmail && password === pass) {
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
         loginMessage.textContent = 'Login successful!';
         loginMessage.classList.remove('text-red-500');
         loginMessage.classList.add('text-green-500');
