@@ -39,9 +39,9 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
         messageDiv.textContent = "Registration successful! Redirecting to main page...";
         messageDiv.classList.remove("text-red-500");
         messageDiv.classList.add("text-green-500");
-        //setTimeout(() => {
-          //  window.location.href = 'dashboard.html'; //will be something else later
-        //}, 2000);
+        setTimeout(() => {
+            window.location.href = 'index.html'; //will be something else later
+        }, 2000);
 
     } catch (error) {
         console.error('Error:', error);

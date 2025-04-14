@@ -94,3 +94,6 @@ a.btn, a.nav-link {
     width: 250px;
     transition: opacity 0.25s;
 }
+#logoutButton {
+    cursor: pointer;
+}

@@ -4,5 +4,83 @@
         "title": "Squat",
         "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/man-training-with-weights-royalty-free-image-1718637105.jpg?crop=0.670xw:1.00xh;0.138xw,0&resize=1200:*",
         "video": "https://youtube.com/embed/eFEVKmp3M4g"
+    },
+    {
+        "name": "pushup",
+        "title": "Push-Up",
+        "thumbnail": "https://previews.123rf.com/images/vadymvdrobot/vadymvdrobot1507/vadymvdrobot150700104/41751509-sports-man-doing-push-ups-isolated-on-a-white-background.jpg",
+        "video": "https://www.youtube.com/embed/oUIR7RFtB_8"
+    },
+    {
+        "name": "plank",
+        "title": "Plank",
+        "thumbnail": "https://media.istockphoto.com/id/506760290/photo/plank-it.jpg?s=612x612&w=0&k=20&c=LyLNA1J-mXmB3JwoxyvcRYhCjQfp0n6LV_jMBjdO9ys=",
+        "video": "https://youtube.com/embed/pSHjTRCQxIw"
+    },
+    {
+        "name": "burpee",
+        "title": "Burpee",
+        "thumbnail": "https://www.fitfatherproject.com/wp-content/uploads/2018/02/burpee-300x214.png",
+        "video": "https://youtube.com/embed/dZgVxmf6jkA"
+    },
+    {
+        "name": "mountain climber",
+        "title": "Mountain Climber",
+        "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/08/mountainclimber-1472061303.gif",
+        "video": "https://youtube.com/embed/cnyTQDSE884"
+    },
+    {
+        "name": "jumping jacks",
+        "title": "Jumping Jacks",
+        "thumbnail": "https://i.pinimg.com/originals/57/cc/e0/57cce0afa73a4b4c9c8c139d08aec588.gif",
+        "video": "https://youtube.com/embed/UpH7rm0cYbM"
+    },
+    {
+        "name": "lunges",
+        "title": "Lunges",
+        "thumbnail": "https://hiitacademy.com/wp-content/uploads/2015/02/alternating_jump_lunges.jpg",
+        "video": "https://youtube.com/embed/QOVaHwm-Q6U"
+    },
+    {
+        "name": "crunches",
+        "title": "Crunches",
+        "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/crunch-1457102356.gif",
+        "video": "https://youtube.com/embed/Xyd_fa5zoEU"
+    },
+    {
+        "name": "bicycle crunches",
+        "title": "Bicycle Crunches",
+        "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/08/bicycle-1472058017.gif?resize=980:*",
+        "video": "https://youtube.com/embed/9FGilxCbdz8"
+    },
+    {
+        "name": "tricep dips",
+        "title": "Tricep Dips",
+        "thumbnail": "https://cdn.jefit.com/assets/img/exercises/gifs/229.gif",
+        "video": "https://youtube.com/embed/6kALZikXxLc"
+    },
+    {
+        "name": "high knees",
+        "title": "High Knees",
+        "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/highkneerun-1457044203.gif",
+        "video": "https://www.youtube.com/embed/OAJ_J3EZkdY"
+    },
+    {
+        "name": "side plank",
+        "title": "Side Plank",
+        "thumbnail": "https://i.pinimg.com/originals/bd/59/d3/bd59d38be0b23eca2dfadcf3b0aca677.gif",
+        "video": "https://www.youtube.com/embed/UltCxDaUBBI"
+    },
+    {
+        "name": "glutebridge",
+        "title": "Glute Bridge",
+        "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/08/glutebridgedynamic-1472218237.gif",
+        "video": "https://youtube.com/embed/8bbE64NuDTU"
+    },
+    {
+        "name": "leg raises",
+        "title": "Leg Raises",
+        "thumbnail": "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/08/legraiseeccentric-1472059308.gif",
+        "video": "https://www.youtube.com/embed/JB2oyawG9KI"
     }
 ]
