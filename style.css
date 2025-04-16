@@ -70,6 +70,10 @@ a.btn, a.nav-link {
     border-radius: 0.5rem;
 }
 
+select.input {
+    padding: 0.6rem 1rem;
+}
+
 .navbar {
     background-color: var(--content-bg-color);
     position: sticky;
@@ -84,16 +88,22 @@ a.btn, a.nav-link {
 
 .body {
     position: relative;
-    width: 250px;
 }
 
-.body img {
+.body-parts img {
     position: absolute;
+    pointer-events: none;
     top: 0;
     left: 0;
-    width: 250px;
     transition: opacity 0.25s;
 }
+
 #logoutButton {
     cursor: pointer;
+}
+
+.exercise {
+    display: flex;
+    gap: 12px;
+    text-decoration: none !important;
 }
