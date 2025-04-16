@@ -1,0 +1,148 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+	font-family: Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+:root {
+    --text-color: #000;
+    --bg-color: #fff;
+    --content-bg-color: #e6e6e6;
+    --input-bg-color: rgb(206, 206, 206);
+    --btn-bg-color: hsl(0, 0%, 30%);
+    --btn-hover-color: hsl(0, 0%, 35%);
+    --nav-hover-color: hsl(0, 0%, 80%);
+    --btn-primary-color: #f00303;
+    --btn-primary-hover-color: hsl(0, 98%, 40%);
+    color-scheme: light;
+}
+
+html.dark {
+    --text-color: #fff;
+    --bg-color: hsl(0, 0%, 5%);
+    --content-bg-color: hsl(0, 0%, 10%);
+    --input-bg-color: #303030;
+    --nav-hover-color: hsl(0, 0%, 35%);
+
+    color-scheme: dark;
+}
+
+.content {    
+    background-color: var(--content-bg-color);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.btn {
+    color: white;
+    transition: background-color 0.25s;
+    background-color: var(--btn-bg-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.btn.primary {
+    background-color: var(--btn-primary-color);
+}
+
+.btn.primary:hover {
+    background-color: var(--btn-primary-hover-color);
+}
+
+.btn img {
+    color: var(--text-color);
+}
+
+.btn:hover {
+    background-color: var(--btn-hover-color);
+}
+
+a:link {
+    text-decoration: underline;
+}
+
+.btn-small {
+    background-color: var(--btn-bg-color);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.nav-link {
+    font-weight: bold;
+    font-size: 1.15rem;
+}
+
+a.btn, a.nav-link {
+    text-decoration: none;
+}
+
+.input {
+    background-color: var(--input-bg-color);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+select.input {
+    padding: 0.6rem 1rem;
+}
+
+.navbar {
+    background-color: var(--content-bg-color);
+    position: sticky;
+    line-height: 1;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+
+.layout {
+    min-height: 100vh;
+}
+
+.body {
+    position: relative;
+}
+
+.body-parts img {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    transition: opacity 0.25s;
+}
+
+button {
+    cursor: pointer;
+}
+
+.exercise {
+    display: flex;
+    gap: 12px;
+    text-decoration: none !important;
+}
+
+.nav-link {
+    padding: 0.75rem;
+    transition: background-color 0.25s;
+    border-radius: 0.25rem;
+}
+
+.nav-link:hover {
+    background-color: var(--nav-hover-color);
+}
+
+#mobile-menu .nav-link{
+    width: 100%;
+}
