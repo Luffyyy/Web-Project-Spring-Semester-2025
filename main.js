@@ -2,6 +2,9 @@
 async function loadExercises() {
     const data = await fetch('data/exercises.json');
     return await data.json();
+// Capitalizes words like hello -> Hello
+export function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 document.addEventListener("DOMContentLoaded", function() {

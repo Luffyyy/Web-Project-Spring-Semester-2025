@@ -1,3 +1,4 @@
+import { capitalize } from "../main";
 import { loadExercises } from "./db";
 
 // Get URL query params (the name=squat you see for example)
@@ -41,7 +42,7 @@ async function refreshList() {
                     <img src="${exercise.thumbnail}" width="150">
                     <div class="flex flex-col">
                         <strong class="text-2xl">${exercise.title}</strong>
-                        <span>${exercise.difficulty.charAt(0).toUpperCase() + exercise.difficulty.slice(1)}</span>
+                        <span>${capitalize(exercise.difficulty)}</span>
                     </div>
                 </a>
             `;
