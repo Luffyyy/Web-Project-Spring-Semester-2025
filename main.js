@@ -3,12 +3,15 @@ export function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("btnTheme").addEventListener("click", function() {
-        document.documentElement.classList.toggle("dark");
-        document.getElementById("btnTheme").innerText= document.documentElement.classList.contains("dark")?"🌙":"☀️";
-    });
-});
+function setTheme(initial = false) {
+    document.documentElement.classList.toggle("dark");
+    document.getElementById("btnTheme").innerText= document.documentElement.classList.contains("dark")?"🌙":"☀️";
+
+    if (!initial) {
+        localStorage.setItem('theme', localStorage.getItem('theme') === 'dark' ? 'light' : 'dark');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('login');
     const registerBtn = document.getElementById('register');
@@ -39,13 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
         registerBtn.style.display = 'flex' // Show Login/Register buttons
         userInfo.style.display = 'none'; // Hide Logout/User Picture
     });
-    
-});
-document.addEventListener("DOMContentLoaded", () => {
-    const btnMenu = document.getElementById("btnMenu");
-    const mobileMenu = document.getElementById("mobileMenu");
 
+    // Mobile menu
+    const btnMenu = document.getElementById("btn-menu");
+    const mobileMenu = document.getElementById("mobile-menu");
     btnMenu.addEventListener("click", () => {
         mobileMenu.classList.toggle("hidden");
     });
+    
+    // Theme
+    document.getElementById("btnTheme").addEventListener("click", () => setTheme());
+    if (localStorage.getItem('theme') === 'light') {
+        setTheme(true);
+    }
 });
