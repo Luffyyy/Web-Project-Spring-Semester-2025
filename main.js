@@ -39,4 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
         registerBtn.style.display = 'flex' // Show Login/Register buttons
         userInfo.style.display = 'none'; // Hide Logout/User Picture
     });
+    
+});
+document.addEventListener("DOMContentLoaded", () => {
+    const btnMenu = document.getElementById("btnMenu");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    btnMenu.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+    });
 });
