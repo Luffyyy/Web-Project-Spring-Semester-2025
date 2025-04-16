@@ -1,3 +1,4 @@
+import { capitalize } from "../main";
 import { loadExercises } from "./db";
 
 document.addEventListener("DOMContentLoaded", async function() {
@@ -13,9 +14,10 @@ document.addEventListener("DOMContentLoaded", async function() {
         const exercise = exercises.find(exercise => exercise.name == name);
         
         if (exercise) {
-            document.querySelector('#exercise-title').innerHTML = exercise.title;
-            document.querySelector('#exercise-video').src = exercise.video;
-            document.querySelector('#exercise-description').innerHTML = exercise.description;
+            document.getElementById('exercise-title').innerHTML = exercise.title;
+            document.getElementById('exercise-video').src = exercise.video;
+            document.getElementById('exercise-difficulty').innerHTML = capitalize(exercise.difficulty);
+            document.getElementById('exercise-description').innerHTML = exercise.description;
         }
     }
 });
