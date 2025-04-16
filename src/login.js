@@ -26,7 +26,7 @@ const loginMessage = document.getElementById('loginMessage');
         loginMessage.classList.add('text-green-500');
         setTimeout(() => {
             window.location.href = 'index.html'; //will be something else later
-        }, 2000);
+        }, 500);
     } else {
         loginMessage.textContent = 'Invalid username/email or password.';
         loginMessage.classList.remove('text-green-500');
