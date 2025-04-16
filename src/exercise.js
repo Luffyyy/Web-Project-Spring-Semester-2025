@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         if (exercise) {
             document.querySelector('#exercise-title').innerHTML = exercise.title;
             document.querySelector('#exercise-video').src = exercise.video;
+            document.querySelector('#exercise-description').innerHTML = exercise.description;
         }
     }
 });
