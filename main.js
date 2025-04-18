@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout functionality
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('loggedInUser'); // Clear logged-in user
-        loginBtn.style.display = 'block';
-        registerBtn.style.display = 'block';
+        loginBtn.forEach(btn => btn.style.display = 'block');
+        registerBtn.forEach(btn => btn.style.display = 'block');
         logoutButton.style.display = 'none';
         avatar.style.display = 'none';
     });
