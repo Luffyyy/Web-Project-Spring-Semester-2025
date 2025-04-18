@@ -5,7 +5,7 @@ export function capitalize(str) {
 
 function setTheme(initial = false) {
     document.documentElement.classList.toggle("dark");
-    document.getElementById("btnTheme").innerText= document.documentElement.classList.contains("dark")?"🌙":"☀️";
+    document.getElementById("theme-btn").innerText= document.documentElement.classList.contains("dark")?"🌙":"☀️";
 
     if (!initial) {
         localStorage.setItem('theme', localStorage.getItem('theme') === 'dark' ? 'light' : 'dark');
