@@ -12,46 +12,44 @@
         <div class ="flex flex-col gap-2 layout">
             <header class="navbar p-4 backdrop-blur-md">
                 <div class="flex flex-wrap gap-4 items-center justify-between">
-                  <a href="/">
+                    <a href="/">
                     <img src="assets/Logo.png" width="128" />
-                  </a>
-                  <div>
-                    <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
-                      <a href="./browse.html" class="nav-link">Browse Exercises</a>
+                    </a>
+                    <div>
+                        <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
+                            <a href="./browse.html" class="nav-link">Browse Exercises</a>
+                        </div>
                     </div>
-                  </div>
-                  <form action="browse.html" class="ml-auto max-lg:hidden flex gap-1" id="searchForm">
-                    <input type="search" class="input" placeholder="Search" name="query" />
-                    <button class="btn btn-small hover:cursor-pointer" onclick="document.querySelector('searchForm').submit()">
-                      <img src="assets/MdiMagnify.svg" width="24"/>
-                    </button>
-                  </form>
-                  <div class="gap-3 flex max-lg:hidden" id="loginRegister">
-                    <a id="login" href="login.html" class="nav-link">Login</a>
-                    <a id="register" href="register.html" class="nav-link">Register</a>
-                    <a id="btnTheme" href="#" class="nav-link">🌙</a>
-                  </div>
-                  <div class="gap-3 flex max-lg:hidden" id="userInfo" style="display: none">
-                    <img id="userPicture" src="assets/default-avatar.png" width="40" height="40" />
-                    <button id="logoutButton" class="nav-link">Logout</button>
-                  </div>
-                  <button class="lg:hidden nav-link" id="btn-menu">
+                    <form action="browse.html" class="ml-auto max-lg:hidden flex gap-1" id="searchForm">
+                        <input type="search" class="input" placeholder="Search" name="query" />
+                        <button class="btn btn-small hover:cursor-pointer" onclick="document.querySelector('searchForm').submit()">
+                        <img src="assets/MdiMagnify.svg" width="24"/>
+                        </button>
+                    </form>
+                    <div class="gap-3 flex max-lg:hidden">
+                        <a id="login" href="login.html" class="nav-link">Login</a>
+                        <a id="register" href="register.html" class="nav-link">Register</a>
+                        <img id="avatar" src="assets/default-avatar.png" width="40" height="40" />
+                        <button id="logoutButton" class="nav-link">Logout</button>
+                        <a id="btnTheme" href="#" class="nav-link">🌙</a>
+                    </div>
+                    <button class="lg:hidden nav-link" id="btn-menu">
                     <img src="assets/MdiMenu.svg" />
-                  </button>
+                    </button>
                 </div>
                 <div class="relative w-full flex flex-col items-end">
-                  <div id="mobile-menu" class="hidden lg:hidden flex flex-col gap-3 px-4 py-3 content rounded shadow-md w-full">
-                    <a href="./browse.html" class="nav-link">Browse Exercises</a>
-                    <a href="login.html" class="nav-link">Login</a>
-                    <a href="register.html" class="nav-link">Register</a>
-                  </div>
+                    <div id="mobile-menu" class="hidden flex flex-col gap-3 px-4 py-3 content rounded shadow-md w-full">
+                        <a href="./browse.html" class="nav-link">Browse Exercises</a>
+                        <a href="login.html" class="nav-link">Login</a>
+                        <a href="register.html" class="nav-link">Register</a>
+                    </div>
                 </div>
             </header>
             <main>
                 <!--Edit here mostly, the rest should remain the same-->
                 <strong class="text-3xl">Browse Exercises</strong>
-                <div class="flex grow gap-4">
-                    <div class="content grow self-start flex flex-col gap-4" style="flex: 1;">
+                <div class="flex grow gap-4 lg:flex-row flex-col">
+                    <div class="content grow lg:self-start flex flex-col gap-4">
                         <strong class="text-3xl mx-auto">Filters</strong>
                         <div class="flex gap-2">
                             <div class="flex flex-col gap-1 grow">
@@ -68,7 +66,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="body flex gap-4 mx-auto" style="min-height: 450px;">
+                        <div class="body flex mx-auto" style="min-height: 450px;">
                             <img src="/assets/body.png" usemap="#body-map" onmouseover="highlightPart()" onclick="alert('Muscle group mannequin functionality to be implemented.');">
                             <map name="body-map">
                                 <area shape="rect" coords="49,104,76,149" onmouseover="highlightPart('biceps')"/>

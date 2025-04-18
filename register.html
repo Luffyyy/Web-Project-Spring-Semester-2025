@@ -1,73 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-    <head>
-        <meta charset="UTF-8" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico">
-        <title>NextFit</title>
-        <link href="/style.css" rel="stylesheet">
-        <script type="module" src="main.js"></script>
-    </head>
-    <body>
-        <div class ="flex flex-col gap-2 layout">
-            <header class="navbar p-4 backdrop-blur-md">
-                <div class="flex flex-wrap gap-4 items-center justify-between">
-                  <a href="/">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>NextFit</title>
+    <link href="/style.css" rel="stylesheet">
+    <script type="module" src="main.js"></script>
+</head>
+
+<body>
+    <div class="flex flex-col gap-2 layout">
+        <header class="navbar p-4 backdrop-blur-md">
+            <div class="flex flex-wrap gap-4 items-center justify-between">
+                <a href="/">
                     <img src="assets/Logo.png" width="128" />
-                  </a>
-                  <div>
+                </a>
+                <div>
                     <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
-                      <a href="./browse.html" class="nav-link">Browse Exercises</a>
+                        <a href="./browse.html" class="nav-link">Browse Exercises</a>
                     </div>
-                  </div>
-                  <form action="browse.html" class="ml-auto max-lg:hidden flex gap-1" id="searchForm">
+                </div>
+                <form action="browse.html" class="ml-auto max-lg:hidden flex gap-1" id="searchForm">
                     <input type="search" class="input" placeholder="Search" name="query" />
-                    <button class="btn btn-small hover:cursor-pointer" onclick="document.querySelector('searchForm').submit()">
-                      <img src="assets/MdiMagnify.svg" width="24"/>
+                    <button class="btn btn-small hover:cursor-pointer"
+                        onclick="document.querySelector('searchForm').submit()">
+                        <img src="assets/MdiMagnify.svg" width="24" />
                     </button>
-                  </form>
-                  <div class="gap-3 flex max-lg:hidden" id="loginRegister">
+                </form>
+                <div class="gap-3 flex max-lg:hidden">
                     <a id="login" href="login.html" class="nav-link">Login</a>
                     <a id="register" href="register.html" class="nav-link">Register</a>
-                    <a id="btnTheme" href="#" class="nav-link">🌙</a>
-                  </div>
-                  <div class="gap-3 flex max-lg:hidden" id="userInfo" style="display: none">
-                    <img id="userPicture" src="assets/default-avatar.png" width="40" height="40" />
+                    <img id="avatar" src="assets/default-avatar.png" width="40" height="40" />
                     <button id="logoutButton" class="nav-link">Logout</button>
-                  </div>
-                  <button class="lg:hidden nav-link" id="btn-menu">
-                    <img src="assets/MdiMenu.svg" />
-                  </button>
+                    <a id="btnTheme" href="#" class="nav-link">🌙</a>
                 </div>
-                <div class="relative w-full flex flex-col items-end">
-                  <div id="mobile-menu" class="hidden lg:hidden flex flex-col gap-3 px-4 py-3 content rounded shadow-md w-full">
+                <div class="gap-3 flex max-lg:hidden" id="userInfo" style="display: none">
+                    <img id="avatar" src="assets/default-avatar.png" width="40" height="40" />
+                    <button id="logoutButton" class="nav-link">Logout</button>
+                </div>
+                <a id="btnTheme" href="#" class="nav-link">🌙</a>
+                <button class="lg:hidden nav-link" id="btn-menu">
+                    <img src="assets/MdiMenu.svg" />
+                </button>
+            </div>
+            <div class="relative w-full flex flex-col items-end">
+                <div id="mobile-menu" class="hidden flex flex-col gap-3 px-4 py-3 content rounded shadow-md w-full">
                     <a href="./browse.html" class="nav-link">Browse Exercises</a>
                     <a href="login.html" class="nav-link">Login</a>
                     <a href="register.html" class="nav-link">Register</a>
-                  </div>
                 </div>
-            </header>        
-            <main>
-                <!--Edit here mostly, the rest should remain the same-->
-                <div class="lg:w-1/4 md:w-1/2 w-full mx-auto">
-                    <form id="registerForm" action="/login" method="post" class="flex flex-col gap-3">
-                        <label for="userInput">Username</label>
-                        <input type="text" id="userInput" class="input" required />
-                        <label for="mailInput">Email</label>
-                        <input type="email" id="mailInput" class="input" required />
-                        <label for="passInput">Password</label>
-                        <input type="password" id="passInput" class="input" required />
-                        <label for="confirmInput">Confirm Password</label>
-                        <input type="password" id="confirmInput" class="input" required />
-                        <label for="dateInput">Birth Date</label>
-                        <input type="date" id="dateInput" class="input" required />
-                        <a href="login.html" class="block text-right">Already Got an Account?</a>
-                        <button type="submit" class="btn">Register</button>
-                    </form>
-                    <div id="registerMessage" class="mt-2 text-red-500 text-center text-sm"></div>
-                </div>
-            </main>
-            <footer class="content">Made By Group 2 - Braude College</footer>
-        </div>
-        <script type="module" src="src/register.js"></script>
-    </body>
+            </div>
+        </header>
+        <main>
+            <!--Edit here mostly, the rest should remain the same-->
+            <div class="lg:w-1/4 md:w-1/2 w-full mx-auto">
+                <form id="registerForm" action="/login" method="post" class="flex flex-col gap-3">
+                    <strong class="text-3xl">Register</strong>
+                    <label for="userInput">Username</label>
+                    <input type="text" id="userInput" class="input" required="required" />
+                    <label for="mailInput">Email</label>
+                    <input type="email" id="mailInput" class="input" required="required" />
+                    <label for="passInput">Password</label>
+                    <input type="password" id="passInput" class="input" required="required" />
+                    <label for="confirmInput">Confirm Password</label>
+                    <input type="password" id="confirmInput" class="input" required="required" />
+                    <label for="dateInput">Birth Date</label>
+                    <input type="date" id="dateInput" class="input" required="required" />
+                    <a href="login.html" class="block text-right">Already Got an Account?</a>
+                    <button type="submit" class="btn">Register</button>
+                </form>
+                <div id="registerMessage" class="mt-2 text-red-500 text-center text-sm"></div>
+            </div>
+        </main>
+        <footer class="content">Made By Group 2 - Braude College</footer>
+    </div>
+    <script type="module" src="src/register.js"></script>
+</body>
+
 </html>
