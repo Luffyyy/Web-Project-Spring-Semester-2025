@@ -146,3 +146,7 @@ button {
 #mobile-menu .nav-link{
     width: 100%;
 }
+
+#avatar {
+    border-radius: 50%;
+}

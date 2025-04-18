@@ -15,8 +15,7 @@ function setTheme(initial = false) {
 document.addEventListener('DOMContentLoaded', () => {
     const loginBtn = document.getElementById('login');
     const registerBtn = document.getElementById('register');
-    const userInfo = document.getElementById('userInfo');
-    const userPicture = document.getElementById('userPicture');
+    const avatar = document.getElementById('avatar');
     const logoutButton = document.getElementById('logoutButton');
 
     // Check if a user is logged in
@@ -26,21 +25,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // Hide Login/Register buttons and show Logout/User Picture
         loginBtn.style.display = 'none';
         registerBtn.style.display = 'none';
-        userInfo.style.display = 'flex';
-        userPicture.src = loggedInUser.picture || 'assets/default-avatar.png'; // Use default if no picture
+        logoutButton.style.display = 'block';
+        avatar.style.display = 'block';
+        avatar.src = loggedInUser.picture || 'assets/default-avatar.png'; // Use default if no picture
     } else {
         // Show Login/Register buttons and hide Logout/User Picture
-        loginBtn.style.display = 'flex';
-        registerBtn.style.display = 'flex';
-        userInfo.style.display = 'none';
+        loginBtn.style.display = 'block';
+        registerBtn.style.display = 'block';
+        logoutButton.style.display = 'none';
+        avatar.style.display = 'none';
     }
 
     // Logout functionality
     logoutButton.addEventListener('click', () => {
         localStorage.removeItem('loggedInUser'); // Clear logged-in user
-        loginBtn.style.display = 'flex';
-        registerBtn.style.display = 'flex' // Show Login/Register buttons
-        userInfo.style.display = 'none'; // Hide Logout/User Picture
+        loginBtn.style.display = 'block';
+        registerBtn.style.display = 'block';
+        logoutButton.style.display = 'none';
+        avatar.style.display = 'none';
     });
 
     // Mobile menu
