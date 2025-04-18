@@ -18,10 +18,8 @@
                 <a href="/">
                     <img src="assets/Logo.png" width="128" />
                 </a>
-                <div>
-                    <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
-                        <a href="./browse.html" class="nav-link">Browse Exercises</a>
-                    </div>
+                <div class="justify-start hidden lg:flex gap-3" id="popUpMenu">
+                    <a href="./browse.html" class="nav-link">Browse Exercises</a>
                 </div>
                 <form action="browse.html" class="ml-auto max-lg:hidden flex gap-1" id="searchForm">
                     <input type="search" class="input" placeholder="Search" name="query" />
@@ -30,12 +28,11 @@
                         <img src="assets/MdiMagnify.svg" width="24" />
                     </button>
                 </form>
-                <div class="gap-3 flex max-lg:hidden">
-                    <a id="login" href="login.html" class="nav-link">Login</a>
-                    <a id="register" href="register.html" class="nav-link">Register</a>
+                <div class="gap-1 flex ml-auto">
+                    <a href="login.html" class="nav-link login-btn">Login</a>
+                    <a href="register.html" class="nav-link register-btn">Register</a>
                     <img id="avatar" src="assets/default-avatar.png" width="40" height="40" />
                     <button id="logoutButton" class="nav-link">Logout</button>
-                    <a id="btnTheme" href="#" class="nav-link">🌙</a>
                 </div>
                 <button class="lg:hidden nav-link" id="btn-menu">
                     <img src="assets/MdiMenu.svg" />
@@ -44,8 +41,8 @@
             <div class="relative w-full flex flex-col items-end">
                 <div id="mobile-menu" class="hidden flex flex-col gap-3 px-4 py-3 content rounded shadow-md w-full">
                     <a href="./browse.html" class="nav-link">Browse Exercises</a>
-                    <a href="login.html" class="nav-link">Login</a>
-                    <a href="register.html" class="nav-link">Register</a>
+                    <a href="login.html" class="nav-link login-btn" id="login-mobile">Login</a>
+                    <a href="register.html" class="nav-link register-btn" id="register-mobile">Register</a>
                 </div>
             </div>
         </header>
@@ -64,7 +61,10 @@
                 <p class="whitespace-break-spaces" id="exercise-description"></p>
             </div>
         </main>
-        <footer class="p-4 content rounded">Made By Group 2 - Braude College</footer>
+        <footer class="p-4 content rounded z-10">
+            <span>Made By Group 2 - Braude College</span>
+            <button class="nav-link ml-auto" id="theme-btn">🌙</button>
+        </footer>
     </div>
 </body>
 

@@ -15,6 +15,11 @@ main {
     gap: 1.25rem;
 }
 
+footer {
+    display: flex;
+    align-items: center;
+}
+
 :root {
     --text-color: #000;
     --bg-color: #fff;

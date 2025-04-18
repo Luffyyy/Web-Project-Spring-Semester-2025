@@ -13,8 +13,8 @@ function setTheme(initial = false) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const loginBtn = document.getElementById('login');
-    const registerBtn = document.getElementById('register');
+    const loginBtn = document.querySelectorAll('.login-btn');
+    const registerBtn = document.querySelectorAll('.register-btn');
     const avatar = document.getElementById('avatar');
     const logoutButton = document.getElementById('logoutButton');
 
@@ -23,15 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (loggedInUser) {
         // Hide Login/Register buttons and show Logout/User Picture
-        loginBtn.style.display = 'none';
-        registerBtn.style.display = 'none';
+        loginBtn.forEach(btn => btn.style.display = 'none');
+        registerBtn.forEach(btn => btn.style.display = 'none');
         logoutButton.style.display = 'block';
         avatar.style.display = 'block';
         avatar.src = loggedInUser.picture || 'assets/default-avatar.png'; // Use default if no picture
     } else {
         // Show Login/Register buttons and hide Logout/User Picture
-        loginBtn.style.display = 'block';
-        registerBtn.style.display = 'block';
+        loginBtn.forEach(btn => btn.style.display = 'block');
+        registerBtn.forEach(btn => btn.style.display = 'block');
         logoutButton.style.display = 'none';
         avatar.style.display = 'none';
     }
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Theme
-    document.getElementById("btnTheme").addEventListener("click", () => setTheme());
+    document.getElementById("theme-btn").addEventListener("click", () => setTheme());
     if (localStorage.getItem('theme') === 'light') {
         setTheme(true);
     }
