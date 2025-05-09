@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+
 
 body {
 	font-family: Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
@@ -33,7 +33,7 @@ footer {
     color-scheme: light;
 }
 
-html.dark {
+body.dark {
     --text-color: #fff;
     --bg-color: hsl(0, 0%, 5%);
     --content-bg-color: hsl(0, 0%, 10%);
