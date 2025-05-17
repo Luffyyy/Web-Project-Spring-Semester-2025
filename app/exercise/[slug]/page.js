@@ -1,12 +1,11 @@
-import exercises from '@/data/exercises.json'; // TODO: this should be fetched from DB
+import getMongoCollection from '@/lib/getMongoCollection';
 import { capitalize } from '@/utils/utils';
 import { notFound } from 'next/navigation';
 
 export default async function Page({ params }) {
     const { slug } = await params;
-    
-    // TODO: replace with actual fetch
-    const exercise = exercises.find(ex => ex.name == slug);
+    const exercises = await getMongoCollection('exercises');
+    const exercise = await exercises.findOne({ name: slug });
 
     if (!exercise) {
         return notFound();

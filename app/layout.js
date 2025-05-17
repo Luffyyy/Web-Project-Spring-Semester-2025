@@ -29,9 +29,12 @@ export default async function RootLayout({ children }) {
 
     // Here we login the user automatically if they are logged in
     // We pass it to the client afterwards
-    const userId = cookieStore.get('user').value;
-    const user = await users.findOne({ _id: new ObjectId(userId) });
-    user._id = undefined;
+    const userId = cookieStore.get('user')?.value;
+    let user
+    if (userId) {
+        user = await users.findOne({ _id: new ObjectId(userId) });
+        user._id = undefined;
+    }
 
 	return <CookiesProvider>
         <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
