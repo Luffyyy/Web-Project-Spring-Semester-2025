@@ -37,6 +37,6 @@ export default function Input({ name, value, label, required, type, onChange, va
             />
         )}
         
-        <span class="text-red-400">{validity}</span>
+        <span className="text-red-400">{validity}</span>
     </>;
 }
