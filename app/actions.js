@@ -1,7 +1,12 @@
 'use server'
 
+import getMongoCollection from "@/lib/getMongoCollection";
 import clientPromise from "@/lib/mongodb";
+import normalizeMongoIds from "@/lib/normalizeMongoIds";
+import { escapeRegex } from "@/utils/utils";
+import { createHash, randomBytes } from "crypto";
 import { cookies } from "next/headers";
+import nodemailer from 'nodemailer';
  
 export async function login(username, password) {
     const client = await clientPromise;
@@ -25,9 +30,7 @@ export async function login(username, password) {
 }
 
 export async function register(username, email, password, dob) {
-    const client = await clientPromise;
-    const db = client.db("nextfit");
-    const users = db.collection("users");
+    const users = await getMongoCollection('users');
 
     if (users.findOne({ $or: [{ username }, { email }] })) {
         return {
@@ -52,4 +55,57 @@ export async function register(username, email, password, dob) {
             error: 'Failed to create user!'
         }
     }
+}
+
+export async function changePassword(token, email, password) {
+    const users = await getMongoCollection('users');
+    const user = await users.findOne({ reset_token: token, email, reset_token_expire: { $gte: new Date() } });
+    if (user) {
+        await users.updateOne({ email }, {
+            $set: {
+                password,
+                reset_token: null,
+                reset_token_expire: null
+            }
+        });
+        return true;
+    }
+
+    return false;
+}
+
+export async function sendPasswordReset(email) {
+    const transporter = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+            user: "braudewebproject2025@gmail.com",
+            pass: process.env.GMAIL_APP_PASS
+        }
+    });
+
+    const users = await getMongoCollection('users');
+    
+    const user = await users.findOne({ email });
+    if (user) {
+        const token = createHash('sha256').update(randomBytes(32).toString('hex')).digest('hex');
+        await users.updateOne({ email }, {
+            $set: {
+                reset_token: token,
+                reset_token_expire: new Date(Date.now() + 15*60*1000)
+            }
+        });
+        
+        const url = process.env.SITE_URL;
+
+        await transporter.sendMail({
+            from: 'braudewebproject2025@gmail.com',
+            to: user.email,
+            subject: 'Password Reset',
+            text: `You've requested a password reset, reset your password through this link: http://${url}/reset-password/${token}`
+        });
+   } else {
+        console.log('found no user with email: ' + email);
+        
+   }
+}
 }

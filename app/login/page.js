@@ -9,7 +9,7 @@ import Input from "@/components/input";
 export default function Login() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [err, setErr]  = useState('');
+    const [msg, setMsg]  = useState('');
     const router = useRouter();
 
     const setUser = useMainStore(state => state.setUser);
@@ -22,7 +22,7 @@ export default function Login() {
             setUser(user);
             router.push(`/`);
         } else {
-            setErr('Wrong username and password combination!');
+            setMsg('Wrong username and password combination!');
         }
     }
 
@@ -31,14 +31,13 @@ export default function Login() {
             <strong className="text-3xl">Login</strong>
             <Input required={true} value={name} onChange={setName} label="Username" name="username" />
             <Input required={true} value={password} onChange={setPassword} label="Password" name="password" type="password"/>
-            <a href="#" className="block text-right"
-                onClick={() => alert('Forgot password functionality to be implemented.')}>Forgot Password?</a>
+            <a href="/reset-password" className="block text-right">Forgot Password?</a>
             <button type="submit" className="btn" onClick={doLogin}>Login</button>
             <Link href="/register" className="btn">Register</Link>
         </form>
         
-        <div id="loginMessage" className="mt-2 text-red-500 text-center text-sm">
-            {err}
+        <div id="loginMessage" className="mt-2 text-center text-sm">
+            {msg}
         </div>
     </div>
 }

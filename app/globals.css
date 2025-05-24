@@ -62,7 +62,7 @@ body.dark {
     background-color: var(--btn-primary-color);
 }
 
-.btn.primary:hover {
+.btn.primary:hover:not(:disabled) {
     background-color: var(--btn-primary-hover-color);
 }
 
@@ -70,7 +70,7 @@ body.dark {
     color: var(--text-color);
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
     background-color: var(--btn-hover-color);
 }
 
