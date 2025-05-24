@@ -2,9 +2,8 @@
 
 import { capitalize } from "@/lib/utils"
 import classNames from "classnames"
-import { useSearchParams } from "next/navigation";
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 export default function MuscleGroup({ name }) {
     const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString).withDefault([]));
@@ -26,6 +25,6 @@ export default function MuscleGroup({ name }) {
 
     return <button className={classes} onClick={chooseGroup}>
         <img src={`/assets/${name}.png`} width="100" alt={name}/>
-        <span>{capitalize(name)}</span>
+        <span>{name.split('_').map(s => capitalize(s)).join(' ')}</span>
     </button>
 }

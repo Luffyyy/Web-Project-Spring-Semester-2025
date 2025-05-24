@@ -24,7 +24,7 @@ export default function ExerciseList({ initialExercises }) {
         'quads',
         'shoulders',
         'triceps',
-        'lowerback',
+        'lower_back',
         'calves',
         'glutes',
         'trapezius',
