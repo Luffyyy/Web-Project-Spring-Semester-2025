@@ -4,12 +4,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useMainStore } from "@/stores";
+import { useCookies } from "next-client-cookies";
 
 export default function Header() {
     const [ query, setQuery ] = useState('');
     const router = useRouter();
+    const cookies = useCookies();
 
     const { user, setUser } = useMainStore(state => state);
+
+    function logout() {
+        setUser();
+        cookies.remove('user');
+    }
 
     function search(e) {
         e.preventDefault();
@@ -21,7 +28,7 @@ export default function Header() {
     if (user) {
         userElem = <>
             <img id="avatar" src="/assets/default-avatar.png" width="40" height="40" alt="Avatar"/>
-            <button id="logoutButton" className="nav-link" onClick={() => setUser(undefined)}>Logout</button>
+            <button id="logoutButton" className="nav-link" onClick={logout}>Logout</button>
         </>
     } else {
         userElem = <>
