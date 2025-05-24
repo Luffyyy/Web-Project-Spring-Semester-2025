@@ -15,6 +15,7 @@ export default function ClientLayout({ theme: initialTheme, user: initialUser, c
     // This is called when theme changes
     useEffect(() => {
         document.body.classList.toggle('dark', theme == 'dark');
+        document.body.classList.toggle('light', theme == 'light');
         cookies.set('theme', theme);
     }, [theme, cookies]);
 
@@ -28,7 +29,7 @@ export default function ClientLayout({ theme: initialTheme, user: initialUser, c
 
             <footer className="p-4 content rounded z-10">
                 <span>Made By Group 2 - Braude College</span>
-                <button className="nav-link ml-auto" id="theme-btn" onClick={() => setTheme(theme == 'dark' ? '' : 'dark')}>
+                <button className="nav-link ml-auto" id="theme-btn" onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}>
                     {theme == 'dark' ? '🌙' : '☀️'}
                 </button>
             </footer>

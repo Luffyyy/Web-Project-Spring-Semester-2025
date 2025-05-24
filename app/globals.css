@@ -7,15 +7,30 @@ body {
     background-color: var(--bg-color);
 }
 
+#root {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+header {
+    grid-area: header;
+}
+
 main {
+    grid-area: main;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     padding: 2rem;
     gap: 1.25rem;
 }
 
 footer {
+    grid-area: footer;
     display: flex;
     align-items: center;
 }
@@ -62,7 +77,7 @@ body.dark {
     background-color: var(--btn-primary-color);
 }
 
-.btn.primary:hover {
+.btn.primary:hover:not(:disabled) {
     background-color: var(--btn-primary-hover-color);
 }
 
@@ -70,7 +85,7 @@ body.dark {
     color: var(--text-color);
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
     background-color: var(--btn-hover-color);
 }
 
@@ -154,4 +169,30 @@ button {
 
 #avatar {
     border-radius: 50%;
+}
+
+.muscle-group:hover img {
+    background-color: var(--btn-hover-color);
+}
+
+.muscle-group img {
+    background-color: var(--btn-bg-color);
+    border-radius: 8px;
+    transition: background-color ease-in-out 0.15s;
+}
+
+.muscle-group.chosen img {
+    background-color: #a74d4d;
+}
+
+.light .muscle-group img {
+    filter: brightness(1.5);
+}
+
+.btn:disabled, .input:disabled {
+    opacity: 0.75;
+}
+
+.btn:disabled:hover {
+    cursor: not-allowed;
 }

@@ -1,3 +1,6 @@
+/**
+ * MongoDB client loading code
+ */
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI;

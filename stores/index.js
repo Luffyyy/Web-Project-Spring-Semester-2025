@@ -1,3 +1,7 @@
+/**
+ * The store is essentially the global state, it's useful and uses the zustand library
+ * Instead of creaing a million useContexts we employ this library and keep our code DRY
+ */
 import { StoreContext } from "@/components/layout/client-layout";
 import { useContext } from "react";
 import { create, useStore } from "zustand";
