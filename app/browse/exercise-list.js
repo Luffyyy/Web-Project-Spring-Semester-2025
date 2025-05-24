@@ -71,14 +71,14 @@ export default function ExerciseList({ initialExercises }) {
                 </div>
             </div>
             <div>
-                <h3>Muscle Groups</h3>
+                <span>Muscle Groups</span>
                 <div className="body flex gap-3 mx-auto flex-wrap justify-center overflow-auto" style={{minHeight: '350px', maxHeight: '260px'}}>
                     {muscleGroups.map((group, i) => <MuscleGroup name={group} key={i}/>)}
                 </div>
             </div>
         </div>
         <div className="flex flex-col gap-4 flex-4" id="exercise-list">
-            {exerciseElements}
+            {exerciseElements.length ? exerciseElements : <b class="text-lg mx-auto">No exercises were found!</b>}
         </div>
     </>
 }
