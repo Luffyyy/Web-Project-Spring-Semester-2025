@@ -108,4 +108,20 @@ export async function sendPasswordReset(email) {
         
    }
 }
+
+export async function findExercises(query, difficulty, tags) {
+    const exercises = await getMongoCollection('exercises');
+
+    const filter = {}
+    if (tags) {
+        filter.tags = { $all: tags };
+    }
+    if (query) {
+        filter.title = { $regex: escapeRegex(query), $options: 'i' };
+    }
+    if (difficulty && difficulty != 'any') {
+        filter.difficulty = difficulty;
+    }
+
+    return normalizeMongoIds(await exercises.find(filter).toArray());
 }

@@ -169,6 +169,25 @@ button {
 
 #avatar {
     border-radius: 50%;
+}
+
+.muscle-group:hover img {
+    background-color: var(--btn-hover-color);
+}
+
+.muscle-group img {
+    background-color: var(--btn-bg-color);
+    border-radius: 8px;
+    transition: background-color ease-in-out 0.15s;
+}
+
+.muscle-group.chosen img {
+    background-color: #a74d4d;
+}
+
+.light .muscle-group img {
+    filter: brightness(1.5);
+}
 
 .btn:disabled, .input:disabled {
     opacity: 0.75;

@@ -1,0 +1,31 @@
+"use client"
+
+import { capitalize } from "@/utils/utils"
+import classNames from "classnames"
+import { useSearchParams } from "next/navigation";
+import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
+import { useMemo, useState } from "react"
+
+export default function MuscleGroup({ name }) {
+    const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString).withDefault([]));
+    const chosen = useMemo(() => tags.indexOf(name) !== -1, [name, tags]);
+
+    const classes = classNames('muscle-group p-4! gap-2 flex flex-col', {
+        chosen
+    });
+
+    function chooseGroup() {
+        let newTags = tags ?? [];
+        if (chosen) {
+            newTags.splice(newTags.indexOf(name), 1);
+        } else {
+            newTags.push(name);
+        }
+        setTags([...newTags]);
+    }
+
+    return <button className={classes} onClick={chooseGroup}>
+        <img src={`/assets/${name}.png`} width="100" alt={name}/>
+        <span>{capitalize(name)}</span>
+    </button>
+}

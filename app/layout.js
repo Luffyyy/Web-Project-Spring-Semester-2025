@@ -5,6 +5,8 @@ import ClientLayout from "@/components/layout/client-layout";
 import { CookiesProvider } from "next-client-cookies/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { NuqsAdapter } from 'nuqs/adapters/next/app';
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -39,9 +41,11 @@ export default async function RootLayout({ children }) {
 	return <CookiesProvider>
         <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
             <body className={theme}>
-                <div className="relative min-h-screen flex flex-col">
+                <div className="relative min-h-screen" id="root">
                     <ClientLayout theme={theme} user={user}>
-                        { children }
+                        <NuqsAdapter>
+                            { children }
+                        </NuqsAdapter>
                     </ClientLayout>
                 </div>
             </body>
