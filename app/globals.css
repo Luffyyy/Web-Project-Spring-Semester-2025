@@ -7,15 +7,30 @@ body {
     background-color: var(--bg-color);
 }
 
+#root {
+    display: grid;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+}
+
+header {
+    grid-area: header;
+}
+
 main {
+    grid-area: main;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
     padding: 2rem;
     gap: 1.25rem;
 }
 
 footer {
+    grid-area: footer;
     display: flex;
     align-items: center;
 }
@@ -154,4 +169,11 @@ button {
 
 #avatar {
     border-radius: 50%;
+
+.btn:disabled, .input:disabled {
+    opacity: 0.75;
+}
+
+.btn:disabled:hover {
+    cursor: not-allowed;
 }
