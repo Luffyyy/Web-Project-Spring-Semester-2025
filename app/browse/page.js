@@ -1,19 +1,19 @@
 import getMongoCollection from '@/lib/getMongoCollection';
-import normalizeMongoIds from '@/lib/normalizeMongoIds';
 import ExerciseList from './exercise-list';
 import { createLoader, parseAsArrayOf, parseAsString } from 'nuqs/server';
 import { findExercises } from '../actions';
 
 export default async function Browse({ searchParams }) {  
     const collection = await getMongoCollection('exercises');
-    const { query, difficulty, tags } = createLoader({
+
+    // This uses the nuqs, which makes it easier to handle query strings (?param=something&param2=something else)
+    const { query, difficulty, tags } = await createLoader({
         query: parseAsString,
         difficulty: parseAsString,
         tags: parseAsArrayOf(parseAsString)
-    })(await searchParams);
+    })(searchParams);
 
-    let exercises = await collection.find().toArray();
-    exercises = await findExercises(query, difficulty, tags);
+    const exercises = await findExercises(query, difficulty, tags);
 
     return <>
         <strong className="text-3xl">Browse Exercises</strong>

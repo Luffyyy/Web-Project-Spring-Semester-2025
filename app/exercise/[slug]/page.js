@@ -1,5 +1,5 @@
 import getMongoCollection from '@/lib/getMongoCollection';
-import { capitalize } from '@/utils/utils';
+import { capitalize } from '@/lib/utils';
 import { notFound } from 'next/navigation';
 
 export default async function Page({ params }) {

@@ -1,6 +1,6 @@
 "use client"
 
-import { capitalize } from "@/utils/utils";
+import { capitalize } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MuscleGroup from "../../components/muscle-group";
@@ -10,7 +10,7 @@ import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 export default function ExerciseList({ initialExercises }) {
     const [ query, setQuery ] = useQueryState('query', { defaultValue: '' });
     const [ diff, setDiff ] = useQueryState('difficulty', { defaultValue: 'any' });
-    const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString));
+    const [ tags ] = useQueryState('tags', parseAsArrayOf(parseAsString));
     const [ exercises, setExercises ] = useState(initialExercises);
     const initial = useRef(false);
 
@@ -36,7 +36,7 @@ export default function ExerciseList({ initialExercises }) {
 
     useEffect(() => {
         if (!initial.current) {
-            initial.currnet = true;
+            initial.current = true;
         }
 
         findExercises(query, diff, tags).then(data => setExercises(data));

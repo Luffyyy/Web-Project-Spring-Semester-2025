@@ -3,11 +3,18 @@
 import getMongoCollection from "@/lib/getMongoCollection";
 import clientPromise from "@/lib/mongodb";
 import normalizeMongoIds from "@/lib/normalizeMongoIds";
-import { escapeRegex } from "@/utils/utils";
+import { escapeRegex } from "@/lib/utils";
 import { createHash, randomBytes } from "crypto";
 import { cookies } from "next/headers";
 import nodemailer from 'nodemailer';
- 
+
+/**
+ * Logs in a user with username and password
+ * 
+ * @param {string} username 
+ * @param {string} password 
+ * @returns The logged in user, if valid
+ */
 export async function login(username, password) {
     const client = await clientPromise;
     const db = client.db("nextfit");
@@ -29,6 +36,15 @@ export async function login(username, password) {
     return data;
 }
 
+/**
+ * Registers a new user
+ * 
+ * @param {string} username 
+ * @param {string} email 
+ * @param {string} password 
+ * @param {string} dob 
+ * @returns the new user
+ */
 export async function register(username, email, password, dob) {
     const users = await getMongoCollection('users');
 
@@ -57,6 +73,14 @@ export async function register(username, email, password, dob) {
     }
 }
 
+/**
+ * Changes the password of a user using a token given by the reset password function, their email and the new password
+ * 
+ * @param {string} token 
+ * @param {string} email 
+ * @param {string} password 
+ * @returns Whether the operation succeeeded
+ */
 export async function changePassword(token, email, password) {
     const users = await getMongoCollection('users');
     const user = await users.findOne({ reset_token: token, email, reset_token_expire: { $gte: new Date() } });
@@ -74,6 +98,13 @@ export async function changePassword(token, email, password) {
     return false;
 }
 
+/**
+ * Attempts to send a password reset link to the given email
+ * If no user exists with said email, we just silently fail;
+ * to not give the user any info they are not supposed to know.
+ * 
+ * @param {string} email Email to send the password reset to
+ */
 export async function sendPasswordReset(email) {
     const transporter = nodemailer.createTransport({
         service: "Gmail",
@@ -105,10 +136,17 @@ export async function sendPasswordReset(email) {
         });
    } else {
         console.log('found no user with email: ' + email);
-        
    }
 }
 
+/**
+ * Looks for exercises with query, difficulty and set of tags it must contain
+ * 
+ * @param {string} query query for title or description
+ * @param {'any'|'beginner'|'intermediate'|'advanced'} difficulty 
+ * @param {string[]} tags
+ * @returns array of exercises
+ */
 export async function findExercises(query, difficulty, tags) {
     const exercises = await getMongoCollection('exercises');
 

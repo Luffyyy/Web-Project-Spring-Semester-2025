@@ -1,6 +1,6 @@
 "use client"
 
-import { capitalize } from "@/utils/utils"
+import { capitalize } from "@/lib/utils"
 import classNames from "classnames"
 import { useSearchParams } from "next/navigation";
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
