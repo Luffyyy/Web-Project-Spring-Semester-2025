@@ -14,6 +14,26 @@ export default function ExerciseList({ initialExercises }) {
     const [ exercises, setExercises ] = useState(initialExercises);
     const initial = useRef(false);
 
+    const muscleGroups = [
+        'biceps',
+        'chest',
+        'abs',
+        'obliques',
+        'back',
+        'hamstrings',
+        'quads',
+        'shoulders',
+        'triceps',
+        'lowerback',
+        'calves',
+        'glutes',
+        'trapezius',
+        'abductors',
+        'adductors',
+        'forearms',
+        'neck'
+    ];
+
     useEffect(() => {
         if (!initial.current) {
             initial.currnet = true;
@@ -21,7 +41,7 @@ export default function ExerciseList({ initialExercises }) {
 
         findExercises(query, diff, tags).then(data => setExercises(data));
     }, [tags, query, diff]);
-
+    
     const exerciseElements = exercises.map(
         (exercise, i) => <Link href={`exercise/${encodeURIComponent(exercise.name)}`} className="content exercise" key={i}>
             <img src={exercise.thumbnail} width="150" alt="Exercise Thumbnail"/>
@@ -53,23 +73,7 @@ export default function ExerciseList({ initialExercises }) {
             <div>
                 <h3>Muscle Groups</h3>
                 <div className="body flex gap-3 mx-auto flex-wrap justify-center overflow-auto" style={{minHeight: '350px', maxHeight: '260px'}}>
-                    <MuscleGroup name="biceps"/>
-                    <MuscleGroup name="chest"/>
-                    <MuscleGroup name="abs"/>
-                    <MuscleGroup name="obliques"/>
-                    <MuscleGroup name="back"/>
-                    <MuscleGroup name="hamstrings"/>
-                    <MuscleGroup name="quads"/>
-                    <MuscleGroup name="shoulders"/>
-                    <MuscleGroup name="triceps"/>
-                    <MuscleGroup name="lowerback"/>
-                    <MuscleGroup name="calves"/>
-                    <MuscleGroup name="glutes"/>
-                    <MuscleGroup name="trapezius"/>
-                    <MuscleGroup name="abductors"/>
-                    <MuscleGroup name="adductors"/>
-                    <MuscleGroup name="forearms"/>
-                    <MuscleGroup name="neck"/>
+                    {muscleGroups.map((group, i) => <MuscleGroup name={group} key={i}/>)}
                 </div>
             </div>
         </div>
