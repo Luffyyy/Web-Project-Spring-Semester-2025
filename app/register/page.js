@@ -41,7 +41,7 @@ export default function Register() {
         <form id="registerForm" action="/login" method="post" className="flex flex-col gap-3">
             <strong className="text-3xl">Register</strong>
             <Input required={true} value={name} onChange={setName} label="Username" name="username" />
-            <Input required={true} value={email} onChange={setName} label="E-Mail" name="username"/>
+            <Input required={true} value={email} onChange={setEmail} label="E-Mail" name="username"/>
             <Input required={true} value={password} onChange={setPassword} label="Password" name="password" type="password" validity={passErr}/>
             <Input required={true} value={confirmPassword} onChange={setConfirmPassword} label="Confirm Password" name="password" type="password"/>
             <Input required={true} value={dob} onChange={setDob} label="Birth Date" name="dob" type="date"/>
