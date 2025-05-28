@@ -87,7 +87,7 @@ export default function ExerciseList({ initialExercises }) {
                         : "bg-transparent text-white border-white hover:bg-white hover:text-black"
                 }`}
             >
-                {tag}
+                {tag.split('_').map(s => capitalize(s)).join(' ')}
             </button>
         );
     });
