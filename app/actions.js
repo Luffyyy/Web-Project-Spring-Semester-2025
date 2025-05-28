@@ -151,7 +151,7 @@ export async function sendPasswordReset(email) {
 export async function findExercises(query, difficulty, tags, filter = {}) {
     const exercises = await getMongoCollection('exercises');
 
-    if (tags) {
+    if (tags && tags.length > 0) {
         filter.tags = { $all: tags };
     }
     if (query) {
