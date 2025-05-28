@@ -4,10 +4,10 @@ import { capitalize } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MuscleGroup from "../../components/muscle-group";
-import { findExercises } from "../actions";
+import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 
-export default function ExerciseList({ initialExercises }) {
+export default function ExerciseList({ initialExercises, isFavorites = false }) {
     const [ query, setQuery ] = useQueryState('query', { defaultValue: '' });
     const [ diff, setDiff ] = useQueryState('difficulty', { defaultValue: 'any' });
     const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString).withDefault([]));
@@ -50,12 +50,16 @@ export default function ExerciseList({ initialExercises }) {
         if (!initial.current) {
             initial.current = true;
         }
-
+      
         const effectiveTags = tags.length > 0 ? tags : undefined;
         const effectiveDiff = diff === 'any' ? undefined : diff;
 
-        findExercises(query, effectiveDiff, effectiveTags).then(data => setExercises(data));
-    }, [tags, query, diff]);
+        if(isFavorites) {
+            findFavoriteExercises(query, diff, tags).then(data => setExercises(data));
+        } else {
+            findExercises(query, diff, tags).then(data => setExercises(data));
+        }
+    }, [tags, query, diff, isFavorites]);
 
     const toggleTag = (tag) => {
         const isActive = tags.includes(tag);

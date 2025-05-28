@@ -14,7 +14,6 @@ export default function Header() {
     const cookies = useCookies();
 
     const { user, setUser } = useMainStore(state => state);
-
     function logout() {
         setUser();
         cookies.remove('user');
@@ -42,7 +41,7 @@ export default function Header() {
     const menuClasses = classNames('flex flex-col gap-3 px-4 py-3 content rounded shadow-md w-full lg:hidden!', {
         hidden: !menuVisible
     });
-
+    
     return (
         <header className="navbar p-4 backdrop-blur-md">
             <div className="flex flex-wrap gap-4 items-center justify-between">
@@ -51,6 +50,9 @@ export default function Header() {
                 </Link>
                 <div className="justify-start hidden lg:flex gap-3" id="popUpMenu">
                     <Link href="/browse" className="nav-link">Browse Exercises</Link>
+                    {user && (
+                        <Link href="/favorites" className="nav-link">Favorite Exercises</Link>
+                    )}
                 </div>
                 <div className="ml-auto max-lg:hidden flex gap-1">
                     <input type="search" className="input" placeholder="Search" name="query" onInput={e => setQuery(e.target.value)}/>
@@ -68,6 +70,9 @@ export default function Header() {
             <div className="relative w-full flex flex-col items-end">
                 <div id="mobile-menu" className={menuClasses}>
                     <Link href="/browse" className="nav-link">Browse Exercises</Link>
+                    {user && (
+                        <Link href="/favorites" className="nav-link">Favorite Exercises</Link>
+                    )}
                     <Link href="/login" className="nav-link login-btn" id="login-mobile">Login</Link>
                     <Link href="/register" className="nav-link register-btn" id="register-mobile">Register</Link>
                 </div>

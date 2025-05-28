@@ -1,9 +1,10 @@
 'use server'
-
+import { ObjectId } from "mongodb";
 import getMongoCollection from "@/lib/getMongoCollection";
 import clientPromise from "@/lib/mongodb";
 import normalizeMongoIds from "@/lib/normalizeMongoIds";
-import { escapeRegex } from "@/lib/utils";
+import { escapeRegex} from "@/lib/utils";
+import { getUser } from "@/lib/server-utils";
 import { createHash, randomBytes } from "crypto";
 import { cookies } from "next/headers";
 import nodemailer from 'nodemailer';
@@ -147,10 +148,9 @@ export async function sendPasswordReset(email) {
  * @param {string[]} tags
  * @returns array of exercises
  */
-export async function findExercises(query, difficulty, tags) {
+export async function findExercises(query, difficulty, tags, filter = {}) {
     const exercises = await getMongoCollection('exercises');
 
-    const filter = {}
     if (tags) {
         filter.tags = { $all: tags };
     }
@@ -162,4 +162,30 @@ export async function findExercises(query, difficulty, tags) {
     }
 
     return normalizeMongoIds(await exercises.find(filter).toArray());
+}
+export async function addToFavorites(exerciseId) {
+    const users = await getMongoCollection('users');
+    const user = await getUser();
+    if (!userId) {
+        throw new Error('User not logged in');
+    }
+
+    // Add the exercise to the user's favorites
+    const result = await users.updateOne(
+         { _id: new ObjectId(user._id) },
+        { $addToSet: { favorites: exerciseId } }
+    );
+
+    return result.modifiedCount > 0; // Return true if the operation was successful
+}
+export async function findFavoriteExercises(query, difficulty, tags) {
+    const user = await getUser();   
+
+    if (!user || !user.favorites) {
+        return [];
+    }
+
+    return findExercises(query, difficulty, tags, {
+        _id: { $in: user.favorites.map(id => new ObjectId(String(id))) }
+    });
 }
