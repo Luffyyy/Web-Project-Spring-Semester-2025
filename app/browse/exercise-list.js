@@ -6,11 +6,12 @@ import { useEffect, useRef, useState } from "react";
 import MuscleGroup from "../../components/muscle-group";
 import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
+import classNames from "classnames";
 
-export default function ExerciseList({ initialExercises, isFavorites = false }) {
+export default function ExerciseList({ initialExercises, isFavorites }) {
     const [ query, setQuery ] = useQueryState('query', { defaultValue: '' });
     const [ diff, setDiff ] = useQueryState('difficulty', { defaultValue: 'any' });
-    const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString).withDefault([]));
+    const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString));
     const [ exercises, setExercises ] = useState(initialExercises);
     const initial = useRef(false);
 
@@ -51,9 +52,6 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
             initial.current = true;
         }
       
-        const effectiveTags = tags.length > 0 ? tags : undefined;
-        const effectiveDiff = diff === 'any' ? undefined : diff;
-
         if(isFavorites) {
             findFavoriteExercises(query, diff, tags).then(data => setExercises(data));
         } else {
@@ -62,10 +60,11 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
     }, [tags, query, diff, isFavorites]);
 
     const toggleTag = (tag) => {
-        const isActive = tags.includes(tag);
+        const currTags = tags ?? [];
+        const isActive = currTags.includes(tag);
         const newTags = isActive
             ? tags.filter(t => t !== tag)
-            : [...tags, tag];
+            : [...currTags, tag];
         setTags(newTags);
     };
 
@@ -80,17 +79,9 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
     );
 
     const tagButtons = availableTags.map((tag, i) => {
-        const isActive = tags.includes(tag);
+        const isActive = tags?.includes(tag);
         return (
-            <button
-                key={i}
-                onClick={() => toggleTag(tag)}
-                className={`px-3 py-1 rounded-full text-sm font-medium border transition ${
-                    isActive
-                        ? "bg-white text-black border-white"
-                        : "bg-transparent text-white border-white hover:bg-white hover:text-black"
-                }`}
-            >
+            <button key={i} onClick={() => toggleTag(tag)} className={classNames('tag', { active: isActive })}>
                 {tag.split('_').map(s => capitalize(s)).join(' ')}
             </button>
         );
@@ -121,8 +112,8 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
                 </div>
             </div>
             <div>
-                <span>Tags</span>
-                <div className="flex flex-wrap gap-2 justify-center">
+                <div className="mb-3">Tags</div>
+                <div className="flex flex-wrap gap-1">
                     {tagButtons}
                 </div>
             </div>

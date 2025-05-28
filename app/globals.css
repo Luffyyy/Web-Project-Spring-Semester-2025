@@ -196,3 +196,22 @@ button {
 .btn:disabled:hover {
     cursor: not-allowed;
 }
+/* `px-3 py-1 rounded-full text-sm font-medium border transition ${
+                    isActive
+                        ? "bg-white text-black border-white"
+                        : "bg-transparent text-white border-white hover:bg-white hover:text-black"
+                }`} */
+.tag {
+    border-radius: calc(infinity * 1px);;
+    padding: 0.25rem 0.75rem;
+    transition: background-color ease-in-out 0.15s;
+    background-color: var(--btn-bg-color);
+}
+
+.tag:hover {
+    background-color: var(--btn-hover-color);
+}
+
+.tag.active {
+    background-color: var(--btn-primary-hover-color);   
+}
