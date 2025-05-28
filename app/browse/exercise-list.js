@@ -4,10 +4,10 @@ import { capitalize } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MuscleGroup from "../../components/muscle-group";
-import { findExercises } from "../actions";
+import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 
-export default function ExerciseList({ initialExercises }) {
+export default function ExerciseList({ initialExercises, isFavorites = false }) {
     const [ query, setQuery ] = useQueryState('query', { defaultValue: '' });
     const [ diff, setDiff ] = useQueryState('difficulty', { defaultValue: 'any' });
     const [ tags ] = useQueryState('tags', parseAsArrayOf(parseAsString));
@@ -38,10 +38,13 @@ export default function ExerciseList({ initialExercises }) {
         if (!initial.current) {
             initial.current = true;
         }
+        if(isFavorites) {
+            findFavoriteExercises(query, diff, tags).then(data => setExercises(data));
+        } else {
+            findExercises(query, diff, tags).then(data => setExercises(data));
+        }
+    }, [tags, query, diff, isFavorites]);
 
-        findExercises(query, diff, tags).then(data => setExercises(data));
-    }, [tags, query, diff]);
-    
     const exerciseElements = exercises.map(
         (exercise, i) => <Link href={`exercise/${encodeURIComponent(exercise.name)}`} className="content exercise" key={i}>
             <img src={exercise.thumbnail} width="150" alt="Exercise Thumbnail"/>
