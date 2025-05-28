@@ -10,7 +10,7 @@ import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 export default function ExerciseList({ initialExercises, isFavorites = false }) {
     const [ query, setQuery ] = useQueryState('query', { defaultValue: '' });
     const [ diff, setDiff ] = useQueryState('difficulty', { defaultValue: 'any' });
-    const [ tags ] = useQueryState('tags', parseAsArrayOf(parseAsString));
+    const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString).withDefault([]));
     const [ exercises, setExercises ] = useState(initialExercises);
     const initial = useRef(false);
 
@@ -34,16 +34,40 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
         'neck'
     ];
 
+    const availableTags = [
+        'lower_body',
+        'strength',
+        'bodyweight',
+        'no_equipment',
+        'core',
+        'cardio',
+        'explosive',
+        'full_body',
+        'balance'
+    ];
+
     useEffect(() => {
         if (!initial.current) {
             initial.current = true;
         }
+      
+        const effectiveTags = tags.length > 0 ? tags : undefined;
+        const effectiveDiff = diff === 'any' ? undefined : diff;
+
         if(isFavorites) {
             findFavoriteExercises(query, diff, tags).then(data => setExercises(data));
         } else {
             findExercises(query, diff, tags).then(data => setExercises(data));
         }
     }, [tags, query, diff, isFavorites]);
+
+    const toggleTag = (tag) => {
+        const isActive = tags.includes(tag);
+        const newTags = isActive
+            ? tags.filter(t => t !== tag)
+            : [...tags, tag];
+        setTags(newTags);
+    };
 
     const exerciseElements = exercises.map(
         (exercise, i) => <Link href={`exercise/${encodeURIComponent(exercise.name)}`} className="content exercise" key={i}>
@@ -54,6 +78,23 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
             </div>
         </Link>
     );
+
+    const tagButtons = availableTags.map((tag, i) => {
+        const isActive = tags.includes(tag);
+        return (
+            <button
+                key={i}
+                onClick={() => toggleTag(tag)}
+                className={`px-3 py-1 rounded-full text-sm font-medium border transition ${
+                    isActive
+                        ? "bg-white text-black border-white"
+                        : "bg-transparent text-white border-white hover:bg-white hover:text-black"
+                }`}
+            >
+                {tag.split('_').map(s => capitalize(s)).join(' ')}
+            </button>
+        );
+    });
 
     return <>
         <div className="content lg:self-start flex flex-col gap-4 flex-2">
@@ -79,9 +120,15 @@ export default function ExerciseList({ initialExercises, isFavorites = false }) 
                     {muscleGroups.map((group, i) => <MuscleGroup name={group} key={i}/>)}
                 </div>
             </div>
+            <div>
+                <span>Tags</span>
+                <div className="flex flex-wrap gap-2 justify-center">
+                    {tagButtons}
+                </div>
+            </div>
         </div>
         <div className="flex flex-col gap-4 flex-4" id="exercise-list">
-            {exerciseElements.length ? exerciseElements : <b class="text-lg mx-auto">No exercises were found!</b>}
+            {exerciseElements.length ? exerciseElements : <b className="text-lg mx-auto">No exercises were found!</b>}
         </div>
     </>
 }
