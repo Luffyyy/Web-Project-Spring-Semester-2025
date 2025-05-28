@@ -2,6 +2,7 @@ import { createLoader, parseAsArrayOf, parseAsString } from 'nuqs/server';
 import { findFavoriteExercises } from '../actions';
 import FavoriteExercises from './favorite-exercises';
 import { getUser } from '@/lib/server-utils';
+import ErrorPage from '../error-page';
 
 export default async function favoriteExercisesPage({ searchParams }) {
     const user = await getUser()
@@ -11,15 +12,8 @@ export default async function favoriteExercisesPage({ searchParams }) {
         tags: parseAsArrayOf(parseAsString)
     })(searchParams);
     if (!user) {
-        return <div className="content">
-            <strong className="text-3xl">You must be logged in to view your favorites.</strong>
-        </div>;
+        return ErrorPage({ status: 403, message: 'You must be logged in to view your favorites.' });
     }
     const exercises = await findFavoriteExercises(query, difficulty, tags);
-    if (!exercises || exercises.length === 0) {
-        return <div className="content">
-            <strong className="text-3xl">No favorite exercises found.</strong>
-        </div>;
-    }
     return <FavoriteExercises exercises={exercises} />;
 }

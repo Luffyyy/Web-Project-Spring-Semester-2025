@@ -6,9 +6,7 @@ import ExerciseList from "../browse/exercise-list";
 export default function FavoriteExercises({ exercises }) {
     const user = useMainStore(state => state.user);
     if (!user) {
-        return <div className="content">
-            <strong className="text-3xl">You must be logged in to view your favorites.</strong>
-        </div>;
+        return ErrorPage({ status: 403, message: 'You must be logged in to view your favorites.' });
     }
     return <>
         <strong className="text-3xl">Browse Favorite Exercises</strong>
