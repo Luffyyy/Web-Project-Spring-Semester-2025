@@ -49,7 +49,7 @@ export async function login(username, password) {
 export async function register(username, email, password, dob) {
     const users = await getMongoCollection('users');
 
-    if (users.findOne({ $or: [{ username }, { email }] })) {
+    if (await users.findOne({ $or: [{ username }, { email }] })) {
         return {
             error: 'User with this username or email already exists!'
         }
