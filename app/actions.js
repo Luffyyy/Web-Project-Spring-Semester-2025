@@ -10,6 +10,69 @@ import { cookies } from "next/headers";
 import nodemailer from 'nodemailer';
 
 /**
+ * Return the currently-logged-in user (by cookie).
+ * Strips _id → string for the client.
+ */
+export async function currentUser() {
+    const cookieStore = await cookies();
+    const id = cookieStore.get('user')?.value;
+    if (!id) return null;
+  
+    const users = await getMongoCollection('users');
+    const data = await users.findOne({ _id: new ObjectId(id) });
+    if (!data) return null;
+    data._id = data._id.toString();
+    return data;
+  }
+  
+  /**
+   * Update height + weight and return the fresh user doc.
+   */
+  export async function updateBodyStats(heightCm, weightKg) {
+    const cookieStore = await cookies();
+    const id = cookieStore.get('user')?.value;
+    if (!id) throw new Error('Not authenticated');
+  
+    const users = await getMongoCollection('users');
+    await users.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: { heightCm, weightKg } }
+    );
+  
+    return currentUser(); // send the updated record back
+  }
+
+/**
+ * Update the logged-in user’s profile.
+ * Any of the fields can be omitted.
+ */
+export async function updateProfile({
+    heightCm,
+    weightKg,
+    password,
+    avoidMuscles,          // ⬅ NEW
+  }) {
+    const cookieStore = await cookies();
+    const id = cookieStore.get('user')?.value;
+    if (!id) throw new Error('Not authenticated');
+  
+    const users  = await getMongoCollection('users');
+    const update = { $set: {} };
+  
+    if (heightCm !== undefined) update.$set.heightCm = heightCm;
+    if (weightKg !== undefined) update.$set.weightKg = weightKg;
+    if (password)               update.$set.password  = password;   // hash in real apps!
+    if (Array.isArray(avoidMuscles))
+      update.$set.avoidMuscles = avoidMuscles;       // always store an array
+  
+    await users.updateOne({ _id: new ObjectId(id) }, update);
+  
+    const user = await users.findOne({ _id: new ObjectId(id) });
+    user._id = user._id.toString();
+    return user;
+  }
+
+/**
  * Logs in a user with username and password
  * 
  * @param {string} username 
@@ -150,6 +213,7 @@ export async function sendPasswordReset(email) {
  */
 export async function findExercises(query, difficulty, tags, filter = {}) {
     const exercises = await getMongoCollection('exercises');
+    const user = await getUser();
 
     if (tags && tags.length > 0) {
         filter.tags = { $all: tags };
@@ -159,6 +223,10 @@ export async function findExercises(query, difficulty, tags, filter = {}) {
     }
     if (difficulty && difficulty != 'any') {
         filter.difficulty = difficulty;
+    }
+    // Exclude exercises that target any of the user's avoided muscles
+    if (user && Array.isArray(user.avoidMuscles) && user.avoidMuscles.length > 0) {
+        filter.muscles = { $nin: user.avoidMuscles };
     }
 
     return normalizeMongoIds(await exercises.find(filter).toArray());
