@@ -8,45 +8,45 @@ import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import classNames from "classnames";
 
+export const muscleGroups = [
+    'biceps',
+    'chest',
+    'abs',
+    'obliques',
+    'back',
+    'hamstrings',
+    'quads',
+    'shoulders',
+    'triceps',
+    'lower_back',
+    'calves',
+    'glutes',
+    'trapezius',
+    'abductors',
+    'adductors',
+    'forearms',
+    'neck'
+];
+
+export const availableTags = [
+    'lower_body',
+    'strength',
+    'bodyweight',
+    'no_equipment',
+    'core',
+    'cardio',
+    'explosive',
+    'full_body',
+    'balance'
+];
+
 export default function ExerciseList({ initialExercises, isFavorites }) {
     const [ query, setQuery ] = useQueryState('query', { defaultValue: '' });
     const [ diff, setDiff ] = useQueryState('difficulty', { defaultValue: 'any' });
     const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString));
     const [ exercises, setExercises ] = useState(initialExercises);
     const initial = useRef(false);
-
-    const muscleGroups = [
-        'biceps',
-        'chest',
-        'abs',
-        'obliques',
-        'back',
-        'hamstrings',
-        'quads',
-        'shoulders',
-        'triceps',
-        'lower_back',
-        'calves',
-        'glutes',
-        'trapezius',
-        'abductors',
-        'adductors',
-        'forearms',
-        'neck'
-    ];
-
-    const availableTags = [
-        'lower_body',
-        'strength',
-        'bodyweight',
-        'no_equipment',
-        'core',
-        'cardio',
-        'explosive',
-        'full_body',
-        'balance'
-    ];
-
+    
     useEffect(() => {
         if (!initial.current) {
             initial.current = true;
