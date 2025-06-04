@@ -34,5 +34,5 @@ export default async function Page({ params }) {
                 {exercise.description}
             </p>
             
-        </div>;
+        </div>
     </div>;}

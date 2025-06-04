@@ -11,7 +11,7 @@ export default function Input({ name, value, label, required, type, onChange, va
         onChange(type == 'checkbox' ? e.target.checked : e.target.value);
     }
 
-    return <>
+    return <div className="flex flex-col gap-2">
         <label htmlFor={id}>{label}</label>
         {type == 'textarea' ? (
             <textarea
@@ -41,5 +41,5 @@ export default function Input({ name, value, label, required, type, onChange, va
         )}
         
         <span className="text-red-400">{validity}</span>
-    </>;
+    </div>;
 }

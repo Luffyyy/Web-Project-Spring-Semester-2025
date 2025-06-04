@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useTransition } from 'react';
 import { updateProfile } from '../actions';
 import Input from '@/components/input';
+import MuscleGroup from '@/components/muscle-group';
+import { muscleGroups } from '../browse/exercise-list';
 
 /* ---------- helpers ---------- */
 function bmiStatus(bmi) {
@@ -65,7 +67,7 @@ export default function ProfileClient({ user }) {
 
     return (
         <section className="flex justify-center py-10">
-            <div className="w-full max-w-md space-y-8 rounded-2xl bg-zinc-900/60 p-8 shadow-2xl ring-1 ring-zinc-700/40 backdrop-blur-md">
+            <div className="w-full max-w-2xl space-y-8 rounded-2xl content shadow-2xl ring-1 ring-zinc-700/40 backdrop-blur-md">
                 <h1 className="text-center text-4xl font-bold tracking-tight">Profile</h1>
 
                 <div className="space-y-1 text-lg leading-relaxed">
@@ -74,14 +76,13 @@ export default function ProfileClient({ user }) {
                     <p><span className="font-semibold text-zinc-300">Birth&nbsp;date:</span> {user.dob}</p>
                 </div>
 
-                <form onSubmit={handleSave} className="space-y-6">
+                <div className="flex flex-col gap-3">
                     <Input
                         label="Password: "
                         type="text"
                         required
-                        value={pwd}
+                        value=""
                         onChange={setPwd}
-                        className="block w-full"
                     />
                     <br />
                     <Input
@@ -90,7 +91,6 @@ export default function ProfileClient({ user }) {
                         required
                         value={height}
                         onChange={setHeight}
-                        className="block w-full"
                     />
                     <br />
                     <Input
@@ -99,7 +99,6 @@ export default function ProfileClient({ user }) {
                         required
                         value={weight}
                         onChange={setWeight}
-                        className="block w-full"
                     />
 
                     {bmi && (
@@ -115,32 +114,15 @@ export default function ProfileClient({ user }) {
                         Need a break from certain muscles?<br />
                         Select them and we&apos;ll skip exercises that target them.
                     </label>
-                    <div className="flex flex-wrap gap-3 mb-4">
-                        {[
-                            "biceps", "chest", "abs", "obliques", "back", "hamstrings", "quads",
-                            "shoulders", "triceps", "lower_back", "calves", "glutes",
-                            "trapezius", "abductors", "adductors", "forearms", "neck"
-                        ].map(muscle => (
-                            <label key={muscle} className="flex items-center gap-1">
-                                <input
-                                    type="checkbox"
-                                    value={muscle}
-                                    checked={avoidMuscles.includes(muscle)}
-                                    onChange={e => {
-                                        if (e.target.checked) {
-                                            setAvoidMuscles(prev => [...prev, muscle]);
-                                        } else {
-                                            setAvoidMuscles(prev => prev.filter(m => m !== muscle));
-                                        }
-                                    }}
-                                />
-                                {muscle.charAt(0).toUpperCase() + muscle.slice(1)}
-                            </label>
+                    <div className="flex flex-wrap gap-3 mb-4 w-full justify-center overflow-y-auto" style={{ minHeight: "350px", maxHeight: "260px" }}>
+                        {muscleGroups.map(muscle => (
+                            <MuscleGroup key={muscle} name={muscle} tags={avoidMuscles} setTags={setAvoidMuscles}/>
                         ))}
                     </div>
 
                     <button
                         type="submit"
+                        onClick={handleSave}
                         disabled={isPending}
                         className="btn w-full rounded-full bg-emerald-600/80 px-6 py-2 text-lg font-medium shadow hover:bg-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-400 disabled:opacity-60"
                     >
@@ -148,7 +130,7 @@ export default function ProfileClient({ user }) {
                     </button>
 
                     {msg && <p className="text-center text-sm text-green-400">{msg}</p>}
-                </form>
+                </div>
             </div>
         </section>
     );
