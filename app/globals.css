@@ -45,6 +45,7 @@ footer {
     --nav-hover-color: hsl(0, 0%, 80%);
     --btn-primary-color: #f00303;
     --btn-primary-hover-color: hsl(0, 98%, 40%);
+    --modal-bg-color: #bbbbbb;
     color-scheme: light;
 }
 
@@ -54,6 +55,7 @@ body.dark {
     --content-bg-color: hsl(0, 0%, 10%);
     --input-bg-color: #303030;
     --nav-hover-color: hsl(0, 0%, 35%);
+    --modal-bg-color: #292929;
 
     color-scheme: dark;
 }
@@ -196,15 +198,12 @@ button {
 .btn:disabled:hover {
     cursor: not-allowed;
 }
-/* `px-3 py-1 rounded-full text-sm font-medium border transition ${
-                    isActive
-                        ? "bg-white text-black border-white"
-                        : "bg-transparent text-white border-white hover:bg-white hover:text-black"
-                }`} */
+
 .tag {
     border-radius: calc(infinity * 1px);;
     padding: 0.25rem 0.75rem;
     transition: background-color ease-in-out 0.15s;
+    color: white;
     background-color: var(--btn-bg-color);
 }
 
@@ -214,4 +213,13 @@ button {
 
 .tag.active {
     background-color: var(--btn-primary-hover-color);   
+}
+
+.modal {
+    z-index: 1000;
+    background-color: #000000a6;
+}
+
+.modal-bg {
+    background-color: var(--modal-bg-color);
 }

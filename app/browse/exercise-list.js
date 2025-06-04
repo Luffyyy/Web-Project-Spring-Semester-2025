@@ -7,6 +7,7 @@ import MuscleGroup from "../../components/muscle-group";
 import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import classNames from "classnames";
+import Tag from "@/components/tag";
 
 export const muscleGroups = [
     "biceps", "chest", "abs", "obliques", "back", "hamstrings", "quads",
@@ -23,7 +24,7 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
     /* ---------------- state ---------------- */
     const [query, setQuery]   = useQueryState("query",      { defaultValue: ""   });
     const [diff,  setDiff]    = useQueryState("difficulty", { defaultValue: "any"});
-    const [tags]              = useQueryState("tags", parseAsArrayOf(parseAsString));
+    const [tags,  setTags]    = useQueryState("tags", parseAsArrayOf(parseAsString));
     const [exercises, setExercises] = useState(initialExercises);
 
     // Track avoidMuscles reactively
@@ -72,29 +73,6 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
         </Link>
     ));
 
-    /* ---------------- toggle tag ---------------- */
-    const toggleTag = (tag) => {
-        const currTags = tags ?? [];
-        const isActive = currTags.includes(tag);
-        const newTags = isActive
-            ? tags.filter(t => t !== tag)
-            : [...currTags, tag];
-        setTags(newTags);
-    };
-
-    const tagButtons = availableTags.map((tag, i) => {
-        const isActive = tags?.includes(tag);
-        return (
-            <button
-                key={i}
-                onClick={() => toggleTag(tag)}
-                className={classNames("tag", { active: isActive })}
-            >
-                {tag.split("_").map(s => capitalize(s)).join(" ")}
-            </button>
-        );
-    });
-
     /* ---------------- UI ---------------- */
     return (
         <>
@@ -134,7 +112,7 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
                         style={{ minHeight: "350px", maxHeight: "260px" }}
                     >
                         {muscleGroups.map((group, i) => (
-                            <MuscleGroup name={group} key={i} />
+                            <MuscleGroup name={group} tags={tags} setTags={setTags} key={i} />
                         ))}
                     </div>
                 </div>
@@ -142,7 +120,7 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
                 <div>
                     <div className="mb-3">Tags</div>
                     <div className="flex flex-wrap gap-1">
-                        {tagButtons}
+                        {availableTags.map((tag, i) => <Tag key={i} tag={tag} tags={tags} setTags={setTags}/>)}
                     </div>
                 </div>
             </div>

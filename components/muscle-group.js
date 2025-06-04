@@ -5,9 +5,8 @@ import classNames from "classnames"
 import { useQueryState, parseAsArrayOf, parseAsString } from "nuqs";
 import { useMemo } from "react"
 
-export default function MuscleGroup({ name }) {
-    const [ tags, setTags ] = useQueryState('tags', parseAsArrayOf(parseAsString).withDefault([]));
-    const chosen = useMemo(() => tags.indexOf(name) !== -1, [name, tags]);
+export default function MuscleGroup({ name, tags, setTags }) {
+    const chosen = useMemo(() => tags && tags.indexOf(name) !== -1, [name, tags]);
 
     const classes = classNames('muscle-group p-4! gap-2 flex flex-col', {
         chosen

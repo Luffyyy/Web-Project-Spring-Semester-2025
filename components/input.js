@@ -3,7 +3,7 @@ import { useId, useRef } from "react";
 /**
  * This component is basically an input element but shortens a lot of code
  */
-export default function Input({ name, value, label, required, type, onChange, validity, disabled }) {
+export default function Input({ name, value, label, required, type, onChange, validity, disabled, placeholder }) {
     const id = useId();
     const element = useRef();
 
@@ -35,6 +35,7 @@ export default function Input({ name, value, label, required, type, onChange, va
                 name={name}
                 type={type}
                 ref={element}
+                placeholder={placeholder}
                 onChange={handleChange}
             />
         )}

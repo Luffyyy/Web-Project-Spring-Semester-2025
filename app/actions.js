@@ -259,6 +259,9 @@ export async function findFavoriteExercises(query, difficulty, tags) {
         _id: { $in: user.favorites.map(id => new ObjectId(String(id))) }
     });
 }
+
+const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]+)/;
+
 /**
  * Converts a regular YouTube video URL into an embeddable iframe-compatible URL.
  * For example: https://www.youtube.com/watch?v=abc123 → https://www.youtube.com/embed/abc123
@@ -266,7 +269,7 @@ export async function findFavoriteExercises(query, difficulty, tags) {
  * @returns {string} - The embeddable YouTube URL.
  */
 function convertToEmbedUrl(url) {
-    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    const match = url.match(youtubeRegex);
     return match ? `https://www.youtube.com/embed/${match[1]}` : url;
 }
 /**
@@ -290,7 +293,7 @@ function slugify(str) {
  * @returns {string} - The thumbnail image URL, or an empty string if not matched.
  */
 function getYouTubeThumbnail(url) {
-    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    const match = url.match(youtubeRegex);
     return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
 }
 
@@ -299,7 +302,7 @@ export async function addVideo({ title, videoUrl, description, difficulty, tags,
     await videos.insertOne({
         name: slugify(title),
         title,
-        thumbnail: thumbnail ?? getYouTubeThumbnail(videoUrl),
+        thumbnail: thumbnail || getYouTubeThumbnail(videoUrl),
         video: convertToEmbedUrl(videoUrl),
         difficulty,
         tags,
