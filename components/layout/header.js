@@ -28,7 +28,7 @@ export default function Header() {
 
     if (user) {
         userElem = <>
-            <img id="avatar" src="/assets/default-avatar.png" width="40" height="40" alt="Avatar"/>
+            <Link href="/profile" aria-label="Profile"><img id="avatar" src="/assets/default-avatar.png" width={40} height={40} alt="Avatar" className="rounded-full cursor-pointer transition hover:opacity-80 hover:scale-105" /></Link>
             <button id="logoutButton" className="nav-link" onClick={logout}>Logout</button>
         </>
     } else {
