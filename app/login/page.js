@@ -31,7 +31,7 @@ export default function Login() {
             <strong className="text-3xl">Login</strong>
             <Input required={true} value={name} onChange={setName} label="Username" name="username" />
             <Input required={true} value={password} onChange={setPassword} label="Password" name="password" type="password"/>
-            <a href="/reset-password" className="block text-right">Forgot Password?</a>
+            <Link href="/reset-password" className="block text-right">Forgot Password?</Link>
             <button type="submit" className="btn" onClick={doLogin}>Login</button>
             <Link href="/register" className="btn">Register</Link>
         </form>

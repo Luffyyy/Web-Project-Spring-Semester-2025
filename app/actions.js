@@ -232,13 +232,13 @@ export async function findExercises(query, difficulty, tags, filter = {}) {
 
     return normalizeMongoIds(await exercises.find(filter).toArray());
 }
+
 export async function addToFavorites(exerciseId) {
     const users = await getMongoCollection('users');
     const user = await getUser();
     if (!user?._id) {
         throw new Error('User not logged in');
     }
-const userId = user._id;
 
     // Add the exercise to the user's favorites
     const result = await users.updateOne(
@@ -266,8 +266,8 @@ export async function findFavoriteExercises(query, difficulty, tags) {
  * @returns {string} - The embeddable YouTube URL.
  */
 function convertToEmbedUrl(url) {
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-  return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    return match ? `https://www.youtube.com/embed/${match[1]}` : url;
 }
 /**
  * Converts a string into a URL-friendly "slug" format.
@@ -290,19 +290,19 @@ function slugify(str) {
  * @returns {string} - The thumbnail image URL, or an empty string if not matched.
  */
 function getYouTubeThumbnail(url) {
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-  return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
+    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
 }
 
-export async function addVideo({ title, videoUrl, description, difficulty, tags, gifUrl }) {
-  const videos = await getMongoCollection("exercises");
-  await videos.insertOne({
-    name: slugify(title),
-    title,
-    gifUrl: getYouTubeThumbnail(videoUrl),
-    video: convertToEmbedUrl(videoUrl),
-    difficulty,
-    tags,
-    description,
-  });
+export async function addVideo({ title, videoUrl, description, difficulty, tags, thumbnail }) {
+    const videos = await getMongoCollection("exercises");
+    await videos.insertOne({
+        name: slugify(title),
+        title,
+        thumbnail: thumbnail ?? getYouTubeThumbnail(videoUrl),
+        video: convertToEmbedUrl(videoUrl),
+        difficulty,
+        tags,
+        description,
+    });
 }
