@@ -122,7 +122,8 @@ export async function register(username, email, password, dob) {
         username,
         email,
         password,
-        dob
+        dob,
+        isAdmin: false
     });
 
     // IF registration succeeded, login the user
@@ -234,9 +235,10 @@ export async function findExercises(query, difficulty, tags, filter = {}) {
 export async function addToFavorites(exerciseId) {
     const users = await getMongoCollection('users');
     const user = await getUser();
-    if (!userId) {
+    if (!user?._id) {
         throw new Error('User not logged in');
     }
+const userId = user._id;
 
     // Add the exercise to the user's favorites
     const result = await users.updateOne(
@@ -256,4 +258,51 @@ export async function findFavoriteExercises(query, difficulty, tags) {
     return findExercises(query, difficulty, tags, {
         _id: { $in: user.favorites.map(id => new ObjectId(String(id))) }
     });
+}
+/**
+ * Converts a regular YouTube video URL into an embeddable iframe-compatible URL.
+ * For example: https://www.youtube.com/watch?v=abc123 → https://www.youtube.com/embed/abc123
+ * @param {string} url - The full YouTube video URL.
+ * @returns {string} - The embeddable YouTube URL.
+ */
+function convertToEmbedUrl(url) {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : url;
+}
+/**
+ * Converts a string into a URL-friendly "slug" format.
+ * For example: "Dumbbell Raise" → "dumbbell-raise"
+ * @param {string} str - The original string.
+ * @returns {string} - The slugified version of the string.
+ */
+function slugify(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')       
+    .replace(/[^\w\-]+/g, '')  
+    .replace(/\-\-+/g, '-') 
+}
+/**
+ * Extracts the video ID from a YouTube URL and returns the URL of its thumbnail image.
+ * Supports both "youtube.com/watch?v=" and "youtu.be/" formats.
+ * @param {string} url - The full YouTube video URL.
+ * @returns {string} - The thumbnail image URL, or an empty string if not matched.
+ */
+function getYouTubeThumbnail(url) {
+  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+  return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
+}
+
+export async function addVideo({ title, videoUrl, description, difficulty, tags, gifUrl }) {
+  const videos = await getMongoCollection("exercises");
+  await videos.insertOne({
+    name: slugify(title),
+    title,
+    gifUrl: getYouTubeThumbnail(videoUrl),
+    video: convertToEmbedUrl(videoUrl),
+    difficulty,
+    tags,
+    description,
+  });
 }
