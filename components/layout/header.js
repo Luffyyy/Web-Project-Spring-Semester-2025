@@ -61,8 +61,8 @@ export default function Header() {
                         <Link href="/favorites" className="nav-link">Favorite Exercises</Link>
                     )}
                     {user?.isAdmin && (
-                        <Link href="/addvideos" className="nav-link bg-green-600 text-white px-3 py-1 rounded">
-                            Add New Videos
+                        <Link href="/add-video" className="nav-link bg-green-600 text-white px-3 py-1 rounded">
+                            Add New Video
                         </Link>
                     )}
                 </div>
@@ -91,7 +91,7 @@ export default function Header() {
                         <Link href="/favorites" className="nav-link">Favorite Exercises</Link>
                     )}
                     {user?.isAdmin && (
-                    <Link href="/addvideos" className="nav-link bg-green-600 text-white px-3 py-1 rounded">Add New Videos</Link>
+                        <Link href="/add-video" className="nav-link bg-green-600 text-white px-3 py-1 rounded">Add New Video</Link>
                     )}
                     <Link href="/login" className="nav-link login-btn" id="login-mobile">Login</Link>
                     <Link href="/register" className="nav-link register-btn" id="register-mobile">Register</Link>
