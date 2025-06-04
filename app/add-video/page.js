@@ -14,7 +14,7 @@ export default function AddVideosPage() {
     const [videoUrl, setVideoUrl] = useState("");
     const [description, setDescription] = useState("");
     const [difficulty, setDifficulty] = useState("");
-    const [gifUrl, setGifUrl] = useState("");
+    const [thumbnailUrl, setthumbnailUrl] = useState("");
     const [tags, setTags] = useState([]);
     const [selectedMuscles, setSelectedMuscles] = useState([]);
     const [success, setSuccess] = useState(false);
@@ -40,7 +40,7 @@ export default function AddVideosPage() {
         if (
             !title.trim() ||
             !videoUrl.trim() ||
-            !gifUrl.trim() ||
+            !thumbnailUrl.trim() ||
             !description.trim() ||
             !difficulty ||
             tags.length === 0 ||
@@ -58,7 +58,7 @@ export default function AddVideosPage() {
             description,
             difficulty,
             tags,
-            gifUrl,
+            thumbnailUrl,
             muscleGroups: selectedMuscles,
         });
 
@@ -89,9 +89,9 @@ export default function AddVideosPage() {
                 <input
                     className="input"
                     type="text"
-                    placeholder="GIF URL"
-                    value={gifUrl}
-                    onChange={(e) => setGifUrl(e.target.value)}
+                    placeholder="Thumbnail URL (Leave empty to use Youtube Video Thumbnail)"
+                    value={thumbnailUrl}
+                    onChange={(e) => setthumbnailUrl(e.target.value)}
                 />
                 <textarea
                     className="input"
