@@ -80,12 +80,10 @@ export async function updateProfile({
  * @returns The logged in user, if valid
  */
 export async function login(username, password) {
-    const client = await clientPromise;
-    const db = client.db("nextfit");
-    const users = db.collection("users");
+    const users = await getMongoCollection('users');
     const cookieStore = await cookies();
     
-    const data = await users.findOne({username, password});
+    const data = await users.findOne({ username, password} );
     if (data) { // Because the ID is a special type and causes issues on server
         data._id = data._id.toString();
     }
