@@ -4,9 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useMainStore } from "@/stores";
-import { useCookies } from "next-client-cookies";
-import { useEffect } from "react";
 import classNames from "classnames";
+import { useCookies } from "next-client-cookies";
 
 export default function Header() {
     const [ query, setQuery ] = useState('');
@@ -15,12 +14,7 @@ export default function Header() {
     const cookies = useCookies();
 
     const { user, setUser } = useMainStore(state => state);
-    useEffect(() => {
-        const u = cookies.get('user');
-        if (u === 'admin') {
-            setUser({ username: 'admin', isAdmin: true });
-        }
-        }, []);
+
     function logout() {
         setUser();
         cookies.remove('user');
