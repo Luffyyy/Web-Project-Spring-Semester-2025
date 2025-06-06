@@ -233,7 +233,7 @@ export async function findExercises(query, difficulty, tags, filter = {}) {
     return normalizeMongoIds(await exercises.find(filter).toArray());
 }
 
-export async function addToFavorites(exerciseId) {
+export async function toggleFavorites(exerciseId) {
     const users = await getMongoCollection('users');
     const user = await getUser();
     if (!user?._id) {
@@ -241,10 +241,18 @@ export async function addToFavorites(exerciseId) {
     }
 
     // Add the exercise to the user's favorites
-    const result = await users.updateOne(
-         { _id: new ObjectId(user._id) },
-        { $addToSet: { favorites: exerciseId } }
-    );
+    let result;
+    if (user.favorites?.includes(exerciseId)) {
+        result = await users.updateOne(
+            { _id: new ObjectId(user._id) },
+            { $pull: { favorites: exerciseId } }
+        );
+    } else {
+        result = await users.updateOne(
+             { _id: new ObjectId(user._id) },
+            { $addToSet: { favorites: exerciseId } }
+        );
+    }
 
     return result.modifiedCount > 0; // Return true if the operation was successful
 }
@@ -299,7 +307,7 @@ function getYouTubeThumbnail(url) {
 
 export async function addVideo({ title, videoUrl, description, difficulty, tags, thumbnail }) {
     const videos = await getMongoCollection("exercises");
-    await videos.insertOne({
+    const result = await videos.insertOne({
         name: slugify(title),
         title,
         thumbnail: thumbnail || getYouTubeThumbnail(videoUrl),
@@ -308,4 +316,13 @@ export async function addVideo({ title, videoUrl, description, difficulty, tags,
         tags,
         description,
     });
+
+    return result.acknowledged;
+}
+
+export async function deleteVideo(id) {
+    const videos = await getMongoCollection("exercises");
+    const result = await videos.deleteOne({ _id: new ObjectId(id) });
+
+    return result.deletedCount === 1;
 }

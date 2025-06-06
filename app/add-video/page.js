@@ -8,6 +8,7 @@ import { capitalize } from "@/lib/utils";
 import MuscleGroup from "@/components/muscle-group";
 import Input from "@/components/input";
 import Tag from "@/components/tag";
+import Modal from "@/components/modal";
 
 export default function AddVideosPage() {
     const router = useRouter();
@@ -130,25 +131,13 @@ export default function AddVideosPage() {
                 </button>
             </div>
 
-            {success && (
-                <div className="fixed modal inset-0 flex items-center justify-center">
-                    <div className="modal-bg p-6 rounded-xl shadow-xl w-96 text-center">
-                        <h2 className="text-2xl font-bold mb-4">Video Added!</h2>
-                        <p className="mb-6">
-                            Your video was added successfully.
-                        </p>
-
-                        <button
-                            className="btn w-full"
-                            onClick={() => {
-                                router.push("/");
-                            }}
-                        >
-                            Close
-                        </button>
-                    </div>
-                </div>
-            )}
+            {success && <Modal 
+                title="Video Added!"
+                description="Your video was added successfully."
+                buttons={[
+                    { text: 'Close', click: () => router.push("/") }
+                ]}
+            />}
         </div>
     );
 }

@@ -3,9 +3,8 @@ import "./globals.css";
 import { cookies } from "next/headers";
 import ClientLayout from "@/components/layout/client-layout";
 import { CookiesProvider } from "next-client-cookies/server";
-import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
+import { getUser } from "@/lib/server-utils";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -25,18 +24,7 @@ export const metadata = {
 export default async function RootLayout({ children }) {
     const cookieStore = await cookies();
     const theme = cookieStore.get('theme')?.value ?? 'dark';
-
-    const client = await clientPromise;
-    const users = client.db("nextfit").collection("users");
-
-    // Here we login the user automatically if they are logged in
-    // We pass it to the client afterwards
-    const userId = cookieStore.get('user')?.value;
-    let user
-    if (userId) {
-        user = await users.findOne({ _id: new ObjectId(userId) });
-        user._id = undefined;
-    }
+    const user = await getUser();
 
 	return <CookiesProvider>
         <html lang="en" className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
