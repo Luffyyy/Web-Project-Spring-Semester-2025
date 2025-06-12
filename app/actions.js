@@ -195,7 +195,7 @@ export async function sendPasswordReset(email) {
             from: process.env.GMAIL_EMAIL,
             to: user.email,
             subject: 'Password Reset',
-            text: `You've requested a password reset, reset your password through this link: http://${url}/reset-password/${token}`
+            text: `You've requested a password reset, reset your password through this link: ${url}/reset-password/${token}`
         });
    } else {
         console.log('found no user with email: ' + email);
