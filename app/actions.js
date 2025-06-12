@@ -172,7 +172,7 @@ export async function sendPasswordReset(email) {
     const transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-            user: "braudewebproject2025@gmail.com",
+            user: process.env.GMAIL_EMAIL,
             pass: process.env.GMAIL_APP_PASS
         }
     });
