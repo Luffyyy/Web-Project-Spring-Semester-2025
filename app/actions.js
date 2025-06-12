@@ -192,7 +192,7 @@ export async function sendPasswordReset(email) {
         const url = process.env.SITE_URL;
 
         await transporter.sendMail({
-            from: 'braudewebproject2025@gmail.com',
+            from: process.env.GMAIL_EMAIL,
             to: user.email,
             subject: 'Password Reset',
             text: `You've requested a password reset, reset your password through this link: http://${url}/reset-password/${token}`
