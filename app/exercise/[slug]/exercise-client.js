@@ -19,7 +19,7 @@ export default function ExerciseClient({ exercise }) {
         setDeleteModal(true);
     }
 
-    if (user.isAdmin) {
+    if (user?.isAdmin) {
         adminButtons = <div className="mt-auto">
             <button className="btn" onClick={deleteExericse}>Delete</button>
         </div>;
