@@ -18,6 +18,7 @@ export default function Header() {
     function logout() {
         setUser();
         cookies.remove('user');
+        router.push('/');
     }
 
     function search(e) {
