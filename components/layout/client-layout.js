@@ -2,14 +2,13 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import Header from "./header";
 import { useCookies } from "next-client-cookies";
-import { createMainStore } from "@/stores";
 
 export const ThemeContext = createContext();
-export const StoreContext = createContext();
+export const UserContext = createContext();
 
 export default function ClientLayout({ theme: initialTheme, user: initialUser, children }) {
     const [ theme, setTheme ] = useState(initialTheme);
-    const store = useRef(createMainStore(initialUser)).current;
+    const [ user, setUser ] = useState(initialUser);
     const cookies = useCookies();
 
     // This is called when theme changes
@@ -20,7 +19,7 @@ export default function ClientLayout({ theme: initialTheme, user: initialUser, c
     }, [theme, cookies]);
 
     return <ThemeContext.Provider value={theme}>
-        <StoreContext value={store}>
+        <UserContext value={{user, setUser}}>
             <Header/>
 
             <main className="grow flex flex-col items-center w-full">
@@ -33,6 +32,6 @@ export default function ClientLayout({ theme: initialTheme, user: initialUser, c
                     {theme == 'dark' ? '🌙' : '☀️'}
                 </button>
             </footer>
-        </StoreContext>
+        </UserContext>
     </ThemeContext.Provider>
 }

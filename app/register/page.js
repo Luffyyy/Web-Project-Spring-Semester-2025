@@ -1,10 +1,10 @@
 "use client"
-import { useMainStore } from "@/stores";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { register } from "../actions";
 import Input from "@/components/input";
+import { UserContext } from "@/components/layout/client-layout";
 
 export default function Register() {
     const [name, setName] = useState('');
@@ -16,7 +16,7 @@ export default function Register() {
     const [passErr, setPassErr]  = useState('');
 
     const router = useRouter();
-    const setUser = useMainStore(state => state.setUser);
+    const { setUser } = useContext(UserContext);
 
     useEffect(() => {
         if (password && confirmPassword && password != confirmPassword) {

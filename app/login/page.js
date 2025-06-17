@@ -1,10 +1,10 @@
 "use client"
 import Link from "next/link";
 import { login } from "../actions";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMainStore } from "@/stores";
 import Input from "@/components/input";
+import { UserContext } from "@/components/layout/client-layout";
 
 export default function Login() {
     const [name, setName] = useState('');
@@ -12,7 +12,7 @@ export default function Login() {
     const [msg, setMsg]  = useState('');
     const router = useRouter();
 
-    const setUser = useMainStore(state => state.setUser);
+    const { setUser } = useContext(UserContext);
 
     async function doLogin(e) {
         e.preventDefault();

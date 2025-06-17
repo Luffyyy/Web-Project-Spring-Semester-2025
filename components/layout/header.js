@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useMainStore } from "@/stores";
+import { useContext, useState } from "react";
 import classNames from "classnames";
 import { useCookies } from "next-client-cookies";
+import { UserContext } from "./client-layout";
 
 export default function Header() {
     const [ query, setQuery ] = useState('');
@@ -13,7 +13,7 @@ export default function Header() {
     const router = useRouter();
     const cookies = useCookies();
 
-    const { user, setUser } = useMainStore(state => state);
+    const { user, setUser } = useContext(UserContext);
 
     function logout() {
         setUser();

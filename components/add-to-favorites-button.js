@@ -1,11 +1,11 @@
 "use client"
 
 import { toggleFavorites } from "@/app/actions";
-import { useMainStore } from "@/stores";
-import { useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
+import { UserContext } from "./layout/client-layout";
 
 export default function AddToFavoritesButton({exerciseId}) {
-    const user = useMainStore(state => state.user);
+    const { user } = useContext(UserContext);
     const [ favorites, setFavorites ] = useState(user?.favorites ?? [])
     const favorited = useMemo(() => favorites.includes(exerciseId), [exerciseId, favorites])
 

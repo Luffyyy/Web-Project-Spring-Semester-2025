@@ -2,14 +2,14 @@
 
 import { deleteVideo } from "@/app/actions";
 import AddToFavoritesButton from "@/components/add-to-favorites-button";
+import { UserContext } from "@/components/layout/client-layout";
 import Modal from "@/components/modal";
 import { capitalize } from "@/lib/utils";
-import { useMainStore } from "@/stores";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function ExerciseClient({ exercise }) {
-    const user = useMainStore(state => state.user);
+    const { user } = useContext(UserContext);
     const [deleteModal, setDeleteModal] = useState(false);
     const router = useRouter();
 
