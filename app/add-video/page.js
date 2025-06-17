@@ -4,11 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { addVideo } from "../actions";
 import { muscleGroups, availableTags } from "@/lib/constants";
-import { capitalize } from "@/lib/utils";
 import MuscleGroup from "@/components/muscle-group";
 import Input from "@/components/input";
 import Tag from "@/components/tag";
 import Modal from "@/components/modal";
+import ErrorPage from "../error-page";
 
 export default function AddVideosPage() {
     const router = useRouter();
@@ -21,6 +21,10 @@ export default function AddVideosPage() {
     const [tags, setTags] = useState([]);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
+
+    if (!user?.isAdmin) {
+        return ErrorPage({ status: 401, message: "You don't have permissions to view this page" });
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();

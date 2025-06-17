@@ -7,7 +7,7 @@ import { UserContext } from "@/components/layout/client-layout";
 export default function FavoriteExercises({ exercises }) {
     const { user } = useContext(UserContext);
     if (!user) {
-        return ErrorPage({ status: 403, message: 'You must be logged in to view your favorites.' });
+        return notLoggedIn();
     }
     return <>
         <strong className="text-3xl">Browse Favorite Exercises</strong>
