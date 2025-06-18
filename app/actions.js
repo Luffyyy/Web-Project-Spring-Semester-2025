@@ -324,3 +324,15 @@ export async function deleteVideo(id) {
 
     return result.deletedCount === 1;
 }
+export async function sendToAI(userText) {
+    const API_KEY = process.env.GEMINI_API_KEY;
+    const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            contents: [{ parts: [{ text: userText }] }]
+        })
+    });
+    const data = await aiRes.json();
+    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't get that.";
+}
