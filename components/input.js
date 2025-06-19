@@ -3,7 +3,7 @@ import { useId, useRef } from "react";
 /**
  * This component is basically an input element but shortens a lot of code
  */
-export default function Input({ name, value, label, required, type, onChange, validity, disabled, placeholder }) {
+export default function Input({ name, value, label, required, type, onChange, validity, disabled, placeholder, min, max }) {
     const id = useId();
     const element = useRef();
 
@@ -28,6 +28,8 @@ export default function Input({ name, value, label, required, type, onChange, va
         ) : (
             <input 
                 id={id}
+                min={min}
+                max={max}
                 className="input"
                 required={required}
                 value={value}

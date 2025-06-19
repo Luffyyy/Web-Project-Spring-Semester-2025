@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { addVideo } from "../actions";
 import { muscleGroups, availableTags } from "@/lib/constants";
@@ -9,6 +9,7 @@ import Input from "@/components/input";
 import Tag from "@/components/tag";
 import Modal from "@/components/modal";
 import ErrorPage from "../error-page";
+import { UserContext } from "@/components/layout/client-layout";
 
 export default function AddVideosPage() {
     const router = useRouter();
@@ -21,6 +22,8 @@ export default function AddVideosPage() {
     const [tags, setTags] = useState([]);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState("");
+
+    const { user } = useContext(UserContext);
 
     if (!user?.isAdmin) {
         return ErrorPage({ status: 401, message: "You don't have permissions to view this page" });
@@ -55,9 +58,9 @@ export default function AddVideosPage() {
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="max-w-6xl mx-auto p-6 content">
             <div className="flex flex-col gap-3">
-                <h1 className="text-3xl font-bold text-center">Add Video</h1>
+                <h1 className="text-3xl font-bold text-center">Add Exercise</h1>
 
                 {error && <p className="text-red-600 text-center">{error}</p>}
 
@@ -131,7 +134,7 @@ export default function AddVideosPage() {
                 </div>
 
                 <button type="submit" className="btn self-center mt-4" onClick={handleSubmit}>
-                    Add Video
+                    Add Exercise
                 </button>
             </div>
 

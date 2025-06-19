@@ -255,7 +255,7 @@ export async function toggleFavorites(exerciseId) {
     return result.modifiedCount > 0; // Return true if the operation was successful
 }
 export async function findFavoriteExercises(query, difficulty, tags) {
-    const user = await getUser();   
+    const user = await getUser();
 
     if (!user || !user.favorites) {
         return [];
@@ -324,6 +324,7 @@ export async function deleteVideo(id) {
 
     return result.deletedCount === 1;
 }
+
 export async function sendToAI(userText) {
     const API_KEY = process.env.GEMINI_API_KEY;
     const aiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
@@ -346,4 +347,111 @@ export async function sendToAI(userText) {
     });
     const data = await aiRes.json();
     return data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I didn't get that.";
+}
+
+export async function addExerciseRoutine(title, days, exercises) {
+    const routines = await getMongoCollection("routines");
+    const user = await getUser();
+
+    const result = await routines.insertOne({
+        userId: user._id,
+        title,
+        days,
+        exercises
+    });
+
+    return result.acknowledged;
+}
+
+export async function saveExerciseRoutine(id, title, days, exercises) {
+    const routines = await getMongoCollection("routines");
+    const user = await getUser();
+
+    const result = await routines.updateOne(
+        { _id: new ObjectId(id), userId: user._id },
+        { $set: { title, days, exercises } }
+    );
+
+    return result.modifiedCount > 0; // Return true if the operation was successful
+}
+
+export async function getExerciseRoutine(exerciseId) {
+    const user = await getUser();
+    if (!user) {
+        throw new Error("User not authenticated");
+    }
+
+    const routines = await getMongoCollection("routines");
+    const exercises = await getMongoCollection("exercises");
+
+    const routine = await routines.findOne({ userId: user._id, _id: new ObjectId(exerciseId) });
+
+    const exerciseIdSet = new Set();
+    routine.exercises.forEach(ex => {
+        if (ex.exerciseId) {
+            exerciseIdSet.add(ex.exerciseId.toString());
+        }
+    });
+    const exerciseIds = Array.from(exerciseIdSet).map(id => new ObjectId(id));
+
+    const exerciseDocs = normalizeMongoIds(await exercises.find({ _id: { $in: exerciseIds } }).toArray());
+
+    const exerciseMap = {};
+    exerciseDocs.forEach(ex => {
+        exerciseMap[ex._id.toString()] = ex;
+    });
+
+    routine.exercises = routine.exercises.map(ex => ({
+        ...ex,
+        exerciseData: exerciseMap[ex.exerciseId?.toString()] || null
+    }));
+
+    routine._id = routine._id.toString();
+    
+    return normalizeMongoIds(routine);
+}
+
+export async function findExerciseRoutines(day) {
+    const user = await getUser();
+    if (!user) {
+        throw new Error("User not authenticated");
+    }
+
+    const routines = await getMongoCollection("routines");
+    const exercises = await getMongoCollection("exercises");
+
+    // 1. Get user routines
+    const filter = { userId: user._id };
+    if (day && day != 'all') {
+        filter.days = { $all: [day] };
+    }
+    const userRoutines = await routines.find(filter).toArray();
+
+    // 2. Collect all unique exerciseIds
+    const exerciseIdSet = new Set();
+    userRoutines.forEach(routine => {
+        routine.exercises.forEach(ex => {
+            if (ex.exerciseId) {
+                exerciseIdSet.add(ex.exerciseId.toString());
+            }
+        });
+    });
+    const exerciseIds = Array.from(exerciseIdSet).map(id => new ObjectId(id));
+
+    // 3. Fetch all exercises in one query
+    const exerciseDocs = normalizeMongoIds(await exercises.find({ _id: { $in: exerciseIds } }).toArray());
+    const exerciseMap = {};
+    exerciseDocs.forEach(ex => {
+        exerciseMap[ex._id.toString()] = ex;
+    });
+
+    // 4. Attach exercise details to each routine
+    userRoutines.forEach(routine => {
+        routine.exercises = routine.exercises.map(ex => ({
+            ...ex,
+            exerciseData: exerciseMap[ex.exerciseId?.toString()] || null
+        }));
+    });
+
+    return normalizeMongoIds(userRoutines);
 }

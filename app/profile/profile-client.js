@@ -67,13 +67,13 @@ export default function ProfileClient({ user }) {
 
     return (
         <section className="flex justify-center py-10">
-            <div className="w-full max-w-2xl space-y-8 rounded-2xl content shadow-2xl ring-1 ring-zinc-700/40 backdrop-blur-md">
+            <div className="w-full max-w-2xl space-y-8 content">
                 <h1 className="text-center text-4xl font-bold tracking-tight">Profile</h1>
 
                 <div className="space-y-1 text-lg leading-relaxed">
-                    <p><span className="font-semibold text-zinc-300">Username:</span> {user.username}</p>
-                    <p><span className="font-semibold text-zinc-300">Email:</span> {user.email}</p>
-                    <p><span className="font-semibold text-zinc-300">Birth&nbsp;date:</span> {user.dob}</p>
+                    <p><span className="font-semibold">Username:</span> {user.username}</p>
+                    <p><span className="font-semibold">Email:</span> {user.email}</p>
+                    <p><span className="font-semibold">Birth&nbsp;date:</span> {user.dob}</p>
                 </div>
 
                 <div className="flex flex-col gap-3">

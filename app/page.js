@@ -9,9 +9,14 @@ export default function Home() {
         <section className="flex flex-col items-center justify-center text-center text-white px-4 py-32 z-10">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to NextFit</h1>
             <p className="text-lg md:text-xl mb-6">Train smart. Stay fit. Anywhere.</p>
-            <Link href="browse" className="btn primary px-6 py-3 rounded text-lg transition">
-                Browse Exercises
-            </Link>
+            <div className="flex gap-1">
+                <Link href="/browse" className="btn primary transition">
+                    Browse Exercises
+                </Link>
+                <Link href="/routine" className="btn primary text-lg transition">
+                    Exercise Routines
+                </Link>
+            </div>
         </section>
 
         <div className="px-4 my-8 flex flex-col items-center text-white">

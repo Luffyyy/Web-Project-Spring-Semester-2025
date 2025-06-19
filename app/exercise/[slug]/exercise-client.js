@@ -55,6 +55,7 @@ export default function ExerciseClient({ exercise }) {
         {deleteModal && <Modal 
             title="Are you sure you want to delete this exercise?"
             description="This acttion is irreversible!"
+            setState={setDeleteModal}
             buttons={[
                 { text: 'Yes', click: async () => {
                     await deleteVideo(exercise._id);        

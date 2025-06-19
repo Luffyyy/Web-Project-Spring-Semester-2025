@@ -6,21 +6,12 @@ import { useCookies } from "next-client-cookies";
 export const ThemeContext = createContext();
 export const UserContext = createContext();
 
-export default function ClientLayout({ theme: initialTheme, user: initialUser, children }) {
-    const [ theme, setTheme ] = useState(initialTheme);
+export default function ClientLayout({ theme, user: initialUser, children }) {
     const [ user, setUser ] = useState(initialUser);
-    const cookies = useCookies();
-
-    // This is called when theme changes
-    useEffect(() => {
-        document.body.classList.toggle('dark', theme == 'dark');
-        document.body.classList.toggle('light', theme == 'light');
-        cookies.set('theme', theme);
-    }, [theme, cookies]);
 
     return <ThemeContext.Provider value={theme}>
         <UserContext value={{user, setUser}}>
-            <Header/>
+            <Header theme={theme}/>
 
             <main className="grow flex flex-col items-center w-full">
                 {children}
@@ -28,9 +19,6 @@ export default function ClientLayout({ theme: initialTheme, user: initialUser, c
 
             <footer className="p-4 content rounded z-10">
                 <span>Made By Group 2 - Braude College</span>
-                <button className="nav-link ml-auto" id="theme-btn" onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}>
-                    {theme == 'dark' ? '🌙' : '☀️'}
-                </button>
             </footer>
         </UserContext>
     </ThemeContext.Provider>

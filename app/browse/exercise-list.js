@@ -8,6 +8,7 @@ import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import classNames from "classnames";
 import Tag from "@/components/tag";
+import ListExercise from "@/components/list-exercise";
 
 export const muscleGroups = [
     "biceps", "chest", "abs", "obliques", "back", "hamstrings", "quads",
@@ -61,15 +62,11 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
     /* ---------------- render exercises ---------------- */
     const exerciseElements = filteredExercises.map((exercise, i) => (
         <Link
+            className="no-underline!"
             href={`exercise/${encodeURIComponent(exercise.name)}`}
-            className="content exercise"
             key={exercise._id ?? i}
         >
-            <img src={exercise.thumbnail} width="150" alt={`${exercise.title} thumbnail`} />
-            <div className="flex flex-col">
-                <strong className="text-2xl">{exercise.title}</strong>
-                <span>{capitalize(exercise.difficulty)}</span>
-            </div>
+            <ListExercise exercise={exercise}/>
         </Link>
     ));
 
