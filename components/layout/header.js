@@ -114,7 +114,7 @@ export default function Header({ theme: initialTheme }) {
                 </button>
                 </div>
                 <button className="lg:hidden nav-link" id="btn-menu" onClick={() => setMenuVisible(!menuVisible)}>
-                    <img src="assets/MdiMenu.svg" className="icon" alt="burger-menu"/>
+                    <img src="/assets/MdiMenu.svg" className="icon" alt="burger-menu"/>
                 </button>
             </div>
             <div className="relative w-full flex flex-col items-end">
