@@ -3,80 +3,80 @@ import { sendToAI } from "@/app/actions";
 import React, { useState } from "react";
 
 export default function ChatWidget() {
-  const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { from: "bot", text: "Hi! How can I help you today?" },
-  ]);
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [messages, setMessages] = useState([
+        { from: "bot", text: "Hi! How can I help you today?" },
+    ]);
+    const [input, setInput] = useState("");
+    const [loading, setLoading] = useState(false);
 
-  const sendMessage = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        if (!input.trim()) return;
 
-    setMessages((msgs) => [...msgs, { from: "user", text: input }]);
-    setLoading(true);
-    try {
-      const response = await sendToAI(input);
-      setMessages((msgs) => [...msgs, { from: "bot", text: response }]);
-    } catch (err) {
-      setMessages((msgs) => [
-        ...msgs,
-        { from: "bot", text: "Error connecting to Gemini AI." },
-      ]);
-    } finally {
-      setLoading(false);
-      setInput("");
-    }
-  };
+        setMessages((msgs) => [...msgs, { from: "user", text: input }]);
+        setLoading(true);
+        try {
+            const response = await sendToAI(input);
+            setMessages((msgs) => [...msgs, { from: "bot", text: response }]);
+        } catch (err) {
+            setMessages((msgs) => [
+                ...msgs,
+                { from: "bot", text: "Error connecting to Gemini AI." },
+            ]);
+        } finally {
+            setLoading(false);
+            setInput("");
+        }
+    };
 
-  return (
-    <div className="chat-widget-container">
-      {open ? (
-        <div className="chat-widget-popup">
-          <div className="chat-widget-header">
-            <span>ChatBot</span>
-            <button
-              className="chat-widget-close"
-              onClick={() => setOpen(false)}
-              aria-label="Close chat"
-            >
-              ×
-            </button>
-          </div>
-          <div className="chat-widget-body" style={{ overflowY: "auto" }}>
-            {messages.map((msg, idx) => (
-              <div
-                key={idx}
-                className={msg.from === "user" ? "chat-widget-msg-user" : "chat-widget-msg-bot"}
-              >
-                {msg.text}
-              </div>
-            ))}
-            {loading && <div className="chat-widget-msg-bot">Thinking...</div>}
-          </div>
-          <form className="chat-widget-input-row" onSubmit={sendMessage}>
-            <input
-              className="chat-widget-input"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
-              disabled={loading}
-            />
-            <button className="chat-widget-send" type="submit" disabled={loading || !input.trim()}>
-              Send
-            </button>
-          </form>
+    return (
+        <div className="chat-widget-container">
+            {open ? (
+                <div className="chat-widget-popup content items-center">
+                    <div className="chat-widget-header w-full">
+                        <span>ChatBot</span>
+                        <button
+                            className="chat-widget-close"
+                            onClick={() => setOpen(false)}
+                            aria-label="Close chat"
+                        >
+                            <img className="icon"  src="/assets/MdiClose.svg"  width="24"  alt="Close"/>
+                        </button>
+                    </div>
+                    <div className="chat-widget-body" style={{ overflowY: "auto" }}>
+                        {messages.map((msg, idx) => (
+                            <div
+                                key={idx}
+                                className={msg.from === "user" ? "chat-widget-msg-user" : "chat-widget-msg-bot"}
+                            >
+                                {msg.text}
+                            </div>
+                        ))}
+                        {loading && <div className="chat-widget-msg-bot">Thinking...</div>}
+                    </div>
+                    <form className="chat-widget-input-row flex gap-1" onSubmit={sendMessage}>
+                        <input
+                            className="input"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            placeholder="Type your message..."
+                            disabled={loading}
+                        />
+                        <button className="btn" type="submit" disabled={loading || !input.trim()}>
+                            Send
+                        </button>
+                    </form>
+                </div>
+            ) : (
+                <button
+                    className="chat-widget-button"
+                    onClick={() => setOpen(true)}
+                    aria-label="Open chat"
+                >
+                    💬
+                </button>
+            )}
         </div>
-      ) : (
-        <button
-          className="chat-widget-button"
-          onClick={() => setOpen(true)}
-          aria-label="Open chat"
-        >
-          💬
-        </button>
-      )}
-    </div>
-  );
+    );
 }
