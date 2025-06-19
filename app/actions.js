@@ -386,6 +386,10 @@ export async function getExerciseRoutine(exerciseId) {
 
     const routine = await routines.findOne({ userId: user._id, _id: new ObjectId(exerciseId) });
 
+    if (!routine) {
+        return null;
+    }
+
     const exerciseIdSet = new Set();
     routine.exercises.forEach(ex => {
         if (ex.exerciseId) {

@@ -1,6 +1,11 @@
+"use client"
+
+import { UserContext } from "@/components/layout/client-layout";
 import Link from "next/link";
+import { useContext } from "react";
 
 export default function Home() {
+    const { user } = useContext(UserContext);
 	return <>
         <div className="absolute inset-0 -z-10">
             <img src="assets/Hero.jpg" alt="Hero Background" className="w-full h-full object-cover" />
@@ -13,9 +18,9 @@ export default function Home() {
                 <Link href="/browse" className="btn primary transition">
                     Browse Exercises
                 </Link>
-                <Link href="/routine" className="btn primary text-lg transition">
+                {user && <Link href="/routine" className="btn primary text-lg transition">
                     Exercise Routines
-                </Link>
+                </Link>}
             </div>
         </section>
 
