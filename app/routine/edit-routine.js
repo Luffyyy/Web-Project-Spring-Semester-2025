@@ -42,14 +42,20 @@ export default function EditRoutine({ routine, initialExercises }) {
         setExercises(newExercises);
     }
 
-    function saveExercise() {
-        if (routine) {
-            saveExerciseRoutine(routine._id, title, days, exercises);
-            setMsg('Successfully saved exercise routine!');
-        } else {
-            addExerciseRoutine(title, days, exercises);
-            setMsg('Successfully created exercise routine!');
-            router.push('/routine');
+    function saveExercise(e) {
+        e.preventDefault();
+
+        try {
+            if (routine) {
+                saveExerciseRoutine(routine._id, title, days, exercises);
+                setMsg('Successfully saved exercise routine!');
+            } else {
+                addExerciseRoutine(title, days, exercises);
+                setMsg('Successfully created exercise routine!');
+                router.push('/routine');
+            }
+        } catch (error) {
+            setMsg("Couldn't save the exercise :/");
         }
     }
 
@@ -109,7 +115,7 @@ export default function EditRoutine({ routine, initialExercises }) {
         </ListExercise>
     });
 
-    return <div className="w-250 mx-auto p-6 content">
+    return <form className="w-250 mx-auto p-6 content" onSubmit={saveExercise}>
         <div className="flex flex-col gap-6">
             <h1 className="text-3xl font-bold text-center">{routine ? 'Edit Exercise Routine' : 'Add Exercise Routine'}</h1>
 
@@ -127,9 +133,10 @@ export default function EditRoutine({ routine, initialExercises }) {
                 <label htmlFor="days">Days</label>
                 <select
                     id="days"
-                    className="input"
+                    className="input h-75"
                     multiple
                     value={days}
+                    required
                     onChange={e => {
                         const days = Array.from(e.target.options)
                             .filter(option => option.selected)
@@ -159,10 +166,10 @@ export default function EditRoutine({ routine, initialExercises }) {
                 </Modal>
             }
 
-            <button className="btn" onClick={saveExercise}>Save</button>
+            <button className="btn">Save</button>
 
             {msg && <p className="text-center text-sm text-green-400">{msg}</p>}
         </div>
-    </div>
+    </form>
 
 }
