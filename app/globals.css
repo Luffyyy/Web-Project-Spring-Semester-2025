@@ -308,3 +308,9 @@ ol, ul, menu {
 .search {
     width: 180px;
 }
+
+.thumbnail {
+    height: 100px;
+    object-fit: cover;
+    aspect-ratio: 2/1;
+}
