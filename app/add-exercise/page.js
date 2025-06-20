@@ -140,7 +140,7 @@ export default function AddVideosPage() {
 
             {success && <Modal 
                 title="Video Added!"
-                description="Your video was added successfully."
+                desc="Your video was added successfully."
                 buttons={[
                     { text: 'Close', click: () => router.push("/") }
                 ]}

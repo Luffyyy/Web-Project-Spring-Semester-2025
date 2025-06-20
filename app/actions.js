@@ -363,6 +363,15 @@ export async function addExerciseRoutine(title, days, exercises) {
     return result.acknowledged;
 }
 
+/**
+ * Saves an exercise routine by its ID.
+ * 
+ * @param {string} id 
+ * @param {string} title 
+ * @param {string[]} days 
+ * @param {array} exercises 
+ * @returns {boolean} indicating success
+ */
 export async function saveExerciseRoutine(id, title, days, exercises) {
     const routines = await getMongoCollection("routines");
     const user = await getUser();
@@ -373,6 +382,25 @@ export async function saveExerciseRoutine(id, title, days, exercises) {
     );
 
     return result.modifiedCount > 0; // Return true if the operation was successful
+}
+
+/**
+ * Deletes an exercise routine by its ID.
+ * 
+ * @param {string} id 
+ * @returns {boolean} indicating success
+ */
+export async function deleteExerciseRoutine(id) {
+    const routines = await getMongoCollection("routines");
+
+    const user = await getUser();
+
+    if (!user) {
+        throw new Error("User not authenticated");
+    }
+
+    const result = await routines.deleteOne({ _id: new ObjectId(id), userId: user._id });
+    return result.deletedCount > 0;
 }
 
 export async function getExerciseRoutine(exerciseId) {

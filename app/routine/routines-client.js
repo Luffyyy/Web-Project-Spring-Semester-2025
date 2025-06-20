@@ -5,10 +5,14 @@ import { capitalize } from "@/lib/utils";
 import classNames from "classnames";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { findExerciseRoutines } from "../actions";
+import { deleteExerciseRoutine, findExerciseRoutines } from "../actions";
+import Modal from "@/components/modal";
 
 export default function RoutinesClient({ initialRoutines }) {
     const [ chosenDay, setChosenDay ] = useState(daysOfTheWeek[new Date().getDay()]);
+    const [ deleteModal, setDeleteModal ] = useState(false);
+    const [ currDeleteRoutine, setCurrDeleteRoutine ] = useState(null);
+
     const dayOptions = [...daysOfTheWeek, 'all'].map(day => 
         <button
             key={day}
@@ -28,11 +32,24 @@ export default function RoutinesClient({ initialRoutines }) {
         }
     }, [chosenDay])
 
+    async function deleteRoutine() {
+        await deleteExerciseRoutine(currDeleteRoutine);
+        setDeleteModal(false);
+
+        setRoutines(routines.filter(routine => routine._id !== currDeleteRoutine));
+    }
+
+    function askDeleteRoutine(id) {
+        setCurrDeleteRoutine(id);
+        setDeleteModal(true);
+    }
+
     const routineElements = routines.map(routine =>
         <div className="content flex flex-col gap-2" key={routine._id}>
             <div className="flex gap-2 items-center">
                 <b className="text-xl">{routine.title}</b>
                 <Link className="btn ml-auto" href={`/routine/${routine._id}`}>Edit</Link>
+                <button className="btn" onClick={() => askDeleteRoutine(routine._id)}>Delete</button>
             </div>
             {routine.exercises.length ? <ul>
                 {routine.exercises.map(exercise => {
@@ -69,5 +86,16 @@ export default function RoutinesClient({ initialRoutines }) {
                 </span>
             }
         </div>
+
+
+        {deleteModal && <Modal 
+            title="Delete Routine"
+            desc="Are you sure you want to delete this routine? This action cannot be undone."
+            setState={setDeleteModal}
+            buttons={[
+                { text: 'Yes', click: deleteRoutine },
+                { text: 'No', click: () => setDeleteModal(false) }
+            ]}
+        />}
     </div>
 }
