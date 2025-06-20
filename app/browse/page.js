@@ -1,4 +1,3 @@
-import getMongoCollection from '@/lib/getMongoCollection';
 import ExerciseList from './exercise-list';
 import { createLoader, parseAsArrayOf, parseAsString } from 'nuqs/server';
 import { findExercises } from '../actions';

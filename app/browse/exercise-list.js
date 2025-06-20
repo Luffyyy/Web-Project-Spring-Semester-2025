@@ -1,12 +1,10 @@
 "use client";
 
-import { capitalize } from "@/lib/utils";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import MuscleGroup from "../../components/muscle-group";
 import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
-import classNames from "classnames";
 import Tag from "@/components/tag";
 import ListExercise from "@/components/list-exercise";
 

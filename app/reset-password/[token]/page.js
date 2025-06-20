@@ -1,4 +1,4 @@
-import getMongoCollection from "@/lib/getMongoCollection";
+import { getMongoCollection } from "@/lib/server-utils";
 import ResetPasswordForm from "./reset-form";
 export default async function ResetPasswordToken({ params }) {
     const { token } = await params;

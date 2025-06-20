@@ -4,7 +4,7 @@ import { useContext } from "react";
 import ExerciseList from "../browse/exercise-list";
 import { UserContext } from "@/components/layout/client-layout";
 
-export default function FavoriteExercises({ exercises }) {
+export default function FavoritesClient({ exercises }) {
     const { user } = useContext(UserContext);
     if (!user) {
         return notLoggedIn();

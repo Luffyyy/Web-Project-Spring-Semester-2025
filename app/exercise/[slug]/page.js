@@ -1,6 +1,6 @@
-import getMongoCollection from '@/lib/getMongoCollection';
 import { notFound } from 'next/navigation';
 import ExerciseClient from './exercise-client';
+import { getMongoCollection } from '@/lib/server-utils';
 
 export default async function Page({ params }) {
     const { slug } = await params;
