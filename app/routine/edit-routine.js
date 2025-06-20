@@ -22,7 +22,8 @@ export default function EditRoutine({ routine, initialExercises }) {
         const newExercises = [...exercises];
         newExercises.push({
             exerciseId: exercise._id,
-            sets: 1
+            sets: 1,
+            reps: 1,
         });
         setExercises(newExercises);
         setShowExercises(false);
@@ -52,6 +53,12 @@ export default function EditRoutine({ routine, initialExercises }) {
         }
     }
 
+    function updateVal(i, key, val) {
+        const newExercises = [...exercises];
+        newExercises[i] = { ...newExercises[i], [key]: val };
+        setExercises(newExercises);
+    }
+
     const exerciseList = initialExercises.map((ex, i) => 
         <ListExercise key={i} exercise={ex}>
             <button className="btn ml-auto my-auto" onClick={() => chooseExercise(ex)}>
@@ -62,26 +69,37 @@ export default function EditRoutine({ routine, initialExercises }) {
 
     const renderChosen = exercises.map(function(step, i) {
         const ex = initialExercises.find(ex => ex._id == step.exerciseId);
-        const steps = <Input
+        const sets = <Input
             min="1"
             type="number"
             label="Sets"
             value={step.sets}
-            onChange={val => {
-                const newExercises = [...exercises];
-                newExercises[i] = { ...newExercises[i], sets: val };
-                setExercises(newExercises);
-            }}
+            onChange={val => updateVal(i, 'sets', val)}
             placeholder="Sets"
             required
         />
+
+        const reps = <Input
+            min="0"
+            type="number"
+            label="Reps"
+            value={step.reps}
+            onChange={val => updateVal(i, 'reps', val)}
+            placeholder="Reps"
+            required
+        />
+
+        const content = <div className="flex gap-3">
+            {sets}
+            {reps}
+        </div>
 
         const arrows = <div className="flex flex-col self-center gap-2">
             {i != 0 && <button className="btn" onClick={() => insertExerciseStepAt(step, i-1)}>↑</button>}
             {i != exercises.length-1 && <button className="btn" onClick={() => insertExerciseStepAt(step, i+1)}>↓</button>}
         </div>
 
-        return <ListExercise key={i} exercise={ex} preContent={arrows} content={steps}>
+        return <ListExercise key={i} exercise={ex} preContent={arrows} content={content}>
             <img className="ml-auto mb-4 hover:cursor-pointer icon"
                 src="/assets/MdiClose.svg"
                 width="24"
@@ -106,9 +124,9 @@ export default function EditRoutine({ routine, initialExercises }) {
             />
 
             <div className="flex flex-col gap-1 grow">
-                <label htmlFor="day">Day</label>
+                <label htmlFor="days">Days</label>
                 <select
-                    id="day"
+                    id="days"
                     className="input"
                     multiple
                     value={days}

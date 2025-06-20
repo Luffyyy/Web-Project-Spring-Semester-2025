@@ -36,10 +36,16 @@ export default function RoutinesClient({ initialRoutines }) {
             </div>
             {routine.exercises.length ? <ul>
                 {routine.exercises.map(exercise => {
+                    let sets = exercise.sets;
+                    let setsPar = `${exercise.sets} ${exercise.sets == 1 ? 'set' : 'sets'}`;
+                    if (exercise.reps > 0) {
+                        sets += "x"+exercise.reps;
+                        setsPar += ` of ${exercise.reps} ${exercise.reps == 1 ? 'rep' : 'reps'}`;
+                    }
                     return <li key={exercise.exerciseId}>
-                        {exercise.sets} {exercise.sets == 1 ? 'set' : 'sets'} of <Link href={`/exercise/${exercise.exerciseData.name}`}>
+                        <Link href={`/exercise/${exercise.exerciseData.name}`}>
                             {exercise.exerciseData.title}
-                        </Link>
+                        </Link>: {sets} ({setsPar})
                     </li>;
                 })}
             </ul> : <span className="p-2">No exercises to do</span>}
