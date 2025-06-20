@@ -15,7 +15,7 @@ export default function Home() {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Welcome to NextFit</h1>
             <p className="text-lg md:text-xl mb-6">Train smart. Stay fit. Anywhere.</p>
             <div className="flex gap-1">
-                <Link href="/browse" className="btn primary transition">
+                <Link href="/browse" className="btn primary text-lg transition">
                     Browse Exercises
                 </Link>
                 {user && <Link href="/routine" className="btn primary text-lg transition">
