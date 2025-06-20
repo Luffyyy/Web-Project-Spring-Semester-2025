@@ -12,7 +12,7 @@ export default function EditRoutine({ routine, initialExercises }) {
     const [showExercises, setShowExercises] = useState(false);
     const [title, setTitle] = useState(routine?.title ?? '');
     const [exercises, setExercises] = useState(routine?.exercises ?? []);
-    const [days, setDays] = useState(routine?.days ?? ["sunday", 'monday']);
+    const [days, setDays] = useState(routine?.days ?? [daysOfTheWeek[new Date().getDay()]]);
     const [msg, setMsg] = useState('');
     const router = useRouter();
 
