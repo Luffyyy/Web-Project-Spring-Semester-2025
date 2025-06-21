@@ -105,6 +105,7 @@ export async function login(username, password) {
  */
 export async function register(username, email, password, dob) {
     const users = await getMongoCollection('users');
+    const cookieStore = await cookies();
 
     if (await users.findOne({ $or: [{ username }, { email }] })) {
         return {
@@ -123,7 +124,7 @@ export async function register(username, email, password, dob) {
     // IF registration succeeded, login the user
     if (res.acknowledged) {
         return {
-            user: login(username, password)
+            user: await login(username, password)
         }
     } else {
         return {
