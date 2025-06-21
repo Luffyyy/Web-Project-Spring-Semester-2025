@@ -16,7 +16,7 @@ export default function ChatWidget() {
         e.preventDefault();
         if (!input.trim()) return;
         const prevMsgs = [...messages]
-        setMessages((msgs) => [...msgs, { from: "user", text: input }]);
+        setMessages((msgs) => [...msgs, { from: "you", text: input }]);
         setLoading(true);
         try {
             const response = await sendToAI(input, prevMsgs);
