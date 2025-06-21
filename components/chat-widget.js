@@ -13,11 +13,11 @@ export default function ChatWidget() {
     const sendMessage = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
-
+        const prevMsgs = [...messages]
         setMessages((msgs) => [...msgs, { from: "user", text: input }]);
         setLoading(true);
         try {
-            const response = await sendToAI(input);
+            const response = await sendToAI(input, prevMsgs);
             setMessages((msgs) => [...msgs, { from: "bot", text: response }]);
         } catch (err) {
             setMessages((msgs) => [

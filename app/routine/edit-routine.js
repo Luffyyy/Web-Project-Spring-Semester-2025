@@ -151,7 +151,7 @@ export default function EditRoutine({ routine, initialExercises }) {
             <div className="flex flex-col gap-3">
                 <div className="flex items-center">
                     <label>Exercises</label>
-                    <button className="btn ml-auto" onClick={() => setShowExercises(true)}>Add</button>
+                    <button type="button" className="btn ml-auto" onClick={() => setShowExercises(true)}>Add</button>
                 </div>
                 <div className="flex flex-col max-h-120 overflow-auto gap-3 p-1">
                     {renderChosen.length ? renderChosen : 'No Exercises Added'}
