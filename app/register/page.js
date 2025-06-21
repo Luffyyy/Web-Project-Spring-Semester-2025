@@ -28,7 +28,7 @@ export default function Register() {
 
     async function doRegister(e) {
         e.preventDefault();
-        const { user, error } = await register(name, password, email, dob);
+        const { user, error } = await register(name, email, password, dob);
         if (user) {
             setUser(user);
             router.push(`/`);
