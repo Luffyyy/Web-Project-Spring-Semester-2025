@@ -4,7 +4,7 @@ import { daysOfTheWeek } from "@/lib/constants";
 import { capitalize } from "@/lib/utils";
 import classNames from "classnames";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { deleteExerciseRoutine, findExerciseRoutines } from "../actions";
 import Modal from "@/components/modal";
 
@@ -22,16 +22,11 @@ export default function RoutinesClient({ initialRoutines }) {
     );
     
     const [ routines, setRoutines ] = useState(initialRoutines);
-    const first = useRef(false);
     const routinesForDay = useMemo(() => routines.filter(routine => routine.days[chosenDay]?.length), [routines, chosenDay]);
 
-    useEffect(() => {
-        if (!first) {
-            setFirst(true);
-        } else {
-            findExerciseRoutines(chosenDay).then(routines => setRoutines(routines))
-        }
-    }, [chosenDay])
+    async function refreshRoutines() {
+        setRoutines(await findExerciseRoutines());
+    }
 
     async function deleteRoutine() {
         await deleteExerciseRoutine(currDeleteRoutine);
@@ -50,7 +45,7 @@ export default function RoutinesClient({ initialRoutines }) {
         
         if (exercises?.length) {
             return <div className="content flex flex-col gap-2" key={routine._id}>
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-1 items-center">
                     <b className="text-xl">{routine.title}</b>
                     <Link className="btn ml-auto" href={`/routine/${routine._id}`}>Edit</Link>
                     <button className="btn" onClick={() => askDeleteRoutine(routine._id)}>Delete</button>
@@ -75,9 +70,10 @@ export default function RoutinesClient({ initialRoutines }) {
     });
 
     return <div className="flex gap-6 flex-col">
-        <div className="flex">
+        <div className="flex gap-1">
             <strong className="text-3xl self-center">Exercise Routines</strong>
             <Link className="ml-auto items-center btn" href="/routine/new">Add</Link>
+            <button className="btn" onClick={refreshRoutines}>Refresh</button>
         </div>
         <div className="flex gap-2 flex-wrap">
             {dayOptions}
