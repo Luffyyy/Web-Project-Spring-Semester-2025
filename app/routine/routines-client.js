@@ -4,7 +4,7 @@ import { daysOfTheWeek } from "@/lib/constants";
 import { capitalize } from "@/lib/utils";
 import classNames from "classnames";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { deleteExerciseRoutine, findExerciseRoutines } from "../actions";
 import Modal from "@/components/modal";
 
@@ -13,7 +13,7 @@ export default function RoutinesClient({ initialRoutines }) {
     const [ deleteModal, setDeleteModal ] = useState(false);
     const [ currDeleteRoutine, setCurrDeleteRoutine ] = useState(null);
 
-    const dayOptions = [...daysOfTheWeek, 'all'].map(day => 
+    const dayOptions = daysOfTheWeek.map(day => 
         <button
             key={day}
             className={classNames('btn', {primary: chosenDay == day})}
@@ -23,6 +23,7 @@ export default function RoutinesClient({ initialRoutines }) {
     
     const [ routines, setRoutines ] = useState(initialRoutines);
     const first = useRef(false);
+    const routinesForDay = useMemo(() => routines.filter(routine => routine.days[chosenDay]?.length), [routines, chosenDay]);
 
     useEffect(() => {
         if (!first) {
@@ -44,30 +45,34 @@ export default function RoutinesClient({ initialRoutines }) {
         setDeleteModal(true);
     }
 
-    const routineElements = routines.map(routine =>
-        <div className="content flex flex-col gap-2" key={routine._id}>
-            <div className="flex gap-2 items-center">
-                <b className="text-xl">{routine.title}</b>
-                <Link className="btn ml-auto" href={`/routine/${routine._id}`}>Edit</Link>
-                <button className="btn" onClick={() => askDeleteRoutine(routine._id)}>Delete</button>
+    const routineElements = routinesForDay.map(routine => {
+        const exercises = routine.days[chosenDay];
+        
+        if (exercises?.length) {
+            return <div className="content flex flex-col gap-2" key={routine._id}>
+                <div className="flex gap-2 items-center">
+                    <b className="text-xl">{routine.title}</b>
+                    <Link className="btn ml-auto" href={`/routine/${routine._id}`}>Edit</Link>
+                    <button className="btn" onClick={() => askDeleteRoutine(routine._id)}>Delete</button>
+                </div>
+                <ul>
+                    {exercises.map(exercise => {
+                        let sets = exercise.sets;
+                        let setsPar = `${exercise.sets} ${exercise.sets == 1 ? 'set' : 'sets'}`;
+                        if (exercise.reps > 0) {
+                            sets += "x"+exercise.reps;
+                            setsPar += ` of ${exercise.reps} ${exercise.reps == 1 ? 'rep' : 'reps'}`;
+                        }
+                        return <li key={exercise.exerciseId}>
+                            <Link href={`/exercise/${exercise.exerciseData.name}`}>
+                                {exercise.exerciseData.title}
+                            </Link>: {sets} ({setsPar})
+                        </li>;
+                    })}
+                </ul>
             </div>
-            {routine.exercises.length ? <ul>
-                {routine.exercises.map(exercise => {
-                    let sets = exercise.sets;
-                    let setsPar = `${exercise.sets} ${exercise.sets == 1 ? 'set' : 'sets'}`;
-                    if (exercise.reps > 0) {
-                        sets += "x"+exercise.reps;
-                        setsPar += ` of ${exercise.reps} ${exercise.reps == 1 ? 'rep' : 'reps'}`;
-                    }
-                    return <li key={exercise.exerciseId}>
-                        <Link href={`/exercise/${exercise.exerciseData.name}`}>
-                            {exercise.exerciseData.title}
-                        </Link>: {sets} ({setsPar})
-                    </li>;
-                })}
-            </ul> : <span className="p-2">No exercises to do</span>}
-        </div>
-    );
+        }
+    });
 
     return <div className="flex gap-6 flex-col">
         <div className="flex">
@@ -90,7 +95,11 @@ export default function RoutinesClient({ initialRoutines }) {
 
         {deleteModal && <Modal 
             title="Delete Routine"
-            desc="Are you sure you want to delete this routine? This action cannot be undone."
+            desc={<>
+                Are you sure you want to delete this routine? This action cannot be undone.
+                <br/>
+                This is applied on all days. If you wish to edit a specific day, go to Edit.
+            </>}
             setState={setDeleteModal}
             buttons={[
                 { text: 'Yes', click: deleteRoutine },
