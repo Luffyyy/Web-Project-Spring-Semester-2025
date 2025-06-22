@@ -79,7 +79,7 @@ export default function ProfileClient({ user }) {
                 <div className="flex flex-col gap-3">
                     <Input
                         label="Password: "
-                        type="text"
+                        type="password"
                         required
                         value={pwd}
                         onChange={setPwd}
