@@ -31,7 +31,7 @@ function badgeClasses(status) {
 export default function ProfileClient({ user }) {
     const [height, setHeight] = useState(user.heightCm ?? '');
     const [weight, setWeight] = useState(user.weightKg ?? '');
-    const [pwd, setPwd]       = useState(user.password ?? '');
+    const [pwd, setPwd]       = useState('');
     const [bmi, setBmi]       = useState('');
     const [isPending, start]  = useTransition();
     const [msg, setMsg]       = useState('');
@@ -81,7 +81,7 @@ export default function ProfileClient({ user }) {
                         label="Password: "
                         type="text"
                         required
-                        value=""
+                        value={pwd}
                         onChange={setPwd}
                     />
                     <br />
