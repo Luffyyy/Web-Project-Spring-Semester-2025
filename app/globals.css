@@ -225,14 +225,15 @@ button {
 }
 
 .tag {
-    border-radius: calc(infinity * 1px);;
+    border-radius: calc(infinity * 1px);
+    font-size: 0.875rem;
     padding: 0.25rem 0.75rem;
     transition: background-color ease-in-out 0.15s;
     color: white;
     background-color: var(--btn-bg-color);
 }
 
-.tag:hover {
+button.tag:hover {
     background-color: var(--btn-hover-color);
 }
 
