@@ -7,6 +7,7 @@ import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import Tag from "@/components/tag";
 import ListExercise from "@/components/list-exercise";
+import Input from "@/components/input";
 
 export const muscleGroups = [
     "biceps", "chest", "abs", "obliques", "back", "hamstrings", "quads",
@@ -19,18 +20,12 @@ export const availableTags = [
     "cardio", "explosive", "full_body", "balance"
 ];
 
-export default function ExerciseList({ initialExercises, isFavorites = false, avoidMuscles = [] }) {
+export default function ExerciseList({ initialExercises, isFavorites = false}) {
     /* ---------------- state ---------------- */
     const [query, setQuery]   = useQueryState("query",      { defaultValue: ""   });
     const [diff,  setDiff]    = useQueryState("difficulty", { defaultValue: "any"});
     const [tags,  setTags]    = useQueryState("tags", parseAsArrayOf(parseAsString));
     const [exercises, setExercises] = useState(initialExercises);
-
-    // Track avoidMuscles reactively
-    const avoid = useRef(avoidMuscles);
-    useEffect(() => {
-        avoid.current = avoidMuscles;
-    }, [avoidMuscles]);
 
     const initial = useRef(false);
 
@@ -49,16 +44,8 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
         });
     }, [tags, query, diff, isFavorites]);
 
-    /* ---------------- filter out avoided muscles ---------------- */
-    const filteredExercises = exercises.filter(ex => {
-        const exerciseTags = ex.tags?.map(tag => tag.toLowerCase()) || [];
-        const avoidList = avoid.current.map(m => m.toLowerCase());
-        const hasAvoided = exerciseTags.some(tag => avoidList.includes(tag));
-        return !hasAvoided;
-    });
-
     /* ---------------- render exercises ---------------- */
-    const exerciseElements = filteredExercises.map((exercise, i) => (
+    const exerciseElements = exercises.map((exercise, i) => (
         <Link
             className="no-underline!"
             href={`exercise/${encodeURIComponent(exercise.name)}`}
@@ -74,17 +61,15 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
             <div className="content lg:self-start flex flex-col gap-4 flex-2">
                 <strong className="text-3xl mx-auto">Filters</strong>
 
-                <div className="flex gap-2 flex-wrap">
-                    <div className="flex flex-col gap-1 grow">
-                        <label htmlFor="exercises-query">Search</label>
-                        <input
-                            className="input"
-                            id="exercises-query"
-                            onInput={e => setQuery(e.target.value)}
-                            value={query}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-1 grow">
+                <div className="flex gap-2 flex-wrap items-center">
+                    <Input
+                        label="Search"
+                        className="grow"
+                        id="exercises-query"
+                        onChange={setQuery}
+                        value={query}
+                    />
+                    <div className="flex flex-col gap-2 grow">
                         <label htmlFor="exercises-diff">Difficulty</label>
                         <select
                             className="input"

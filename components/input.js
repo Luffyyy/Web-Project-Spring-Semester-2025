@@ -1,9 +1,10 @@
+import classNames from "classnames";
 import { useId, useRef } from "react";
 
 /**
  * This component is basically an input element but shortens a lot of code
  */
-export default function Input({ name, value, label, required, type, onChange, validity, disabled, placeholder, min, max }) {
+export default function Input({ name, value, label, required, type, onChange, validity, disabled, placeholder, min, max, className }) {
     const id = useId();
     const element = useRef();
 
@@ -11,8 +12,8 @@ export default function Input({ name, value, label, required, type, onChange, va
         onChange(type == 'checkbox' ? e.target.checked : e.target.value);
     }
 
-    return <div className="flex flex-col gap-2">
-        <label htmlFor={id}>{label}</label>
+    return <div className={classNames('flex flex-col gap-2', className)}>
+        <label htmlFor={id} className="text-left">{label}</label>
         {type == 'textarea' ? (
             <textarea
                 id={id}
@@ -42,6 +43,6 @@ export default function Input({ name, value, label, required, type, onChange, va
             />
         )}
         
-        <span className="text-red-400">{validity}</span>
+        {validity && <span className="text-red-400">{validity}</span>}
     </div>;
 }

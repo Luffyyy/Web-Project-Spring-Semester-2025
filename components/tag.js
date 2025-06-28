@@ -16,10 +16,16 @@ export default function Tag({ tag, tags, setTags }) {
         setTags(newTags);
     };
 
-    return <button
-        onClick={() => toggleTag(tag)}
-        className={classNames("tag", { active: isActive })}
-    >
-        {tag.split("_").map(s => capitalize(s)).join(" ")}
-    </button>
+    if (setTags) {
+        return <button
+            onClick={() => toggleTag(tag)}
+            className={classNames("tag", { active: isActive })}
+        >
+            {tag.split("_").map(s => capitalize(s)).join(" ")}
+        </button>
+    } else {
+        return <span className="tag">
+            {tag.split("_").map(s => capitalize(s)).join(" ")}
+        </span>
+    }
 }

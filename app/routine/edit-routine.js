@@ -4,8 +4,8 @@ import ListExercise from "@/components/list-exercise";
 import Modal from "@/components/modal";
 import { daysOfTheWeek } from "@/lib/constants";
 import { capitalize } from "@/lib/utils";
-import { useMemo, useState } from "react";
-import { addExerciseRoutine, saveExerciseRoutine } from "../actions";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { addExerciseRoutine, findExercises, saveExerciseRoutine } from "../actions";
 import { useRouter } from "next/navigation";
 import classNames from "classnames";
 
@@ -22,6 +22,20 @@ export default function EditRoutine({ routine, initialExercises }) {
     const [msg, setMsg] = useState('');
     const [chosenDay, setChosenDay] = useState(daysOfTheWeek[new Date().getDay()]);
     const router = useRouter();
+
+    const [exerciseQuery, setExerciseQuery] = useState(routine?.title ?? '');
+    const [avExercises, setAvExercises] = useState(initialExercises);
+
+    const initial = useRef(false);
+    useEffect(() => {
+        if (!initial.current) {
+            initial.current = true;
+        }
+
+        findExercises(exerciseQuery).then(data => {
+            setAvExercises(data);
+        });
+    }, [exerciseQuery]);
 
     const canSave = useMemo(() => title.length && Object.values(days).flat(1).length > 0, [title, days])
     
@@ -84,7 +98,7 @@ export default function EditRoutine({ routine, initialExercises }) {
         setDays({ ...days, [chosenDay]: newExercises });
     }
 
-    const exerciseList = initialExercises.map((ex, i) =>
+    const exerciseList = avExercises.map((ex, i) =>
         <ListExercise key={i} exercise={ex}>
             <button className="btn ml-auto my-auto" onClick={() => chooseExercise(ex)}>
                 Select
@@ -164,6 +178,13 @@ export default function EditRoutine({ routine, initialExercises }) {
 
             {showExercises &&
                 <Modal setState={setShowExercises}>
+                    <Input
+                        label="Search"
+                        className="grow"
+                        id="exercises-query"
+                        onChange={setExerciseQuery}
+                        value={exerciseQuery}
+                    />
                     <div className="max-h-128 w-150 overflow-auto gap-3 flex flex-col">
                         {exerciseList}
                     </div>
