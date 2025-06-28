@@ -7,6 +7,7 @@ import { findExercises, findFavoriteExercises } from "../actions";
 import { parseAsArrayOf, parseAsString, useQueryState } from "nuqs";
 import Tag from "@/components/tag";
 import ListExercise from "@/components/list-exercise";
+import Input from "@/components/input";
 
 export const muscleGroups = [
     "biceps", "chest", "abs", "obliques", "back", "hamstrings", "quads",
@@ -60,17 +61,15 @@ export default function ExerciseList({ initialExercises, isFavorites = false}) {
             <div className="content lg:self-start flex flex-col gap-4 flex-2">
                 <strong className="text-3xl mx-auto">Filters</strong>
 
-                <div className="flex gap-2 flex-wrap">
-                    <div className="flex flex-col gap-1 grow">
-                        <label htmlFor="exercises-query">Search</label>
-                        <input
-                            className="input"
-                            id="exercises-query"
-                            onInput={e => setQuery(e.target.value)}
-                            value={query}
-                        />
-                    </div>
-                    <div className="flex flex-col gap-1 grow">
+                <div className="flex gap-2 flex-wrap items-center">
+                    <Input
+                        label="Search"
+                        className="grow"
+                        id="exercises-query"
+                        onChange={setQuery}
+                        value={query}
+                    />
+                    <div className="flex flex-col gap-2 grow">
                         <label htmlFor="exercises-diff">Difficulty</label>
                         <select
                             className="input"
