@@ -19,18 +19,12 @@ export const availableTags = [
     "cardio", "explosive", "full_body", "balance"
 ];
 
-export default function ExerciseList({ initialExercises, isFavorites = false, avoidMuscles = [] }) {
+export default function ExerciseList({ initialExercises, isFavorites = false}) {
     /* ---------------- state ---------------- */
     const [query, setQuery]   = useQueryState("query",      { defaultValue: ""   });
     const [diff,  setDiff]    = useQueryState("difficulty", { defaultValue: "any"});
     const [tags,  setTags]    = useQueryState("tags", parseAsArrayOf(parseAsString));
     const [exercises, setExercises] = useState(initialExercises);
-
-    // Track avoidMuscles reactively
-    const avoid = useRef(avoidMuscles);
-    useEffect(() => {
-        avoid.current = avoidMuscles;
-    }, [avoidMuscles]);
 
     const initial = useRef(false);
 
@@ -49,16 +43,8 @@ export default function ExerciseList({ initialExercises, isFavorites = false, av
         });
     }, [tags, query, diff, isFavorites]);
 
-    /* ---------------- filter out avoided muscles ---------------- */
-    const filteredExercises = exercises.filter(ex => {
-        const exerciseTags = ex.tags?.map(tag => tag.toLowerCase()) || [];
-        const avoidList = avoid.current.map(m => m.toLowerCase());
-        const hasAvoided = exerciseTags.some(tag => avoidList.includes(tag));
-        return !hasAvoided;
-    });
-
     /* ---------------- render exercises ---------------- */
-    const exerciseElements = filteredExercises.map((exercise, i) => (
+    const exerciseElements = exercises.map((exercise, i) => (
         <Link
             className="no-underline!"
             href={`exercise/${encodeURIComponent(exercise.name)}`}

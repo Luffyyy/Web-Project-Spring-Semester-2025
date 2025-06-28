@@ -46,7 +46,7 @@ export async function updateProfile({
     heightCm,
     weightKg,
     password,
-    avoidMuscles,          // ⬅ NEW
+    avoidMuscles,
   }) {
     const cookieStore = await cookies();
     const id = cookieStore.get('user')?.value;
@@ -222,7 +222,8 @@ export async function findExercises(query, difficulty, tags, filter = {}) {
     }
     // Exclude exercises that target any of the user's avoided muscles
     if (user && Array.isArray(user.avoidMuscles) && user.avoidMuscles.length > 0) {
-        filter.muscles = { $nin: user.avoidMuscles };
+        filter.tags = filter.tags || {};
+        filter.tags.$nin = user.avoidMuscles;
     }
 
     return normalizeMongoIds(await exercises.find(filter).toArray());
