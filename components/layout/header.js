@@ -65,7 +65,7 @@ export default function Header({ theme: initialTheme }) {
                         <Link href="/favorites" className="nav-link max-xl:hidden">Favorite Exercises</Link>
                         <Link href="/routine" className="nav-link">Routines</Link>
                     </>)}
-                    {user?.isAdmin && (<Link href="/add-exercise" className="nav-link max-xl:hidden">Add Exercise</Link>)}
+                    {user?.isAdmin && (<Link href="/exercise/new" className="nav-link max-xl:hidden">Add Exercise</Link>)}
                 </div>
                 {/* DROPDOWN MENU */}
                 {user && (
@@ -88,7 +88,7 @@ export default function Header({ theme: initialTheme }) {
                                     Favorite Exercises
                                 </Link>
                                 {user?.isAdmin && (
-                                    <Link href="/add-exercise" className="nav-link" onClick={() => setDropdownOpen(false)}>
+                                    <Link href="/exercise/new" className="nav-link" onClick={() => setDropdownOpen(false)}>
                                         Add Exercise
                                     </Link>
                                 )}
@@ -124,7 +124,7 @@ export default function Header({ theme: initialTheme }) {
                         <Link href="/favorites" className="nav-link">Favorite Exercises</Link>
                         <Link href="/routine" className="nav-link">Routines</Link>
                     </>)}
-                    {user?.isAdmin && (<Link href="/add-exercise" className="nav-link">Add Exercise</Link>)}
+                    {user?.isAdmin && (<Link href="/exercise/new" className="nav-link">Add Exercise</Link>)}
                     {!user && <>
                         <Link href="/login" className="nav-link login-btn" id="login-mobile">Login</Link>
                         <Link href="/register" className="nav-link register-btn" id="register-mobile">Register</Link>

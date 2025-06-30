@@ -6,7 +6,8 @@ import { UserContext } from "@/components/layout/client-layout";
 import Modal from "@/components/modal";
 import { capitalize } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useState } from "react"
+import Link from "next/link";
 
 export default function ExerciseClient({ exercise }) {
     const { user } = useContext(UserContext);
@@ -20,9 +21,12 @@ export default function ExerciseClient({ exercise }) {
     }
 
     if (user?.isAdmin) {
-        adminButtons = <div className="mt-auto">
+        adminButtons = <><div className="mt-auto flex items-center gap-1">
             <button className="btn" onClick={deleteExericse}>Delete</button>
-        </div>;
+            <Link className="btn" href={`/exercise/${exercise._id}/edit`}>
+                Edit
+            </Link>
+        </div></>
     }
 
     return <div className="flex w-full gap-6 flex-wrap">
@@ -36,10 +40,7 @@ export default function ExerciseClient({ exercise }) {
                 <strong className="text-2xl " id="exercise-title">
                     {exercise.title}
                 </strong>
-                <div className="ml-auto flex gap-1">
-                    <AddToFavoritesButton exerciseId={exercise._id.toString()} />
-                    {adminButtons}
-                </div>
+                <AddToFavoritesButton exerciseId={exercise._id.toString()} />
             </div>
             <br/>
             <span id="exercise-difficulty">
@@ -50,6 +51,9 @@ export default function ExerciseClient({ exercise }) {
             <p className="whitespace-break-spaces" id="exercise-description">
                 {exercise.description}
             </p>
+            <div className="ml-auto flex gap-1">
+                    {adminButtons}
+                </div>
         </div>
 
         {deleteModal && <Modal 

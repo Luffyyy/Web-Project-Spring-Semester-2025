@@ -4,6 +4,7 @@ import { escapeRegex, getMongoCollection, getUser, normalizeMongoIds } from "@/l
 import { createHash, randomBytes } from "crypto";
 import { cookies } from "next/headers";
 import nodemailer from 'nodemailer';
+import { slugify } from "@/lib/utils";
 
 /**
  * Return the currently-logged-in user (by cookie).
@@ -277,20 +278,6 @@ function convertToEmbedUrl(url) {
     return match ? `https://www.youtube.com/embed/${match[1]}` : url;
 }
 /**
- * Converts a string into a URL-friendly "slug" format.
- * For example: "Dumbbell Raise" → "dumbbell-raise"
- * @param {string} str - The original string.
- * @returns {string} - The slugified version of the string.
- */
-function slugify(str) {
-  return str
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')       
-    .replace(/[^\w\-]+/g, '')  
-    .replace(/\-\-+/g, '-') 
-}
-/**
  * Extracts the video ID from a YouTube URL and returns the URL of its thumbnail image.
  * Supports both "youtube.com/watch?v=" and "youtu.be/" formats.
  * @param {string} url - The full YouTube video URL.
@@ -301,19 +288,19 @@ function getYouTubeThumbnail(url) {
     return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
 }
 
-export async function addVideo({ title, videoUrl, description, difficulty, tags, thumbnail }) {
+export async function addVideo({ title, video, description, difficulty, tags, thumbnail }) {
     const videos = await getMongoCollection("exercises");
     const result = await videos.insertOne({
         name: slugify(title),
         title,
-        thumbnail: thumbnail || getYouTubeThumbnail(videoUrl),
-        video: convertToEmbedUrl(videoUrl),
+        thumbnail: thumbnail || getYouTubeThumbnail(video),
+        video: convertToEmbedUrl(video),
         difficulty,
         tags,
         description,
     });
 
-    return result.acknowledged;
+    return result;
 }
 
 export async function deleteVideo(id) {
@@ -555,4 +542,27 @@ export async function findExerciseRoutines() {
     });
 
     return normalizeMongoIds(userRoutines);
+}
+export async function getExerciseById(id) {
+    const exercises = await getMongoCollection("exercises");
+    const exercise = await exercises.findOne({ _id: new ObjectId(id) });
+    if (!exercise) return null;
+    exercise._id = exercise._id.toString();
+    return exercise;
+}
+export async function updateExercise(data) {
+    const exercises = await getMongoCollection("exercises");
+    const result = await exercises.updateOne(
+        { _id: new ObjectId(data.id) },
+        { $set: { 
+            name: slugify(data.title),
+            title: data.title,
+            video: data.video,
+            description: data.description,
+            difficulty: data.difficulty,
+            tags: data.tags,
+            thumbnail: data.thumbnail
+        }}
+    );
+    return result.modifiedCount > 0;
 }
