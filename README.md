@@ -1,8 +1,53 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+NextFit is a fitness application that provides exercise recommendations, workout routines, and AI-powered fitness coaching through an integrated chat assistant.
+
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+Before running the application, you need to set up the required environment variables.
+
+### Environment Configuration
+
+Create a `.env.local` file in the root directory and configure the following variables:
+
+```bash
+# MongoDB connection string
+MONGODB_URI=your_mongodb_connection_string_here
+
+# Google Gemini AI API key for the chat assistant
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Gmail credentials for password reset emails
+GMAIL_EMAIL=your_gmail_address_here
+GMAIL_APP_PASS=your_gmail_app_specific_password_here
+
+# Site URL for password reset links
+SITE_URL=http://localhost:3000
+```
+
+See `.env.local.example` for a template with all required variables.
+
+### Required Services
+
+- **MongoDB Atlas**: Database for storing users, exercises, and routines
+- **Google Gemini AI**: AI chat assistant for fitness recommendations
+- **Gmail SMTP**: Email service for password reset functionality
+
+### Installation and Setup
+
+First, install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -19,6 +64,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Features
+
+- **Exercise Database**: Browse and search fitness exercises with difficulty levels and muscle group targeting
+- **User Profiles**: Personalized profiles with BMI calculation and muscle group preferences
+- **Workout Routines**: Create, edit, and manage custom workout routines
+- **AI Chat Assistant**: Powered by Google Gemini AI for exercise recommendations and routine creation
+- **Favorites System**: Save and organize favorite exercises
+- **YouTube Integration**: Exercise demonstration videos with automatic thumbnail extraction
+- **User Authentication**: Registration, login, and password reset functionality
+
+## Project Structure
+
+- `app/` - Next.js app directory with pages and server actions
+- `components/` - Reusable React components
+- `lib/` - Utility functions and database configuration
+- `public/` - Static assets including muscle group images
 
 ## Learn More
 
