@@ -24,7 +24,7 @@ export default function AddToFavoritesButton({exerciseId}) {
     if (!user) return null;
     return (
         <button className="btn" onClick={toggle}>
-            {favorited ? 'Remove from Favorites' : 'Add to Favorites'}
+            {favorited ? 'Unfavorite' : 'Favorite'}
         </button>
     );
 }

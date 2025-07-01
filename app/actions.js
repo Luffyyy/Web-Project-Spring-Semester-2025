@@ -288,7 +288,7 @@ function getYouTubeThumbnail(url) {
     return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
 }
 
-export async function addVideo({ title, video, description, difficulty, tags, thumbnail }) {
+export async function addExercise({ title, video, description, difficulty, tags, thumbnail }) {
     const videos = await getMongoCollection("exercises");
     const result = await videos.insertOne({
         name: slugify(title),
@@ -300,10 +300,10 @@ export async function addVideo({ title, video, description, difficulty, tags, th
         description,
     });
 
-    return result;
+    return result.acknowledged;
 }
 
-export async function deleteVideo(id) {
+export async function deleteExercise(id) {
     const videos = await getMongoCollection("exercises");
     const result = await videos.deleteOne({ _id: new ObjectId(id) });
 

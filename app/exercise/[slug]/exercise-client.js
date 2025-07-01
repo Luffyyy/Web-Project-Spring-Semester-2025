@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteVideo } from "@/app/actions";
+import { deleteExercise } from "@/app/actions";
 import AddToFavoritesButton from "@/components/add-to-favorites-button";
 import { UserContext } from "@/components/layout/client-layout";
 import Modal from "@/components/modal";
@@ -21,12 +21,13 @@ export default function ExerciseClient({ exercise }) {
     }
 
     if (user?.isAdmin) {
-        adminButtons = <><div className="mt-auto flex items-center gap-1">
-            <button className="btn" onClick={deleteExericse}>Delete</button>
-            <Link className="btn" href={`/exercise/${exercise._id}/edit`}>
-                Edit
-            </Link>
-        </div></>
+        adminButtons = <div className="flex flex-col gap-1 mt-auto">
+            Admin Actions
+            <div className="flex items-center gap-1">
+                <Link className="btn" href={`/exercise/${exercise._id}/edit`}>Edit</Link>
+                <button className="btn" onClick={deleteExericse}>Delete</button>
+            </div>
+        </div>
     }
 
     return <div className="flex w-full gap-6 flex-wrap">
@@ -35,12 +36,14 @@ export default function ExerciseClient({ exercise }) {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin" allowFullScreen="allowfullscreen"> 
         </iframe>
-        <div className="content p-4 overflow-hidden relative" style={{flex: 1}}>
+        <div className="flex flex-col content p-4 overflow-hidden relative" style={{flex: 1}}>
             <div className="flex gap-3 items-center">
                 <strong className="text-2xl " id="exercise-title">
                     {exercise.title}
                 </strong>
-                <AddToFavoritesButton exerciseId={exercise._id.toString()} />
+                <div className="ml-auto">
+                    <AddToFavoritesButton exerciseId={exercise._id.toString()} />
+                </div>
             </div>
             <br/>
             <span id="exercise-difficulty">
@@ -51,9 +54,7 @@ export default function ExerciseClient({ exercise }) {
             <p className="whitespace-break-spaces" id="exercise-description">
                 {exercise.description}
             </p>
-            <div className="ml-auto flex gap-1">
-                    {adminButtons}
-                </div>
+            {adminButtons}
         </div>
 
         {deleteModal && <Modal 
@@ -62,7 +63,7 @@ export default function ExerciseClient({ exercise }) {
             setState={setDeleteModal}
             buttons={[
                 { text: 'Yes', click: async () => {
-                    await deleteVideo(exercise._id);        
+                    await deleteExercise(exercise._id);        
                     router.push('/browse');
                 } },
                 { text: 'No', click: () => setDeleteModal(false) }

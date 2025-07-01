@@ -9,12 +9,13 @@ import Tag from "@/components/tag";
 import Modal from "@/components/modal";
 import ErrorPage from "../error-page";
 import { UserContext } from "@/components/layout/client-layout";
-import { addVideo, updateExercise } from "../actions";
+import { addExercise, updateExercise } from "../actions";
 import { slugify } from "@/lib/utils";
 
-export default function ExerciseFormPage({
+export default function EditExercise({
     initial = null,
-    submitLabel = "Add Exercise",
+    titleLabel = "Add Exercise",
+    submitLabel = "Add",
     modalTitle = "Video Added!",
     modalDesc = "Your video was added successfully."
 }) {
@@ -60,12 +61,12 @@ export default function ExerciseFormPage({
 
         setError("");
 
-        let onSubmit = addVideo; // Default to addVideo action
+        let onSubmit = addExercise; // Default to addExercise action
         if (initial) {
             onSubmit = updateExercise;
         }
         // Await the result and get the exercise ID
-        const result = await onSubmit({
+        await onSubmit({
             id: initial?._id, // Pass the ID if editing
             title,
             video,
@@ -81,7 +82,7 @@ export default function ExerciseFormPage({
     return (
         <div className="max-w-6xl mx-auto p-6 content">
             <div className="flex flex-col gap-3">
-                <h1 className="text-3xl font-bold text-center">{submitLabel}</h1>
+                <h1 className="text-3xl font-bold text-center">{titleLabel}</h1>
 
                 {error && <p className="text-red-600 text-center">{error}</p>}
 

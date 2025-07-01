@@ -9,7 +9,7 @@ export default function ListExercise({ exercise, children, preContent, content }
             <strong className="text-2xl">{exercise.title}</strong>
             <span className="text-left">{capitalize(exercise.difficulty)}</span>
             {content}
-            <div className="flex gap-1 mt-auto flex-wrap">
+            <div className="flex gap-1 mt-auto flex-wrap max-w-sm 2xl:max-w-xl">
                 {exercise.tags?.map((tag, i) => <Tag key={i} tag={tag}/>)}
             </div>
         </div>
