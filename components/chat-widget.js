@@ -1,13 +1,23 @@
 "use client";
 import { sendToAI } from "@/app/actions";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { capitalize } from "@/lib/utils";
 import Markdown from 'react-markdown';
+import { UserContext } from "./layout/client-layout";
 
 export default function ChatWidget() {
     const [open, setOpen] = useState(false);
+    const { user } = useContext(UserContext);
+    
+    let initial = "Hi! I'm your fitness assistant. I can help you with exercises, routines, and nutrition.";
+    if (user) {
+        initial += '\nYou can also ask me to create a routine for you.';
+    } else {
+        initial += '\nIf you login into an account, I can also help you with with creating a routine.';
+    }
+
     const [messages, setMessages] = useState([
-        { from: "bot", text: "Hi! How can I help you today?" },
+        { from: "bot", text: initial },
     ]);
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
