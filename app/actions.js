@@ -21,34 +21,12 @@ export async function currentUser() {
     data._id = data._id.toString();
     return data;
   }
-  
-  /**
-   * Update height + weight and return the fresh user doc.
-   */
-  export async function updateBodyStats(heightCm, weightKg) {
-    const cookieStore = await cookies();
-    const id = cookieStore.get('user')?.value;
-    if (!id) throw new Error('Not authenticated');
-  
-    const users = await getMongoCollection('users');
-    await users.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: { heightCm, weightKg } }
-    );
-  
-    return currentUser(); // send the updated record back
-  }
 
 /**
  * Update the logged-in user’s profile.
  * Any of the fields can be omitted.
  */
-export async function updateProfile({
-    heightCm,
-    weightKg,
-    password,
-    avoidMuscles,
-  }) {
+export async function updateProfile({ heightCm, weightKg, password, avoidMuscles }) {
     const cookieStore = await cookies();
     const id = cookieStore.get('user')?.value;
     if (!id) throw new Error('Not authenticated');
@@ -230,6 +208,9 @@ export async function findExercises(query, difficulty, tags, filter = {}) {
     return normalizeMongoIds(await exercises.find(filter).toArray());
 }
 
+/**
+ * Toggles favorite status of an exercise.
+ */
 export async function toggleFavorites(exerciseId) {
     const users = await getMongoCollection('users');
     const user = await getUser();
@@ -253,6 +234,10 @@ export async function toggleFavorites(exerciseId) {
 
     return result.modifiedCount > 0; // Return true if the operation was successful
 }
+
+/**
+ * A simple function that uses findExercises to get the user's favorite exercises
+ */
 export async function findFavoriteExercises(query, difficulty, tags) {
     const user = await getUser();
 
@@ -288,6 +273,9 @@ function getYouTubeThumbnail(url) {
     return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
 }
 
+/**
+ * Adds a new exercise to the database with the provided details.
+ */
 export async function addExercise({ title, video, description, difficulty, tags, thumbnail }) {
     const videos = await getMongoCollection("exercises");
     const result = await videos.insertOne({
@@ -303,6 +291,9 @@ export async function addExercise({ title, video, description, difficulty, tags,
     return result.acknowledged;
 }
 
+/**
+ * Deletes an exercise by its ID.
+ */
 export async function deleteExercise(id) {
     const videos = await getMongoCollection("exercises");
     const result = await videos.deleteOne({ _id: new ObjectId(id) });
@@ -310,13 +301,50 @@ export async function deleteExercise(id) {
     return result.deletedCount === 1;
 }
 
+/**
+ * Returns an exercise using an ID
+ */
+export async function getExerciseById(id) {
+    const exercises = await getMongoCollection("exercises");
+    const exercise = await exercises.findOne({ _id: new ObjectId(id) });
+    if (!exercise) return null;
+    exercise._id = exercise._id.toString();
+    return exercise;
+}
+
+/**
+ * Updates an existing exercise with the provided data.
+ * 
+ * @param {object} data - The data to update the exercise with.
+ * @returns 
+ */
+export async function updateExercise(data) {
+    const exercises = await getMongoCollection("exercises");
+    const result = await exercises.updateOne(
+        { _id: new ObjectId(data.id) },
+        { $set: { 
+            name: slugify(data.title),
+            title: data.title,
+            video: data.video,
+            description: data.description,
+            difficulty: data.difficulty,
+            tags: data.tags,
+            thumbnail: data.thumbnail
+        }}
+    );
+    return result.modifiedCount > 0;
+}
+
+/**
+ * Sends a prompt to the gym coach AI with chatHistory support
+ * The AI can add routines by itself if the user is logged in and consents to it.
+ */
 export async function sendToAI(userText, chatHistory = []) {
     const API_KEY = process.env.GEMINI_API_KEY;
     const exercisesCollection = await getMongoCollection("exercises");
     const exercisesArr = await exercisesCollection.find({}).toArray();
     const user = await getUser();
 
-    // You may want to limit the fields sent to the AI for brevity
     const exercises = exercisesArr.map(ex => ({
         exerciseId: ex._id.toString(),
         title: ex.title,
@@ -344,7 +372,8 @@ export async function sendToAI(userText, chatHistory = []) {
             exercises is an array of objects with the following structure: { exerciseId: str, sets: number, reps: number }
             The sets and reps are ONLY numbers! Do not return null ever, if it's AMRAP then give 0.
 
-            When making a routine, always and always give the user a list of what is going to be added for each day including sets and reps. Use markdown, new lines to make it more readable.
+            When making a routine, always and always give the user a list of what is going to be added for each day including sets and reps.
+            Use markdown, new lines to make it more readable.
             Never ask the user if they want to add a routine without telling them what's in there
 
             Finally, before adding the routine, ask the user if they consent to add it to their routines.
@@ -394,6 +423,12 @@ export async function sendToAI(userText, chatHistory = []) {
     return data2.response || "Sorry, I didn't get that.";
 }
 
+/**
+ * Adds a new exercise routine given a title and days object.
+ * 
+ * @param {string} title - The title of the routine.
+ * @param {Object} days - An object where keys are day names and values are arrays of exercises.
+ */
 export async function addExerciseRoutine(title, days) {
     const routines = await getMongoCollection("routines");
     const user = await getUser();
@@ -418,7 +453,7 @@ export async function addExerciseRoutine(title, days) {
  * 
  * @param {string} id 
  * @param {string} title 
- * @param {string[]} days 
+ * @param {Object} days - An object where keys are day names and values are arrays of exercises.
  * @param {array} exercises 
  * @returns {boolean} indicating success
  */
@@ -542,27 +577,4 @@ export async function findExerciseRoutines() {
     });
 
     return normalizeMongoIds(userRoutines);
-}
-export async function getExerciseById(id) {
-    const exercises = await getMongoCollection("exercises");
-    const exercise = await exercises.findOne({ _id: new ObjectId(id) });
-    if (!exercise) return null;
-    exercise._id = exercise._id.toString();
-    return exercise;
-}
-export async function updateExercise(data) {
-    const exercises = await getMongoCollection("exercises");
-    const result = await exercises.updateOne(
-        { _id: new ObjectId(data.id) },
-        { $set: { 
-            name: slugify(data.title),
-            title: data.title,
-            video: data.video,
-            description: data.description,
-            difficulty: data.difficulty,
-            tags: data.tags,
-            thumbnail: data.thumbnail
-        }}
-    );
-    return result.modifiedCount > 0;
 }
