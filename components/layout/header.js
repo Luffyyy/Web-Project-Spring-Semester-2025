@@ -35,6 +35,11 @@ export default function Header({ theme: initialTheme }) {
         router.push(`browse?query=${query}`);
     }
 
+    function setThemeBtn(e) {
+        e.stopPropagation();
+        setTheme(theme == 'dark' ? 'light' : 'dark');
+    }
+
     let userElem = '';
 
     if (user) {
@@ -118,7 +123,7 @@ export default function Header({ theme: initialTheme }) {
                 </button>
             </div>
             <div className="relative w-full flex flex-col items-end">
-                <div id="mobile-menu" className={menuClasses}>
+                <div id="mobile-menu" className={menuClasses} onClick={() => setMenuVisible(false)}>
                     <Link href="/browse" className="nav-link">Browse Exercises</Link>
                     {user && (<>
                         <Link href="/favorites" className="nav-link">Favorite Exercises</Link>
@@ -129,7 +134,7 @@ export default function Header({ theme: initialTheme }) {
                         <Link href="/login" className="nav-link login-btn" id="login-mobile">Login</Link>
                         <Link href="/register" className="nav-link register-btn" id="register-mobile">Register</Link>
                     </>}
-                    <button className="nav-link text-left" id="theme-btn" onClick={() => setTheme(theme == 'dark' ? 'light' : 'dark')}>
+                    <button className="nav-link text-left" id="theme-btn" onClick={setThemeBtn}>
                         {theme == 'dark' ? 'Dark Mode 🌙' : 'Light Mode ☀️'}
                     </button>
                 </div>
