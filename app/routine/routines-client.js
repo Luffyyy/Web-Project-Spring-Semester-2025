@@ -45,10 +45,12 @@ export default function RoutinesClient({ initialRoutines }) {
         
         if (exercises?.length) {
             return <div className="content flex flex-col gap-2" key={routine._id}>
-                <div className="flex gap-1 items-center">
+                <div className="flex gap-1 items-center max-sm:flex-col flex-wrap">
                     <b className="text-xl">{routine.title}</b>
-                    <Link className="btn ml-auto" href={`/routine/${routine._id}`}>Edit</Link>
-                    <button className="btn" onClick={() => askDeleteRoutine(routine._id)}>Delete</button>
+                    <div className="flex gap-1 sm:ml-auto">
+                        <Link className="btn" href={`/routine/${routine._id}`}>Edit</Link>
+                        <button className="btn" onClick={() => askDeleteRoutine(routine._id)}>Delete</button>
+                    </div>
                 </div>
                 <ul>
                     {exercises.map(exercise => {
@@ -72,7 +74,7 @@ export default function RoutinesClient({ initialRoutines }) {
     return <div className="flex gap-6 flex-col">
         <div className="flex gap-1 max-sm:flex-col items-center">
             <strong className="text-3xl self-center">Exercise Routines</strong>
-            <div className="flex gap-1 md:ml-auto">
+            <div className="flex gap-1 sm:ml-auto">
                 <Link className="btn" href="/routine/new">Add</Link>
                 <button className="btn" onClick={refreshRoutines}>Refresh</button>
             </div>
