@@ -115,6 +115,7 @@ export default function EditRoutine({ routine, initialExercises }) {
             value={step.sets}
             onChange={val => updateVal(i, 'sets', val)}
             placeholder="Sets"
+            className="flex-1"
             required
         />
 
@@ -125,21 +126,22 @@ export default function EditRoutine({ routine, initialExercises }) {
             value={step.reps}
             onChange={val => updateVal(i, 'reps', val)}
             placeholder="Reps"
+            className="flex-1"
             required
         />
 
-        const content = <div className="flex gap-3 flex-wrap">
+        const content = <div className="flex gap-2 flex-wrap">
             {sets}
             {reps}
         </div>
 
-        const arrows = <div className="flex flex-col self-center gap-2">
+        const arrows = <div className="flex flex-col self-center gap-1 text-sm">
             {i != 0 && <button className="btn" onClick={() => insertExerciseStepAt(step, i - 1)}>↑</button>}
             {i != exercises.length - 1 && <button className="btn" onClick={() => insertExerciseStepAt(step, i + 1)}>↓</button>}
         </div>
 
         return <ListExercise key={i} exercise={ex} preContent={arrows} content={content} tags={false}>
-            <img className="md:ml-auto my-4 hover:cursor-pointer icon"
+            <img className="md:ml-auto mx-auto my-4 hover:cursor-pointer icon"
                 src="/assets/MdiClose.svg"
                 width="24"
                 alt="Close"

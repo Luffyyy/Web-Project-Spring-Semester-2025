@@ -13,7 +13,7 @@ export default function ListExercise({ exercise, children, preContent, content, 
     return <div className="content exercise flex-wrap max-sm:flex-col items-center">
         {preContent}
         <img src={exercise.thumbnail} className="thumbnail" alt={`${exercise.title} thumbnail`} />
-        <div className="flex flex-col flex-wrap gap-2">
+        <div className="flex flex-col flex-wrap gap-2 flex-1">
             <strong className="text-2xl">{exercise.title}</strong>
             <span className="text-left">{capitalize(exercise.difficulty)}</span>
             {tagHolder}
