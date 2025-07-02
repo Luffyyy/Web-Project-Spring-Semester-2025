@@ -23,7 +23,7 @@ export default function EditRoutine({ routine, initialExercises }) {
     const [chosenDay, setChosenDay] = useState(daysOfTheWeek[new Date().getDay()]);
     const router = useRouter();
 
-    const [exerciseQuery, setExerciseQuery] = useState(routine?.title ?? '');
+    const [exerciseQuery, setExerciseQuery] = useState('');
     const [avExercises, setAvExercises] = useState(initialExercises);
 
     const initial = useRef(false);
@@ -128,7 +128,7 @@ export default function EditRoutine({ routine, initialExercises }) {
             required
         />
 
-        const content = <div className="flex gap-3">
+        const content = <div className="flex gap-3 flex-wrap">
             {sets}
             {reps}
         </div>
@@ -138,8 +138,8 @@ export default function EditRoutine({ routine, initialExercises }) {
             {i != exercises.length - 1 && <button className="btn" onClick={() => insertExerciseStepAt(step, i + 1)}>↓</button>}
         </div>
 
-        return <ListExercise key={i} exercise={ex} preContent={arrows} content={content}>
-            <img className="ml-auto mb-4 hover:cursor-pointer icon"
+        return <ListExercise key={i} exercise={ex} preContent={arrows} content={content} tags={false}>
+            <img className="md:ml-auto my-4 hover:cursor-pointer icon"
                 src="/assets/MdiClose.svg"
                 width="24"
                 alt="Close"
@@ -148,7 +148,7 @@ export default function EditRoutine({ routine, initialExercises }) {
         </ListExercise>
     });
 
-    return <form className="w-250 mx-auto p-6 content" onSubmit={saveExercise}>
+    return <form className="mx-auto p-6 content" onSubmit={saveExercise}>
         <div className="flex flex-col gap-6">
             <h1 className="text-3xl font-bold text-center">{routine ? 'Edit Exercise Routine' : 'Add Exercise Routine'}</h1>
 
@@ -162,7 +162,7 @@ export default function EditRoutine({ routine, initialExercises }) {
                 required
             />
 
-            <div className="flex gap-2 flex-wrap self-center">
+            <div className="flex gap-2 flex-wrap justify-center">
                 {dayOptions}
             </div>
 
@@ -185,7 +185,7 @@ export default function EditRoutine({ routine, initialExercises }) {
                         onChange={setExerciseQuery}
                         value={exerciseQuery}
                     />
-                    <div className="max-h-128 w-150 overflow-auto gap-3 flex flex-col">
+                    <div className="max-h-128 overflow-auto gap-3 flex flex-col">
                         {exerciseList}
                     </div>
                 </Modal>

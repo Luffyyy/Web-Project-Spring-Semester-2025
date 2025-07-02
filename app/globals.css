@@ -228,7 +228,7 @@ button {
 
 .tag {
     border-radius: calc(infinity * 1px);
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     padding: 0.25rem 0.75rem;
     transition: background-color ease-in-out 0.15s;
     color: white;

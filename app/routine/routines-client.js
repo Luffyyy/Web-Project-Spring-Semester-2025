@@ -70,12 +70,14 @@ export default function RoutinesClient({ initialRoutines }) {
     });
 
     return <div className="flex gap-6 flex-col">
-        <div className="flex gap-1">
+        <div className="flex gap-1 max-sm:flex-col items-center">
             <strong className="text-3xl self-center">Exercise Routines</strong>
-            <Link className="ml-auto items-center btn" href="/routine/new">Add</Link>
-            <button className="btn" onClick={refreshRoutines}>Refresh</button>
+            <div className="flex gap-1 md:ml-auto">
+                <Link className="btn" href="/routine/new">Add</Link>
+                <button className="btn" onClick={refreshRoutines}>Refresh</button>
+            </div>
         </div>
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-1 flex-wrap justify-center">
             {dayOptions}
         </div>
         <div className="flex flex-col gap-3">

@@ -104,7 +104,7 @@ export default function Header({ theme: initialTheme }) {
                 </div>
                 <div className="gap-2 flex items-center max-lg:ml-auto">
                 {user?.isAdmin && (
-                    <span className="px-2 py-1 text-sm font-medium rounded bg-yellow-200 text-yellow-800 dark:bg-yellow-400 dark:text-black">
+                    <span className="px-2 py-1 text-sm font-medium rounded bg-yellow-200 text-yellow-800 dark:bg-yellow-400 dark:text-black max-sm:hidden">
                     Admin
                     </span>
                 )}
