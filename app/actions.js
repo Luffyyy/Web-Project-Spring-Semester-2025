@@ -377,7 +377,7 @@ export async function sendToAI(userText, chatHistory = []) {
             Never ask the user if they want to add a routine without telling them what's in there
 
             Finally, before adding the routine, ask the user if they consent to add it to their routines.
-            ONLY after they consent, say something along the lines of "Added the exercise routine successfully" 
+            ONLY after they consent, say something along the lines of "Added the exercise routine successfully" and make sure to include the routine in the response
             After adding, forget about that exercise. DO NOT add it again.
 
             If the user doesn't give enough info, default to simple exercises suited for everyone.
